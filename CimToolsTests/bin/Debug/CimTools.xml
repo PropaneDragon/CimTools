@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CimTools</name>
+    </assembly>
+    <members>
+        <member name="T:CimTools.Workshop.Changelog">
+            <summary>
+            Used for grabbing change logs from the Steam Workshop. This will automatically
+            get the most recent change log on the page and return it in either a list or a
+            string.
+            <para>
+            The workshop changelogs must be formatted in a specific way in order for them to
+            be correctly formatted when getting the output from the class. Every change must be
+            within [list][/list] tags with [*] before each item when entering them into the workshop.
+            </para>
+            </summary>
+        </member>
+        <member name="F:CimTools.Workshop.Changelog.m_instance">
+            <summary>
+            The class instance
+            </summary>
+        </member>
+        <member name="F:CimTools.Workshop.Changelog.m_webClient">
+            <summary>
+            The web client that accesses the community and downloads the changes
+            </summary>
+        </member>
+        <member name="F:CimTools.Workshop.Changelog.m_changeList">
+            <summary>
+            A list of changes which is populated upon download.
+            </summary>
+        </member>
+        <member name="F:CimTools.Workshop.Changelog.m_rawChanges">
+            <summary>
+            A string which contains all changes. Populated upon download.
+            </summary>
+        </member>
+        <member name="F:CimTools.Workshop.Changelog.m_downloadComplete">
+            <summary>
+            Whether the download is complete or not.
+            </summary>
+        </member>
+        <member name="F:CimTools.Workshop.Changelog.m_downloadError">
+            <summary>
+            Whether the download has encountered an error.
+            </summary>
+        </member>
+        <member name="P:CimTools.Workshop.Changelog.DownloadComplete">
+            <summary>
+            If downloading Async, this will return whether the download has completed from
+            that request. If the download fails it will still be false.
+            </summary>
+        </member>
+        <member name="P:CimTools.Workshop.Changelog.DownloadError">
+            <summary>
+            Whether an error has occured while downloading the most recent changes.
+            </summary>
+        </member>
+        <member name="P:CimTools.Workshop.Changelog.ChangesString">
+            <summary>
+            A formatted string of change logs. Each change log is separated by
+            \n\n.
+            </summary>
+        </member>
+        <member name="P:CimTools.Workshop.Changelog.ChangesList">
+            <summary>
+            A list of change logs.
+            </summary>
+        </member>
+        <member name="F:CimTools.Workshop.Changelog.m_colouriseTags">
+            <summary>
+            Whether or not to replace HTML tags with colours.
+            </summary>
+        </member>
+        <member name="F:CimTools.Workshop.Changelog.m_tagsToColourise">
+            <summary>
+            A list of tags to replace with colours.
+            </summary>
+        </member>
+        <member name="M:CimTools.Workshop.Changelog.Instance">
+            <summary>
+            Gets and creates an instance of the Changelog class, if required.
+            </summary>
+            <returns>A Changelog class</returns>
+        </member>
+        <member name="M:CimTools.Workshop.Changelog.DownloadChangelog(System.UInt32)">
+            <summary>
+            Downloads the latest changelog from a workshop item using the ID provided. Please note
+            that this will stop the calling thread while it downloads, but you can guarantee the
+            download will be complete when the thread resumes.
+            </summary>
+            <param name="workshopId">The workshop ID of the item to get the changelog for</param>
+        </member>
+        <member name="M:CimTools.Workshop.Changelog.DownloadChangelogAsync(System.UInt32)">
+            <summary>
+            Downloads the latest changelog from a workshop item using the ID provided. Please note
+            that while this works on a separate thread, you can't guarantee the download will be
+            complete immediately. You should check for a complete download using m_downloadCompleted
+            before trying to get data from it.
+            </summary>
+            <param name="workshopId">The workshop ID of the item to get the changelog for</param>
+            <seealso cref="F:CimTools.Workshop.Changelog.m_downloadComplete"/>
+        </member>
+        <member name="M:CimTools.Workshop.Changelog.ExtractData(System.String)">
+            <summary>
+            Extracts data from a HTML page. This will only work on the Steam Workshop
+            due to certain div IDs. You shouldn't need to call this yourself really, and
+            should only be used if you really really need to use it.
+            </summary>
+            <param name="rawData"></param>
+        </member>
+    </members>
+</doc>

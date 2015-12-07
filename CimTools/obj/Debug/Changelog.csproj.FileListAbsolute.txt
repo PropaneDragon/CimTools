@@ -1,0 +1,13 @@
+D:\Projects\Git\CimTools\CimTools\bin\Debug\Changelog.dll
+D:\Projects\Git\CimTools\CimTools\bin\Debug\Changelog.pdb
+D:\Projects\Git\CimTools\CimTools\bin\Debug\Assembly-CSharp.dll
+D:\Projects\Git\CimTools\CimTools\bin\Debug\ColossalManaged.dll
+D:\Projects\Git\CimTools\CimTools\bin\Debug\ICities.dll
+D:\Projects\Git\CimTools\CimTools\bin\Debug\UnityEngine.dll
+D:\Projects\Git\CimTools\CimTools\bin\Debug\Assembly-CSharp-firstpass.dll
+D:\Projects\Git\CimTools\CimTools\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\Projects\Git\CimTools\CimTools\bin\Debug\UnityEngine.xml
+D:\Projects\Git\CimTools\CimTools\obj\Debug\Changelog.csprojResolveAssemblyReference.cache
+D:\Projects\Git\CimTools\CimTools\obj\Debug\Changelog.dll
+D:\Projects\Git\CimTools\CimTools\obj\Debug\Changelog.pdb
+D:\Projects\Git\CimTools\CimTools\bin\Debug\Changelog.XML
