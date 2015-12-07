@@ -1,0 +1,12 @@
+D:\Projects\Git\CimTools\CimTools\bin\Release\CimTools.dll
+D:\Projects\Git\CimTools\CimTools\bin\Release\CimTools.pdb
+D:\Projects\Git\CimTools\CimTools\bin\Release\Assembly-CSharp.dll
+D:\Projects\Git\CimTools\CimTools\bin\Release\ColossalManaged.dll
+D:\Projects\Git\CimTools\CimTools\bin\Release\ICities.dll
+D:\Projects\Git\CimTools\CimTools\bin\Release\UnityEngine.dll
+D:\Projects\Git\CimTools\CimTools\bin\Release\Assembly-CSharp-firstpass.dll
+D:\Projects\Git\CimTools\CimTools\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\Projects\Git\CimTools\CimTools\bin\Release\UnityEngine.xml
+D:\Projects\Git\CimTools\CimTools\obj\Release\CimTools.csprojResolveAssemblyReference.cache
+D:\Projects\Git\CimTools\CimTools\obj\Release\CimTools.dll
+D:\Projects\Git\CimTools\CimTools\obj\Release\CimTools.pdb
