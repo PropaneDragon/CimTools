@@ -33,12 +33,20 @@ namespace CimTools.Workshop
         /// <summary>
         /// A list of changes which is populated upon download.
         /// </summary>
-        protected List<string> m_changeList = new List<string>();
+        protected List<string> m_changeList = new List<string>()
+        {
+            "<color#f58282>You have not set this up for your mod!</color>",
+            "You need to call <color#c8f582>DownloadChangelog</color> or <color#c8f582>DownloadChangelogAsync</color> to get changes!",
+            "You might also want to read up on the documentation some more to make the most of this panel!"
+        };
 
         /// <summary>
         /// A string which contains all changes. Populated upon download.
         /// </summary>
-        protected string m_rawChanges = "";
+        protected string m_rawChanges =
+            "<color#f58282>You have not set this up for your mod!</color>" +
+            "\n\nYou need to call <color#c8f582>DownloadChangelog</color> or <color#c8f582>DownloadChangelogAsync</color> to get changes!" +
+            "\n\nYou might also want to read up on the documentation some more to make the most of this panel!";
 
         /// <summary>
         /// Whether the download is complete or not.
@@ -46,9 +54,26 @@ namespace CimTools.Workshop
         protected bool m_downloadComplete = false;
 
         /// <summary>
+        /// Whether a download is in progress or not.
+        /// </summary>
+        protected bool m_downloadInProgress = false;
+
+        /// <summary>
         /// Whether the download has encountered an error.
         /// </summary>
         protected bool m_downloadError = false;
+
+        /// <summary>
+        /// If downloading Async, this determines whether or not there is an ongoing
+        /// download.
+        /// </summary>
+        public bool DownloadInProgress
+        {
+            get
+            {
+                return m_downloadInProgress;
+            }
+        }
 
         /// <summary>
         /// If downloading Async, this will return whether the download has completed from
@@ -130,8 +155,11 @@ namespace CimTools.Workshop
         /// download will be complete when the thread resumes.
         /// </summary>
         /// <param name="workshopId">The workshop ID of the item to get the changelog for</param>
-        public void DownloadChangelog(uint workshopId)
+        public void DownloadChangelog(ulong workshopId)
         {
+            m_changeList.Clear();
+            m_rawChanges = "";
+
             m_downloadError = true;
 
             ExtractData(m_webClient.DownloadString(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + workshopId.ToString())));
@@ -147,8 +175,12 @@ namespace CimTools.Workshop
         /// </summary>
         /// <param name="workshopId">The workshop ID of the item to get the changelog for</param>
         /// <seealso cref="m_downloadComplete"/>
-        public void DownloadChangelogAsync(uint workshopId)
+        public void DownloadChangelogAsync(ulong workshopId)
         {
+            m_changeList.Clear();
+            m_rawChanges = "";
+
+            m_downloadInProgress = true;
             m_downloadComplete = false;
             m_downloadError = true;
 
@@ -166,8 +198,9 @@ namespace CimTools.Workshop
         private void M_webClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             m_downloadComplete = true;
+            m_downloadInProgress = false;
 
-            if(!e.Cancelled && e.Result != null && e.Result != "")
+            if (!e.Cancelled && e.Result != null && e.Result != "")
             {
                 ExtractData(e.Result);
             }

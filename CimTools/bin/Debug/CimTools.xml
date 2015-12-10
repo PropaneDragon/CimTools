@@ -4,6 +4,120 @@
         <name>CimTools</name>
     </assembly>
     <members>
+        <member name="T:CimTools.File.Path">
+            <summary>
+            Handles system paths
+            </summary>
+        </member>
+        <member name="M:CimTools.File.Path.GetModPath(System.UInt64,System.String)">
+            <summary>
+            Gets the full path of the mod
+            </summary>
+            <param name="workshopId">The workshop ID of the mod</param>
+            <param name="modName">The name of the mod</param>
+            <returns>The full path of the mod</returns>
+        </member>
+        <member name="T:CimTools.Utilities.SpriteUtilities">
+            <summary>
+            Utilities for sprite handling. Takes care of atlases and sprites.
+            <para>
+            Atlases are a large map of many small sprites. Cities handles all
+            individual sprites using a single large atlas, and each sprite has a
+            location on the atlas.
+            </para>
+            </summary>
+        </member>
+        <member name="M:CimTools.Utilities.SpriteUtilities.GetAtlas(System.String)">
+            <summary>
+            Returns a stored atlas.
+            </summary>
+            <param name="atlasName">The name of the atlas to return.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CimTools.Utilities.SpriteUtilities.InitialiseAtlas(System.String,System.String)">
+            <summary>
+            Creates a new atlas from a texture and a name.
+            </summary>
+            <param name="texturePath">The full path to the texture.</param>
+            <param name="atlasName">The name to give the atlas. Used for finding and using later.</param>
+            <returns>Whether the atlas was created successfully.</returns>
+        </member>
+        <member name="M:CimTools.Utilities.SpriteUtilities.AddSpriteToAtlas(UnityEngine.Rect,System.String,System.String)">
+            <summary>
+            Creates a new sprite using the size of the image inside the atlas.
+            </summary>
+            <param name="dimensions">The location and size of the sprite within the atlas (in pixels).</param>
+            <param name="spriteName">The name of the sprite to create</param>
+            <param name="atlasName">The name of the atlas to add the sprite to.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CimTools.Utilities.SpriteUtilities.FixTransparency(UnityEngine.Texture2D)">
+            <summary>
+            Copy the values of adjacent pixels to transparent pixels color info, to
+            remove the white border artifact when importing transparent .PNGs.
+            </summary>
+            <param name="texture"></param>
+        </member>
+        <member name="T:CimTools.Utilities.UIUtilities">
+            <summary>
+            Utilities for adding items to the UI
+            </summary>
+        </member>
+        <member name="M:CimTools.Utilities.UIUtilities.CreateButton(ColossalFramework.UI.UIComponent)">
+            <summary>
+            Creates a button on the component
+            </summary>
+            <param name="parent">The component to add the button to</param>
+            <returns>A new button</returns>
+        </member>
+        <member name="M:CimTools.Utilities.UIUtilities.CreateCheckBox(ColossalFramework.UI.UIComponent)">
+            <summary>
+            Creates a checkbox on the component
+            </summary>
+            <param name="parent">The component to add the checbox to</param>
+            <returns>A new checkbox</returns>
+        </member>
+        <member name="M:CimTools.Utilities.UIUtilities.CreateTextField(ColossalFramework.UI.UIComponent)">
+            <summary>
+            Creates a text field on the component
+            </summary>
+            <param name="parent">The component to add the text field to</param>
+            <returns>A new text field</returns>
+        </member>
+        <member name="M:CimTools.Utilities.UIUtilities.CreateDropDown(ColossalFramework.UI.UIComponent)">
+            <summary>
+            Creates a dropdown on the component
+            </summary>
+            <param name="parent">The component to add the dropdown to</param>
+            <returns>A new dropdown</returns>
+        </member>
+        <member name="M:CimTools.Utilities.UIUtilities.CreateColorField(ColossalFramework.UI.UIComponent)">
+            <summary>
+            Creates a color field on the component
+            </summary>
+            <param name="parent">The component to add the color field to</param>
+            <returns>A new color field</returns>
+        </member>
+        <member name="M:CimTools.Utilities.UIUtilities.ResizeIcon(ColossalFramework.UI.UISprite,UnityEngine.Vector2)">
+            <summary>
+            Resizes a sprite to fit within certain bounds. It doesn't stretch the sprite
+            and keeps the correct ratio.
+            </summary>
+            <param name="icon">The sprite to resize</param>
+            <param name="maxSize">The maximum size of the sprite</param>
+        </member>
+        <member name="P:CimTools.Utilities.UIUtilities.defaultAtlas">
+            <summary>
+            The default game atlas
+            </summary>
+        </member>
+        <member name="M:CimTools.Utilities.UIUtilities.GetAtlas(System.String)">
+            <summary>
+            Gets an atlas by name
+            </summary>
+            <param name="name">The atlas name to retrieve</param>
+            <returns>The named atlas, or null if none is found.</returns>
+        </member>
         <member name="T:CimTools.Workshop.Changelog">
             <summary>
             Used for grabbing change logs from the Steam Workshop. This will automatically
@@ -41,9 +155,20 @@
             Whether the download is complete or not.
             </summary>
         </member>
+        <member name="F:CimTools.Workshop.Changelog.m_downloadInProgress">
+            <summary>
+            Whether a download is in progress or not.
+            </summary>
+        </member>
         <member name="F:CimTools.Workshop.Changelog.m_downloadError">
             <summary>
             Whether the download has encountered an error.
+            </summary>
+        </member>
+        <member name="P:CimTools.Workshop.Changelog.DownloadInProgress">
+            <summary>
+            If downloading Async, this determines whether or not there is an ongoing
+            download.
             </summary>
         </member>
         <member name="P:CimTools.Workshop.Changelog.DownloadComplete">
@@ -84,7 +209,7 @@
             </summary>
             <returns>A Changelog class</returns>
         </member>
-        <member name="M:CimTools.Workshop.Changelog.DownloadChangelog(System.UInt32)">
+        <member name="M:CimTools.Workshop.Changelog.DownloadChangelog(System.UInt64)">
             <summary>
             Downloads the latest changelog from a workshop item using the ID provided. Please note
             that this will stop the calling thread while it downloads, but you can guarantee the
@@ -92,7 +217,7 @@
             </summary>
             <param name="workshopId">The workshop ID of the item to get the changelog for</param>
         </member>
-        <member name="M:CimTools.Workshop.Changelog.DownloadChangelogAsync(System.UInt32)">
+        <member name="M:CimTools.Workshop.Changelog.DownloadChangelogAsync(System.UInt64)">
             <summary>
             Downloads the latest changelog from a workshop item using the ID provided. Please note
             that while this works on a separate thread, you can't guarantee the download will be
@@ -109,6 +234,40 @@
             should only be used if you really really need to use it.
             </summary>
             <param name="rawData"></param>
+        </member>
+        <member name="T:CimTools.Panels.UpdatePanel">
+            <summary>
+            A speech bubble which contains the latest changes to your mod.
+            The bubble can be clicked and expanded to reveal new changes, rather than
+            taking up loads of space.
+            </summary>
+        </member>
+        <member name="F:CimTools.Panels.UpdatePanel.m_changelogDownloader">
+            <summary>
+            Set and get a Changelog downloader. By default this uses the default Changelog
+            instance, but you can pass your own through here if you wish to use your own.
+            <para>
+            Please note that if you are using the default Changelog instance you will need to set
+            it up for your mod, otherwise you'll get no changes.
+            </para>
+            </summary>
+        </member>
+        <member name="F:CimTools.Panels.UpdatePanel.m_updatedTitleMessage">
+            <summary>
+            The initial message title when an update has been detected.
+            </summary>
+        </member>
+        <member name="F:CimTools.Panels.UpdatePanel.m_updatedContentMessage">
+            <summary>
+            The initial message content when an update has been detected.
+            </summary>
+        </member>
+        <member name="M:CimTools.Panels.UpdatePanel.setPositionSpeakyPoint(UnityEngine.Vector2)">
+            <summary>
+            Sets the position of the panel based on the "speaky point" of the
+            speech bubble it creates
+            </summary>
+            <param name="position">Position to set the panel to</param>
         </member>
     </members>
 </doc>
