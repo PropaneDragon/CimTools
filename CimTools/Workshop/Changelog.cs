@@ -37,6 +37,7 @@ namespace CimTools.Workshop
         {
             "<color#f58282>You have not set this up for your mod!</color>",
             "You need to call <color#c8f582>DownloadChangelog</color> or <color#c8f582>DownloadChangelogAsync</color> to get changes!",
+            "<color#f58282>If you're not the creator of this mod, let them know as soon as possible!</color>",
             "You might also want to read up on the documentation some more to make the most of this panel!"
         };
 
@@ -46,6 +47,7 @@ namespace CimTools.Workshop
         protected string m_rawChanges =
             "<color#f58282>You have not set this up for your mod!</color>" +
             "\n\nYou need to call <color#c8f582>DownloadChangelog</color> or <color#c8f582>DownloadChangelogAsync</color> to get changes!" +
+            "\n\n<color#f58282>If you're not the creator of this mod, let them know as soon as possible!</color>" +
             "\n\nYou might also want to read up on the documentation some more to make the most of this panel!";
 
         /// <summary>

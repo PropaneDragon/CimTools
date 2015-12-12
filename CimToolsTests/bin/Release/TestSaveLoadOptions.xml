@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SavedOptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SavedSliders>
+    <SavedSlider>
+      <Name>test5</Name>
+      <Value>1.2</Value>
+    </SavedSlider>
+    <SavedSlider>
+      <Name>test6</Name>
+      <Value>2.3</Value>
+    </SavedSlider>
+  </SavedSliders>
+  <SavedCheckboxes>
+    <SavedCheckbox>
+      <Name>test1</Name>
+      <Value>true</Value>
+    </SavedCheckbox>
+    <SavedCheckbox>
+      <Name>test2</Name>
+      <Value>false</Value>
+    </SavedCheckbox>
+  </SavedCheckboxes>
+  <SavedDropdowns>
+    <SavedDropdown>
+      <Name>test3</Name>
+      <Value>testDropdown1</Value>
+    </SavedDropdown>
+    <SavedDropdown>
+      <Name>test4</Name>
+      <Value>testDropdown2</Value>
+    </SavedDropdown>
+  </SavedDropdowns>
+</SavedOptions>

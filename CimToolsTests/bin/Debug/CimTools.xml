@@ -17,6 +17,135 @@
             <param name="modName">The name of the mod</param>
             <returns>The full path of the mod</returns>
         </member>
+        <member name="T:CimTools.File.SavedOptions">
+            <summary>
+            Handles saving and loading options from the disk
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedOptions.SavedSliders">
+            <summary>
+            A list of sliders to save
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedOptions.SavedCheckboxes">
+            <summary>
+            A list of checkboxes to save
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedOptions.SavedDropdowns">
+            <summary>
+            A list of dropdowns to save
+            </summary>
+        </member>
+        <member name="M:CimTools.File.SavedOptions.Instance">
+            <summary>
+            Gets an instance of the SavedOptions
+            </summary>
+            <returns>An instance of SavedOptions</returns>
+        </member>
+        <member name="M:CimTools.File.SavedOptions.SetInstance(CimTools.File.SavedOptions)">
+            <summary>
+            Change the instance used for the options.
+            </summary>
+            <param name="optionManager">The SavedOptions to replace the existing instance</param>
+        </member>
+        <member name="M:CimTools.File.SavedOptions.Save(System.String)">
+            <summary>
+            Saves all options to the disk. Make sure you've updated the options first.
+            </summary>
+        </member>
+        <member name="M:CimTools.File.SavedOptions.Load(System.String)">
+            <summary>
+            Load all options from the disk.
+            </summary>
+            <returns>Whether loading was successful</returns>
+        </member>
+        <member name="T:CimTools.File.SavedSlider">
+            <summary>
+            Container for saving data for a slider
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedSlider.name">
+            <summary>
+            Slider name
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedSlider.value">
+            <summary>
+            Value of the slider
+            </summary>
+        </member>
+        <member name="T:CimTools.File.SavedCheckbox">
+            <summary>
+            Container for saving data for a checkbox
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedCheckbox.name">
+            <summary>
+            Checkbox name
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedCheckbox.value">
+            <summary>
+            Value of the checkbox
+            </summary>
+        </member>
+        <member name="T:CimTools.File.SavedDropdown">
+            <summary>
+            Container for saving data for a dropdown
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedDropdown.name">
+            <summary>
+            Dropdown name
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedDropdown.value">
+            <summary>
+            Value of the dropdown
+            </summary>
+        </member>
+        <member name="T:CimTools.File.Version">
+            <summary>
+            Handles everything to do with the mod version number
+            </summary>
+        </member>
+        <member name="M:CimTools.File.Version.Major(System.Reflection.Assembly)">
+            <summary>
+            Major version ([1].2.35.623)
+            </summary>
+            <param name="thisAssembly">The assembly to get the verison number of</param>
+            <returns>The major number</returns>
+        </member>
+        <member name="M:CimTools.File.Version.Minor(System.Reflection.Assembly)">
+            <summary>
+            Minor version (1.[2].35.623)
+            </summary>
+            <param name="thisAssembly">The assembly to get the verison number of</param>
+            <returns>The minor number</returns>
+        </member>
+        <member name="M:CimTools.File.Version.Build(System.Reflection.Assembly)">
+            <summary>
+            Build version (1.2.[35].623)
+            </summary>
+            <param name="thisAssembly">The assembly to get the verison number of</param>
+            <returns>The build number</returns>
+        </member>
+        <member name="M:CimTools.File.Version.Revision(System.Reflection.Assembly)">
+            <summary>
+            Revision version (1.2.35.[623])
+            </summary>
+            <param name="thisAssembly">The assembly to get the verison number of</param>
+            <returns>The revision number</returns>
+        </member>
+        <member name="M:CimTools.File.Version.Delimited(System.Reflection.Assembly,CimTools.File.Version.Limit,System.String)">
+            <summary>
+            Returns a delimited version string
+            </summary>
+            <param name="delimiter">The delimiter to place between version numbers</param>
+            <param name="upTo">Return a version number up to this limit</param>
+            <returns>A delimited version string</returns>
+        </member>
         <member name="T:CimTools.Utilities.SpriteUtilities">
             <summary>
             Utilities for sprite handling. Takes care of atlases and sprites.

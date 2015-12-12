@@ -62,6 +62,9 @@
   <ItemGroup>
     <Compile Include="Elements\UITitleBar.cs" />
     <Compile Include="File\Path.cs" />
+    <Compile Include="File\SavedOptions.cs" />
+    <Compile Include="File\Version.cs" />
+    <Compile Include="Utilities\OptionUtilities.cs" />
     <Compile Include="Utilities\SpriteUtilities.cs" />
     <Compile Include="Utilities\UIUtilities.cs" />
     <Compile Include="Workshop\Changelog.cs" />
