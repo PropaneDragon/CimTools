@@ -9,21 +9,23 @@ namespace CimToolsTests
     public class VersionTests
     {
         [TestMethod]
-        public void TestVersionDelimiter()
+        public void Delimited()
         {
-            string version = CimTools.File.Version.Delimited(Assembly.GetExecutingAssembly());
+            CimTools.Settings.ModAssembly = Assembly.GetExecutingAssembly();
+
+            string version = CimTools.File.Version.Delimited();
             Assert.AreEqual(version.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries).Length, 3);
 
-            version = CimTools.File.Version.Delimited(Assembly.GetExecutingAssembly(), CimTools.File.Version.Limit.Revision);
+            version = CimTools.File.Version.Delimited(CimTools.File.Version.Limit.Revision);
             Assert.AreEqual(version.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries).Length, 4);
 
-            version = CimTools.File.Version.Delimited(Assembly.GetExecutingAssembly(), CimTools.File.Version.Limit.Major);
+            version = CimTools.File.Version.Delimited(CimTools.File.Version.Limit.Major);
             Assert.AreEqual(version.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries).Length, 1);
 
-            version = CimTools.File.Version.Delimited(Assembly.GetExecutingAssembly(), CimTools.File.Version.Limit.Major, ",");
+            version = CimTools.File.Version.Delimited(CimTools.File.Version.Limit.Major, ",");
             Assert.AreEqual(version.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Length, 1);
 
-            version = CimTools.File.Version.Delimited(Assembly.GetExecutingAssembly(), CimTools.File.Version.Limit.Revision, ",");
+            version = CimTools.File.Version.Delimited(CimTools.File.Version.Limit.Revision, ",");
             Assert.AreEqual(version.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Length, 4);
         }
     }

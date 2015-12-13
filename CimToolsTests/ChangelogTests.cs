@@ -15,7 +15,7 @@ namespace CimTools.Workshop
     public class ChangelogTests
     {
         [TestMethod]
-        public void TestChangelogList()
+        public void ReturnList()
         {
             ChangelogTest tester = new ChangelogTest();
             string testData = "<div class=\"test\"><u><b><i><div class=\"headline\"></div><ul class=\"bb_ul\"><li><b>TEST</b><u> test2</u></li><li>Another <invalid tag with stuff in><b>test</b> list</ul><div class=\"commentsLink changeLog\"></div></div>";
@@ -34,7 +34,7 @@ namespace CimTools.Workshop
         }
 
         [TestMethod]
-        public void TestChangelogString()
+        public void ReturnString()
         {
             ChangelogTest tester = new ChangelogTest();
             string testData = "<div class=\"test\"><u><b><i><div class=\"headline\"></div><ul class=\"bb_ul\"><li><b>TEST</b><u> test2</u></li><li>Another <invalid tag with stuff in><b>test</b> list</ul><div class=\"commentsLink changeLog\"></div></div>";

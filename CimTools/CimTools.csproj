@@ -32,8 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Release\CimTools.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -62,9 +61,11 @@
   <ItemGroup>
     <Compile Include="Elements\UITitleBar.cs" />
     <Compile Include="File\Path.cs" />
-    <Compile Include="File\ExternalOptions.cs" />
+    <Compile Include="File\PersistentOptions.cs" />
     <Compile Include="File\Version.cs" />
-    <Compile Include="File\SaveFileOptions.cs" />
+    <Compile Include="File\SaveGameOptions.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Utilities\ModOptionUtilities.cs" />
     <Compile Include="Utilities\SpriteUtilities.cs" />
     <Compile Include="Utilities\UIUtilities.cs" />
     <Compile Include="Workshop\Changelog.cs" />
@@ -73,8 +74,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>D:\Projects\XMLtoMD\XMLtoMD\XMLtoMD\bin\Debug\XMLtoMD.exe $(TargetDir)CimTools.xml</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

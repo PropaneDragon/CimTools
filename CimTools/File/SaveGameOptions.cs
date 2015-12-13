@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CimTools.Utilities
 {
-    class SaveFileOptions
+    class SaveGameOptions
     {
 
     }

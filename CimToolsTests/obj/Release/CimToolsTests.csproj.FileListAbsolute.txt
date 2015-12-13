@@ -12,3 +12,4 @@ D:\Projects\Git\CimTools\CimToolsTests\bin\Release\UnityEngine.xml
 D:\Projects\Git\CimTools\CimToolsTests\obj\Release\CimToolsTests.csprojResolveAssemblyReference.cache
 D:\Projects\Git\CimTools\CimToolsTests\obj\Release\CimToolsTests.dll
 D:\Projects\Git\CimTools\CimToolsTests\obj\Release\CimToolsTests.pdb
+D:\Projects\Git\CimTools\CimToolsTests\bin\Release\CimTools.xml

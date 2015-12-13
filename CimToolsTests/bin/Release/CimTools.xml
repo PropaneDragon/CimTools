@@ -463,11 +463,25 @@
         <member name="F:CimTools.Settings.ModName">
             <summary>
             The name of the mod you wish to use.
+            <para>
+            Required for: Path, PersistentOptions
+            </para>
             </summary>
         </member>
         <member name="F:CimTools.Settings.ModAssembly">
             <summary>
             The assembly to get the version name from. Use <code>Assembly.GetExecutingAssembly()</code> if unsure.
+            <para>
+            Required for: Version.
+            </para>
+            </summary>
+        </member>
+        <member name="F:CimTools.Settings.WorkshopID">
+            <summary>
+            The workshop ID of the mod.
+            <para>
+            Required for: Changelog.
+            </para>
             </summary>
         </member>
         <member name="T:CimTools.Workshop.Changelog">
@@ -561,22 +575,20 @@
             </summary>
             <returns>A Changelog class</returns>
         </member>
-        <member name="M:CimTools.Workshop.Changelog.DownloadChangelog(System.UInt64)">
+        <member name="M:CimTools.Workshop.Changelog.DownloadChangelog">
             <summary>
             Downloads the latest changelog from a workshop item using the ID provided. Please note
             that this will stop the calling thread while it downloads, but you can guarantee the
             download will be complete when the thread resumes.
             </summary>
-            <param name="workshopId">The workshop ID of the item to get the changelog for</param>
         </member>
-        <member name="M:CimTools.Workshop.Changelog.DownloadChangelogAsync(System.UInt64)">
+        <member name="M:CimTools.Workshop.Changelog.DownloadChangelogAsync">
             <summary>
             Downloads the latest changelog from a workshop item using the ID provided. Please note
             that while this works on a separate thread, you can't guarantee the download will be
             complete immediately. You should check for a complete download using m_downloadCompleted
             before trying to get data from it.
             </summary>
-            <param name="workshopId">The workshop ID of the item to get the changelog for</param>
             <seealso cref="F:CimTools.Workshop.Changelog.m_downloadComplete"/>
         </member>
         <member name="M:CimTools.Workshop.Changelog.ExtractData(System.String)">
