@@ -4,109 +4,53 @@
         <name>CimTools</name>
     </assembly>
     <members>
-        <member name="T:CimTools.File.Path">
+        <member name="T:CimTools.File.ExportOptionBase.OptionError">
             <summary>
-            Handles system paths
+            Any errors that could occur in the options.
             </summary>
         </member>
-        <member name="M:CimTools.File.Path.GetModPath(System.UInt64,System.String)">
+        <member name="F:CimTools.File.ExportOptionBase.OptionError.NoError">
             <summary>
-            Gets the full path of the mod
-            </summary>
-            <param name="workshopId">The workshop ID of the mod</param>
-            <param name="modName">The name of the mod</param>
-            <returns>The full path of the mod</returns>
-        </member>
-        <member name="T:CimTools.File.PersistentOptions">
-            <summary>
-            Persistent options are not saved inside the save file for a level,
-            and persist regardless of the level that is loaded. These are good
-            for saving options for a mod, which do not need to interact with
-            elements within a certain level, or elements that can change between
-            saved files.
-            <para>
-            All data stored in here is saved to the same folder as the game
-            executable. This can be edited at any time by the user, and is not
-            protected. It is stored as XML.
-            </para>
+            No error has occurred.
             </summary>
         </member>
-        <member name="F:CimTools.File.PersistentOptions.SavedData">
+        <member name="F:CimTools.File.ExportOptionBase.OptionError.SaveFailed">
+            <summary>
+            Could not save the data.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.ExportOptionBase.OptionError.LoadFailed">
+            <summary>
+            Could not load the data.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.ExportOptionBase.OptionError.FileNotFound">
+            <summary>
+            The saved data file could not be found.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.ExportOptionBase.OptionError.GroupNotFound">
+            <summary>
+            The group could not be retrieved.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.ExportOptionBase.OptionError.OptionNotFound">
+            <summary>
+            The option could not be retrieved.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.ExportOptionBase.OptionError.CastFailed">
+            <summary>
+            Could not cast the option to the specified type.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.ExportOptionBase.SavedData">
             <summary>
             Data that gets saved to disk. You shouldn't have to modify this
             manually, and instead should use the SetValue and GetValue methods.
             </summary>
         </member>
-        <member name="F:CimTools.File.PersistentOptions.OptionVersion">
-            <summary>
-            The current version of the PersistentOptions class. This is for
-            doing upgrades from older versions of the class if needed.
-            </summary>
-        </member>
-        <member name="T:CimTools.File.PersistentOptions.PersistentOptionError">
-            <summary>
-            Any errors that could occur in the options.
-            </summary>
-        </member>
-        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.NoError">
-            <summary>
-            No error has occurred.
-            </summary>
-        </member>
-        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.SaveFailed">
-            <summary>
-            Could not save the data.
-            </summary>
-        </member>
-        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.LoadFailed">
-            <summary>
-            Could not load the data.
-            </summary>
-        </member>
-        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.FileNotFound">
-            <summary>
-            The saved data file could not be found.
-            </summary>
-        </member>
-        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.GroupNotFound">
-            <summary>
-            The group could not be retrieved.
-            </summary>
-        </member>
-        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.OptionNotFound">
-            <summary>
-            The option could not be retrieved.
-            </summary>
-        </member>
-        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.CastFailed">
-            <summary>
-            Could not cast the option to the specified type.
-            </summary>
-        </member>
-        <member name="M:CimTools.File.PersistentOptions.Instance">
-            <summary>
-            Gets an instance of the SavedOptions
-            </summary>
-            <returns>An instance of SavedOptions</returns>
-        </member>
-        <member name="M:CimTools.File.PersistentOptions.SetInstance(CimTools.File.PersistentOptions)">
-            <summary>
-            Change the instance used for the options.
-            </summary>
-            <param name="optionManager">The SavedOptions to replace the existing instance</param>
-        </member>
-        <member name="M:CimTools.File.PersistentOptions.Save">
-            <summary>
-            Saves all options to the disk. Make sure you've updated the options first.
-            </summary>
-        </member>
-        <member name="M:CimTools.File.PersistentOptions.Load">
-            <summary>
-            Load all options from the disk.
-            </summary>
-            <returns>Whether loading was successful</returns>
-        </member>
-        <member name="M:CimTools.File.PersistentOptions.GetValues``1(System.String)">
+        <member name="M:CimTools.File.ExportOptionBase.GetValues``1(System.String)">
             <summary>
             Gets all values of type T under the specified group name.
             </summary>
@@ -114,7 +58,7 @@
             <param name="groupName">The group to search under.</param>
             <returns></returns>
         </member>
-        <member name="M:CimTools.File.PersistentOptions.GetValue``1(System.String,``0@,System.String)">
+        <member name="M:CimTools.File.ExportOptionBase.GetValue``1(System.String,``0@,System.String)">
             <summary>
             Gets a stored value of type T.
             </summary>
@@ -124,7 +68,7 @@
             <param name="groupName">The name of the group to load the data from.</param>
             <returns>Whether the data could be retrieved or not.</returns>
         </member>
-        <member name="M:CimTools.File.PersistentOptions.SetValue``1(System.String,``0,System.String)">
+        <member name="M:CimTools.File.ExportOptionBase.SetValue``1(System.String,``0,System.String)">
             <summary>
             Sets a value to be saved to disk automatically.
             </summary>
@@ -162,6 +106,74 @@
             <summary>
             SavedElements in the group
             </summary>
+        </member>
+        <member name="M:CimTools.File.InternalOptions.Instance">
+            <summary>
+            Gets an instance of the SavedOptions
+            </summary>
+            <returns>An instance of SavedOptions</returns>
+        </member>
+        <member name="M:CimTools.File.InternalOptions.SetInstance(CimTools.File.InternalOptions)">
+            <summary>
+            Change the instance used for the options.
+            </summary>
+            <param name="optionManager">The SavedOptions to replace the existing instance</param>
+        </member>
+        <member name="T:CimTools.File.Path">
+            <summary>
+            Handles system paths
+            </summary>
+        </member>
+        <member name="M:CimTools.File.Path.GetModPath(System.UInt64,System.String)">
+            <summary>
+            Gets the full path of the mod
+            </summary>
+            <param name="workshopId">The workshop ID of the mod</param>
+            <param name="modName">The name of the mod</param>
+            <returns>The full path of the mod</returns>
+        </member>
+        <member name="T:CimTools.File.PersistentOptions">
+            <summary>
+            Persistent options are not saved inside the save file for a level,
+            and persist regardless of the level that is loaded. These are good
+            for saving options for a mod, which do not need to interact with
+            elements within a certain level, or elements that can change between
+            saved files.
+            <para>
+            All data stored in here is saved to the same folder as the game
+            executable. This can be edited at any time by the user, and is not
+            protected. It is stored as XML.
+            </para>
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.OptionVersion">
+            <summary>
+            The current version of the PersistentOptions class. This is for
+            doing upgrades from older versions of the class if needed.
+            </summary>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.Instance">
+            <summary>
+            Gets an instance of the SavedOptions
+            </summary>
+            <returns>An instance of SavedOptions</returns>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.SetInstance(CimTools.File.PersistentOptions)">
+            <summary>
+            Change the instance used for the options.
+            </summary>
+            <param name="optionManager">The SavedOptions to replace the existing instance</param>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.Save">
+            <summary>
+            Saves all options to the disk. Make sure you've updated the options first.
+            </summary>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.Load">
+            <summary>
+            Load all options from the disk.
+            </summary>
+            <returns>Whether loading was successful</returns>
         </member>
         <member name="T:CimTools.File.Version">
             <summary>

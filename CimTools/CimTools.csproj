@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Elements\UITitleBar.cs" />
+    <Compile Include="File\ExportOptionBase.cs" />
+    <Compile Include="File\InternalOptions.cs" />
     <Compile Include="File\Path.cs" />
     <Compile Include="File\PersistentOptions.cs" />
     <Compile Include="File\Version.cs" />

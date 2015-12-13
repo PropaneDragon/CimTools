@@ -21,38 +21,38 @@ namespace CimToolsTests
             double doubleValue;
             int intValue;
 
-            bool valid = PersistentOptions.Instance().GetValue("testFloat", out floatValue) == PersistentOptions.PersistentOptionError.NoError;
+            bool valid = PersistentOptions.Instance().GetValue("testFloat", out floatValue) == PersistentOptions.OptionError.NoError;
             Assert.IsTrue(valid, "Retrieving \"testFloat\" option");
             if (valid)
             {
                 Assert.AreEqual(10.4f, floatValue);
             }
 
-            valid = PersistentOptions.Instance().GetValue("testString", out stringValue) == PersistentOptions.PersistentOptionError.NoError;
+            valid = PersistentOptions.Instance().GetValue("testString", out stringValue) == PersistentOptions.OptionError.NoError;
             Assert.IsTrue(valid, "Retrieving \"testString\" option");
             if (valid)
             {
                 Assert.AreEqual("hello", stringValue);
             }
 
-            valid = PersistentOptions.Instance().GetValue("testDouble", out doubleValue) == PersistentOptions.PersistentOptionError.NoError;
+            valid = PersistentOptions.Instance().GetValue("testDouble", out doubleValue) == PersistentOptions.OptionError.NoError;
             Assert.IsTrue(valid, "Retrieving \"testDouble\" option");
             if (valid)
             {
                 Assert.AreEqual(19.2, doubleValue);
             }
 
-            valid = PersistentOptions.Instance().GetValue("testInt", out intValue) == PersistentOptions.PersistentOptionError.NoError;
+            valid = PersistentOptions.Instance().GetValue("testInt", out intValue) == PersistentOptions.OptionError.NoError;
             Assert.IsTrue(valid, "Retrieving \"testInt\" option");
             if (valid)
             {
                 Assert.AreEqual(19, intValue);
             }
 
-            valid = PersistentOptions.Instance().GetValue("testNotInList", out floatValue) == PersistentOptions.PersistentOptionError.NoError;
+            valid = PersistentOptions.Instance().GetValue("testNotInList", out floatValue) == PersistentOptions.OptionError.NoError;
             Assert.IsFalse(valid, "Retrieving \"testNotInList\" option");
 
-            valid = PersistentOptions.Instance().GetValue("testInt", out intValue) == PersistentOptions.PersistentOptionError.NoError;
+            valid = PersistentOptions.Instance().GetValue("testInt", out intValue) == PersistentOptions.OptionError.NoError;
             Assert.IsTrue(valid, "Retrieving \"testInt\" option");
             if (valid)
             {
@@ -157,7 +157,7 @@ namespace CimToolsTests
             PersistentOptions.Instance().SetValue("testDifferentString", "hello again again", "awesome group");
             PersistentOptions.Instance().SetValue("testDifferentGroup", "hi", "not as awesome group");
 
-            bool succeeded = PersistentOptions.Save() == PersistentOptions.PersistentOptionError.NoError;
+            bool succeeded = PersistentOptions.Save() == PersistentOptions.OptionError.NoError;
             Assert.IsTrue(succeeded, "Options failed to save to disk");
 
             if (succeeded)
@@ -168,26 +168,26 @@ namespace CimToolsTests
 
                 PersistentOptions.SetInstance(new PersistentOptions());
 
-                bool valid = PersistentOptions.Instance().GetValue("testFloat", out floatValue) == PersistentOptions.PersistentOptionError.NoError;
+                bool valid = PersistentOptions.Instance().GetValue("testFloat", out floatValue) == PersistentOptions.OptionError.NoError;
                 Assert.IsFalse(valid);
 
                 PersistentOptions.Load();
 
-                valid = PersistentOptions.Instance().GetValue("testFloat", out floatValue) == PersistentOptions.PersistentOptionError.NoError;
+                valid = PersistentOptions.Instance().GetValue("testFloat", out floatValue) == PersistentOptions.OptionError.NoError;
                 Assert.IsTrue(valid, "Obtaining \"testFloat\" from the options");
                 if (valid)
                 {
                     Assert.AreEqual(10.4f, floatValue, "Checking whether the value is a float");
                 }
 
-                valid = PersistentOptions.Instance().GetValue("testInt", out intValue, "awesome group") == PersistentOptions.PersistentOptionError.NoError;
+                valid = PersistentOptions.Instance().GetValue("testInt", out intValue, "awesome group") == PersistentOptions.OptionError.NoError;
                 Assert.IsTrue(valid, "Obtaining \"testInt\" from the options under \"awesome group\"");
                 if (valid)
                 {
                     Assert.AreEqual(2082, intValue, "Checking whether the value is an int");
                 }
 
-                valid = PersistentOptions.Instance().GetValue("testString", out stringValue, "awesome group") == PersistentOptions.PersistentOptionError.NoError;
+                valid = PersistentOptions.Instance().GetValue("testString", out stringValue, "awesome group") == PersistentOptions.OptionError.NoError;
                 Assert.IsTrue(valid, "Obtaining \"testString\" from the options under \"awesome group\"");
                 if (valid)
                 {
@@ -201,12 +201,12 @@ namespace CimToolsTests
         {
             CimTools.Settings.ModName = "DoesntExist";
 
-            Assert.AreEqual(PersistentOptions.Load(), PersistentOptions.PersistentOptionError.FileNotFound);
+            Assert.AreEqual(PersistentOptions.Load(), PersistentOptions.OptionError.FileNotFound);
 
             int tempIntStorage;
 
-            Assert.AreEqual(PersistentOptions.Instance().GetValue<int>("NotAValidName", out tempIntStorage, "NotAValidGroup"), PersistentOptions.PersistentOptionError.GroupNotFound);
-            Assert.AreEqual(PersistentOptions.Instance().GetValue<int>("NotAValidName", out tempIntStorage), PersistentOptions.PersistentOptionError.OptionNotFound);
+            Assert.AreEqual(PersistentOptions.Instance().GetValue<int>("NotAValidName", out tempIntStorage, "NotAValidGroup"), PersistentOptions.OptionError.GroupNotFound);
+            Assert.AreEqual(PersistentOptions.Instance().GetValue<int>("NotAValidName", out tempIntStorage), PersistentOptions.OptionError.OptionNotFound);
         }
     }
 }

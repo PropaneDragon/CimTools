@@ -73,7 +73,7 @@ namespace CimTools.Utilities
             {
                 object foundValue;
 
-                if(PersistentOptions.Instance().GetValue(option.uniqueName, out foundValue, "IngameOptions") == PersistentOptions.PersistentOptionError.NoError)
+                if(PersistentOptions.Instance().GetValue(option.uniqueName, out foundValue, "IngameOptions") == PersistentOptions.OptionError.NoError)
                 {
                     option.m_value = foundValue;
                 }
