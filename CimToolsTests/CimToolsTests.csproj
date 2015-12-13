@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="ChangelogTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SavedOptionTests.cs" />
+    <Compile Include="VersionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CimTools\CimTools.csproj">

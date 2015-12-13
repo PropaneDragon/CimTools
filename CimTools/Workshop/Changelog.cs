@@ -37,6 +37,7 @@ namespace CimTools.Workshop
         {
             "<color#f58282>You have not set this up for your mod!</color>",
             "You need to call <color#c8f582>DownloadChangelog</color> or <color#c8f582>DownloadChangelogAsync</color> to get changes!",
+            "<color#f58282>If you're not the creator of this mod, let them know as soon as possible!</color>",
             "You might also want to read up on the documentation some more to make the most of this panel!"
         };
 
@@ -46,6 +47,7 @@ namespace CimTools.Workshop
         protected string m_rawChanges =
             "<color#f58282>You have not set this up for your mod!</color>" +
             "\n\nYou need to call <color#c8f582>DownloadChangelog</color> or <color#c8f582>DownloadChangelogAsync</color> to get changes!" +
+            "\n\n<color#f58282>If you're not the creator of this mod, let them know as soon as possible!</color>" +
             "\n\nYou might also want to read up on the documentation some more to make the most of this panel!";
 
         /// <summary>
@@ -154,17 +156,19 @@ namespace CimTools.Workshop
         /// that this will stop the calling thread while it downloads, but you can guarantee the
         /// download will be complete when the thread resumes.
         /// </summary>
-        /// <param name="workshopId">The workshop ID of the item to get the changelog for</param>
-        public void DownloadChangelog(ulong workshopId)
+        public void DownloadChangelog()
         {
-            m_changeList.Clear();
-            m_rawChanges = "";
+            if (Settings.WorkshopID != null)
+            {
+                m_changeList.Clear();
+                m_rawChanges = "";
 
-            m_downloadError = true;
+                m_downloadError = true;
 
-            ExtractData(m_webClient.DownloadString(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + workshopId.ToString())));
+                ExtractData(m_webClient.DownloadString(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + Settings.WorkshopID.ToString())));
 
-            m_downloadComplete = true;
+                m_downloadComplete = true;
+            }
         }
 
         /// <summary>
@@ -173,25 +177,27 @@ namespace CimTools.Workshop
         /// complete immediately. You should check for a complete download using m_downloadCompleted
         /// before trying to get data from it.
         /// </summary>
-        /// <param name="workshopId">The workshop ID of the item to get the changelog for</param>
         /// <seealso cref="m_downloadComplete"/>
-        public void DownloadChangelogAsync(ulong workshopId)
+        public void DownloadChangelogAsync()
         {
-            m_changeList.Clear();
-            m_rawChanges = "";
-
-            m_downloadInProgress = true;
-            m_downloadComplete = false;
-            m_downloadError = true;
-
-            try
+            if (Settings.WorkshopID != null)
             {
-                m_webClient.DownloadStringCompleted += M_webClient_DownloadStringCompleted;
-                m_webClient.DownloadStringAsync(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + workshopId.ToString()));
-            }
-            catch(Exception exception)
-            {
-                Debug.LogException(exception);
+                m_changeList.Clear();
+                m_rawChanges = "";
+
+                m_downloadInProgress = true;
+                m_downloadComplete = false;
+                m_downloadError = true;
+
+                try
+                {
+                    m_webClient.DownloadStringCompleted += M_webClient_DownloadStringCompleted;
+                    m_webClient.DownloadStringAsync(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + Settings.WorkshopID.ToString()));
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogException(exception);
+                }
             }
         }
 

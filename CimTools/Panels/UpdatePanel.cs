@@ -89,7 +89,7 @@ namespace CimTools.Panels
 
             m_infoLabel.text = "Unable to retrieve the latest changes! Check on the workshop for the most recent changes.";
 
-            if (Changelog.Instance().DownloadComplete)
+            if (!Changelog.Instance().DownloadInProgress && !Changelog.Instance().DownloadError)
             {
                 m_infoLabel.text = Changelog.Instance().ChangesString;
             }

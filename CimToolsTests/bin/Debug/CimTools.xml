@@ -17,6 +17,342 @@
             <param name="modName">The name of the mod</param>
             <returns>The full path of the mod</returns>
         </member>
+        <member name="T:CimTools.File.PersistentOptions">
+            <summary>
+            Persistent options are not saved inside the save file for a level,
+            and persist regardless of the level that is loaded. These are good
+            for saving options for a mod, which do not need to interact with
+            elements within a certain level, or elements that can change between
+            saved files.
+            <para>
+            All data stored in here is saved to the same folder as the game
+            executable. This can be edited at any time by the user, and is not
+            protected. It is stored as XML.
+            </para>
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.SavedData">
+            <summary>
+            Data that gets saved to disk. You shouldn't have to modify this
+            manually, and instead should use the SetValue and GetValue methods.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.OptionVersion">
+            <summary>
+            The current version of the PersistentOptions class. This is for
+            doing upgrades from older versions of the class if needed.
+            </summary>
+        </member>
+        <member name="T:CimTools.File.PersistentOptions.PersistentOptionError">
+            <summary>
+            Any errors that could occur in the options.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.NoError">
+            <summary>
+            No error has occurred.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.SaveFailed">
+            <summary>
+            Could not save the data.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.LoadFailed">
+            <summary>
+            Could not load the data.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.FileNotFound">
+            <summary>
+            The saved data file could not be found.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.GroupNotFound">
+            <summary>
+            The group could not be retrieved.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.OptionNotFound">
+            <summary>
+            The option could not be retrieved.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.PersistentOptions.PersistentOptionError.CastFailed">
+            <summary>
+            Could not cast the option to the specified type.
+            </summary>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.Instance">
+            <summary>
+            Gets an instance of the SavedOptions
+            </summary>
+            <returns>An instance of SavedOptions</returns>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.SetInstance(CimTools.File.PersistentOptions)">
+            <summary>
+            Change the instance used for the options.
+            </summary>
+            <param name="optionManager">The SavedOptions to replace the existing instance</param>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.Save">
+            <summary>
+            Saves all options to the disk. Make sure you've updated the options first.
+            </summary>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.Load">
+            <summary>
+            Load all options from the disk.
+            </summary>
+            <returns>Whether loading was successful</returns>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.GetValues``1(System.String)">
+            <summary>
+            Gets all values of type T under the specified group name.
+            </summary>
+            <typeparam name="T">The type of the items to return.</typeparam>
+            <param name="groupName">The group to search under.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.GetValue``1(System.String,``0@,System.String)">
+            <summary>
+            Gets a stored value of type T.
+            </summary>
+            <typeparam name="T">The type of the item to return.</typeparam>
+            <param name="name">The unique name of the data.</param>
+            <param name="value">The output value of the data.</param>
+            <param name="groupName">The name of the group to load the data from.</param>
+            <returns>Whether the data could be retrieved or not.</returns>
+        </member>
+        <member name="M:CimTools.File.PersistentOptions.SetValue``1(System.String,``0,System.String)">
+            <summary>
+            Sets a value to be saved to disk automatically.
+            </summary>
+            <typeparam name="T">The type of the item to set.</typeparam>
+            <param name="name">The unique name of the data.</param>
+            <param name="value">The input value of the data.</param>
+            <param name="groupName">The name of the group to save this data in.</param>
+        </member>
+        <member name="T:CimTools.File.SavedElement">
+            <summary>
+            Container for saving data to disk.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedElement.name">
+            <summary>
+            Unique item name
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedElement.value">
+            <summary>
+            Value of the item
+            </summary>
+        </member>
+        <member name="T:CimTools.File.SavedGroup">
+            <summary>
+            Container for saving groups of data to disk.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedGroup.name">
+            <summary>
+            Unique group name
+            </summary>
+        </member>
+        <member name="F:CimTools.File.SavedGroup.elements">
+            <summary>
+            SavedElements in the group
+            </summary>
+        </member>
+        <member name="T:CimTools.File.Version">
+            <summary>
+            Handles everything to do with the mod version number
+            </summary>
+        </member>
+        <member name="T:CimTools.File.Version.Limit">
+            <summary>
+            How far to limit the version numbering to.
+            </summary>
+        </member>
+        <member name="F:CimTools.File.Version.Limit.Major">
+            <summary>
+            Major version ([1].2.35.623)
+            </summary>
+        </member>
+        <member name="F:CimTools.File.Version.Limit.Minor">
+            <summary>
+            Minor version (1.[2].35.623)
+            </summary>
+        </member>
+        <member name="F:CimTools.File.Version.Limit.Build">
+            <summary>
+            Build version (1.2.[35].623)
+            </summary>
+        </member>
+        <member name="F:CimTools.File.Version.Limit.Revision">
+            <summary>
+            Revision version (1.2.35.[623])
+            </summary>
+        </member>
+        <member name="M:CimTools.File.Version.Major">
+            <summary>
+            Major version ([1].2.35.623)
+            </summary>
+            <returns>The major number</returns>
+        </member>
+        <member name="M:CimTools.File.Version.Minor">
+            <summary>
+            Minor version (1.[2].35.623)
+            </summary>
+            <returns>The minor number</returns>
+        </member>
+        <member name="M:CimTools.File.Version.Build">
+            <summary>
+            Build version (1.2.[35].623)
+            </summary>
+            <returns>The build number</returns>
+        </member>
+        <member name="M:CimTools.File.Version.Revision">
+            <summary>
+            Revision version (1.2.35.[623])
+            </summary>
+            <returns>The revision number</returns>
+        </member>
+        <member name="M:CimTools.File.Version.Delimited(CimTools.File.Version.Limit,System.String)">
+            <summary>
+            Returns a delimited version string
+            </summary>
+            <param name="delimiter">The delimiter to place between version numbers.</param>
+            <param name="upTo">Return a version number up to this limit.</param>
+            <returns>A delimited version string</returns>
+        </member>
+        <member name="T:CimTools.Utilities.OptionPanelSaved">
+            <summary>
+            When the user has saved the options
+            </summary>
+        </member>
+        <member name="T:CimTools.Utilities.ModOptionUtilities">
+            <summary>
+            Handles options on the mod option panel ingame
+            </summary>
+        </member>
+        <member name="E:CimTools.Utilities.ModOptionUtilities.OnOptionPanelSaved">
+            <summary>
+            When the options have been saved by the user.
+            </summary>
+        </member>
+        <member name="M:CimTools.Utilities.ModOptionUtilities.CreateOptions(ICities.UIHelperBase,System.String)">
+            <summary>
+            Creates options on a panel using the helper
+            </summary>
+            <param name="helper">The UIHelper to put the options on</param>
+            <param name="groupName">The title of the group in the options panel.</param>
+        </member>
+        <member name="M:CimTools.Utilities.ModOptionUtilities.SaveOptions">
+            <summary>
+            Manually save the UI options to the persistent options. When this is called
+            by the class internally, you can get the event using OnOptionPanelSaved()
+            </summary>
+        </member>
+        <member name="M:CimTools.Utilities.ModOptionUtilities.LoadOptions">
+            <summary>
+            Manually load the UI options onto the existing panel elements.
+            </summary>
+        </member>
+        <member name="T:CimTools.Utilities.OptionsItemBase">
+            <summary>
+            Base class for all option panel options.
+            </summary>
+        </member>
+        <member name="F:CimTools.Utilities.OptionsItemBase.uniqueName">
+            <summary>
+            The unique option name. Can't clash with any other option names
+            or you'll lose data.
+            </summary>
+        </member>
+        <member name="F:CimTools.Utilities.OptionsItemBase.readableName">
+            <summary>
+            The name that appears on the UI.
+            </summary>
+        </member>
+        <member name="F:CimTools.Utilities.OptionsItemBase.enabled">
+            <summary>
+            Whether the option is enabled or not
+            </summary>
+        </member>
+        <member name="M:CimTools.Utilities.OptionsItemBase.Create(ICities.UIHelperBase)">
+            <summary>
+            Create the element on the helper
+            </summary>
+            <param name="helper">The UIHelper to attach the element to</param>
+        </member>
+        <member name="T:CimTools.Utilities.OptionsCheckbox">
+            <summary>
+            Checkbox option
+            </summary>
+        </member>
+        <member name="P:CimTools.Utilities.OptionsCheckbox.value">
+            <summary>
+            The default value of the object, or the saved value if loaded.
+            </summary>
+        </member>
+        <member name="M:CimTools.Utilities.OptionsCheckbox.Create(ICities.UIHelperBase)">
+            <summary>
+            Create the element on the helper
+            </summary>
+            <param name="helper">The UIHelper to attach the element to</param>
+        </member>
+        <member name="T:CimTools.Utilities.OptionsSlider">
+            <summary>
+            Slider option
+            </summary>
+        </member>
+        <member name="P:CimTools.Utilities.OptionsSlider.value">
+            <summary>
+            The default value of the object, or the saved value if loaded.
+            </summary>
+        </member>
+        <member name="F:CimTools.Utilities.OptionsSlider.min">
+            <summary>
+            Lower bound for the slider
+            </summary>
+        </member>
+        <member name="F:CimTools.Utilities.OptionsSlider.max">
+            <summary>
+            Upper bound for the slider
+            </summary>
+        </member>
+        <member name="F:CimTools.Utilities.OptionsSlider.step">
+            <summary>
+            The amount to step when the user slides the slider
+            </summary>
+        </member>
+        <member name="M:CimTools.Utilities.OptionsSlider.Create(ICities.UIHelperBase)">
+            <summary>
+            Create the element on the helper
+            </summary>
+            <param name="helper">The UIHelper to attach the element to</param>
+        </member>
+        <member name="T:CimTools.Utilities.OptionsDropdown">
+            <summary>
+            Dropdown option
+            </summary>
+        </member>
+        <member name="P:CimTools.Utilities.OptionsDropdown.value">
+            <summary>
+            The default value of the object, or the saved value if loaded.
+            </summary>
+        </member>
+        <member name="F:CimTools.Utilities.OptionsDropdown.options">
+            <summary>
+            All available options to select in the dropdown
+            </summary>
+        </member>
+        <member name="M:CimTools.Utilities.OptionsDropdown.Create(ICities.UIHelperBase)">
+            <summary>
+            Create the element on the helper
+            </summary>
+            <param name="helper">The UIHelper to attach the element to</param>
+        </member>
         <member name="T:CimTools.Utilities.SpriteUtilities">
             <summary>
             Utilities for sprite handling. Takes care of atlases and sprites.
@@ -117,6 +453,22 @@
             </summary>
             <param name="name">The atlas name to retrieve</param>
             <returns>The named atlas, or null if none is found.</returns>
+        </member>
+        <member name="T:CimTools.Settings">
+            <summary>
+            Global settings for CimTools. Set these up before doing anything
+            with the tools, or elements may not work properly.
+            </summary>
+        </member>
+        <member name="F:CimTools.Settings.ModName">
+            <summary>
+            The name of the mod you wish to use.
+            </summary>
+        </member>
+        <member name="F:CimTools.Settings.ModAssembly">
+            <summary>
+            The assembly to get the version name from. Use <code>Assembly.GetExecutingAssembly()</code> if unsure.
+            </summary>
         </member>
         <member name="T:CimTools.Workshop.Changelog">
             <summary>
