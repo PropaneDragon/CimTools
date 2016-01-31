@@ -59,24 +59,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Elements\UITitleBar.cs" />
-    <Compile Include="File\ExportOptionBase.cs" />
-    <Compile Include="File\InternalOptions.cs" />
-    <Compile Include="File\Path.cs" />
-    <Compile Include="File\PersistentOptions.cs" />
-    <Compile Include="File\Version.cs" />
-    <Compile Include="File\SaveGameOptions.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Utilities\ModOptionUtilities.cs" />
-    <Compile Include="Utilities\SpriteUtilities.cs" />
-    <Compile Include="Utilities\UIUtilities.cs" />
-    <Compile Include="Workshop\Changelog.cs" />
-    <Compile Include="Panels\UpdatePanel.cs" />
+    <Compile Include="V1\Elements\UITitleBar.cs" />
+    <Compile Include="V1\File\ExportOptionBase.cs" />
+    <Compile Include="V1\File\Path.cs" />
+    <Compile Include="V1\File\XmlFileManager.cs" />
+    <Compile Include="V1\File\Version.cs" />
+    <Compile Include="V1\File\SaveFileManager.cs" />
+    <Compile Include="V1\File\XmlFileOptions.cs" />
+    <Compile Include="V1\CimToolSettings.cs" />
+    <Compile Include="V1\CimToolBase.cs" />
+    <Compile Include="V1\Utilities\ModOptionUtilities.cs" />
+    <Compile Include="V1\Utilities\SpriteUtilities.cs" />
+    <Compile Include="V1\Utilities\UIUtilities.cs" />
+    <Compile Include="V1\Workshop\Changelog.cs" />
+    <Compile Include="V1\Panels\UpdatePanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>D:\Projects\XMLtoMD\XMLtoMD\XMLtoMD\bin\Debug\XMLtoMD.exe $(TargetDir)CimTools.xml</PostBuildEvent>
+    <PostBuildEvent>xcopy /s /y "$(TargetDir)*.dll" "D:\Projects\Git\RushHour\RushHour\CimTools\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

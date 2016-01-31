@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 
-namespace CimTools.File
+namespace CimTools.V1.File
 {
     public partial class ExportOptionBase
     {
@@ -74,7 +72,7 @@ namespace CimTools.File
                 }
             }
 
-            if (returnGroup == null && createIfNotExists)
+            if (returnGroup == null && (createIfNotExists || name == emptyGroupName))
             {
                 returnGroup = new SavedGroup() { name = name };
                 SavedData.Add(returnGroup);
@@ -89,7 +87,7 @@ namespace CimTools.File
         /// <typeparam name="T">The type of the items to return.</typeparam>
         /// <param name="groupName">The group to search under.</param>
         /// <returns></returns>
-        public Dictionary<string, T> GetValues<T>(string groupName)
+        public Dictionary<string, T> GetValues<T>(string groupName, bool strict = true)
         {
             Dictionary<string, T> returnValues = new Dictionary<string, T>();
             SavedGroup foundGroup = GetGroup(groupName);
@@ -98,8 +96,9 @@ namespace CimTools.File
             {
                 foreach (SavedElement element in foundGroup.elements)
                 {
-                    T valueOut;
-                    if (GetValue<T>(element.name, out valueOut, groupName) == OptionError.NoError)
+                    T valueOut = default(T);
+
+                    if (GetValue<T>(element.name, ref valueOut, groupName, strict) == OptionError.NoError)
                     {
                         returnValues.Add(element.name, valueOut);
                     }
@@ -117,13 +116,11 @@ namespace CimTools.File
         /// <param name="value">The output value of the data.</param>
         /// <param name="groupName">The name of the group to load the data from.</param>
         /// <returns>Whether the data could be retrieved or not.</returns>
-        public OptionError GetValue<T>(string name, out T value, string groupName = null)
+        public OptionError GetValue<T>(string name, ref T value, string groupName = null, bool strict = true)
         {
             SavedElement foundElement = null;
             SavedGroup foundGroup = GetGroup(groupName);
             OptionError error = OptionError.NoError;
-
-            value = default(T);
 
             if (foundGroup != null)
             {
@@ -140,13 +137,20 @@ namespace CimTools.File
                 {
                     try
                     {
-                        if (foundElement.value.GetType() == typeof(T))
+                        if (strict)
                         {
-                            value = (T)Convert.ChangeType(foundElement.value, typeof(T));
+                            if (foundElement.value.GetType() == typeof(T))
+                            {
+                                value = (T)Convert.ChangeType(foundElement.value, typeof(T));
+                            }
+                            else
+                            {
+                                error = OptionError.CastFailed;
+                            }
                         }
                         else
                         {
-                            error = OptionError.CastFailed;
+                            value = (T)Convert.ChangeType(foundElement.value, typeof(T));
                         }
                     }
                     catch
@@ -233,7 +237,7 @@ namespace CimTools.File
         /// <summary>
         /// SavedElements in the group
         /// </summary>
-        [XmlElement("Element", IsNullable = false)]
+        [XmlArray("Element")]
         public List<SavedElement> elements = new List<SavedElement>();
     }
 }

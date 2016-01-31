@@ -1,10 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace CimTools.Workshop
+namespace CimTools.V1.Workshop
 {
     class ChangelogTest : Changelog
     {
+        public ChangelogTest(CimToolSettings settings) : base(settings)
+        {            
+        }
+
         public void ForceExtractData(string data)
         {
             ExtractData(data);
@@ -17,7 +21,7 @@ namespace CimTools.Workshop
         [TestMethod]
         public void ReturnList()
         {
-            ChangelogTest tester = new ChangelogTest();
+            ChangelogTest tester = new ChangelogTest(new CimToolSettings(""));
             string testData = "<div class=\"test\"><u><b><i><div class=\"headline\"></div><ul class=\"bb_ul\"><li><b>TEST</b><u> test2</u></li><li>Another <invalid tag with stuff in><b>test</b> list</ul><div class=\"commentsLink changeLog\"></div></div>";
 
             tester.ForceExtractData(testData);
@@ -36,7 +40,7 @@ namespace CimTools.Workshop
         [TestMethod]
         public void ReturnString()
         {
-            ChangelogTest tester = new ChangelogTest();
+            ChangelogTest tester = new ChangelogTest(new CimToolSettings(""));
             string testData = "<div class=\"test\"><u><b><i><div class=\"headline\"></div><ul class=\"bb_ul\"><li><b>TEST</b><u> test2</u></li><li>Another <invalid tag with stuff in><b>test</b> list</ul><div class=\"commentsLink changeLog\"></div></div>";
 
             tester.ForceExtractData(testData);

@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace CimTools.Workshop
+namespace CimTools.V1.Workshop
 {
     /// <summary>
     /// Used for grabbing change logs from the Steam Workshop. This will automatically
@@ -20,11 +21,6 @@ namespace CimTools.Workshop
     /// </summary>
     public class Changelog
     {
-        /// <summary>
-        /// The class instance
-        /// </summary>
-        protected static Changelog m_instance = null;
-
         /// <summary>
         /// The web client that accesses the community and downloads the changes
         /// </summary>
@@ -137,18 +133,11 @@ namespace CimTools.Workshop
             new KeyValuePair<string, Color>("u", new Color(.96f, .5f, .5f))
         };
 
-        /// <summary>
-        /// Gets and creates an instance of the Changelog class, if required.
-        /// </summary>
-        /// <returns>A Changelog class</returns>
-        public static Changelog Instance()
-        {
-            if(m_instance == null)
-            {
-                m_instance = new Changelog();
-            }
+        internal CimToolSettings m_settings = null;
 
-            return m_instance;
+        public Changelog(CimToolSettings settings)
+        {
+            m_settings = settings;
         }
 
         /// <summary>
@@ -158,14 +147,14 @@ namespace CimTools.Workshop
         /// </summary>
         public void DownloadChangelog()
         {
-            if (Settings.WorkshopID != null)
+            if (m_settings != null && m_settings.WorkshopID != null)
             {
                 m_changeList.Clear();
                 m_rawChanges = "";
 
                 m_downloadError = true;
 
-                ExtractData(m_webClient.DownloadString(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + Settings.WorkshopID.ToString())));
+                ExtractData(m_webClient.DownloadString(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + m_settings.WorkshopID.ToString())));
 
                 m_downloadComplete = true;
             }
@@ -180,7 +169,7 @@ namespace CimTools.Workshop
         /// <seealso cref="m_downloadComplete"/>
         public void DownloadChangelogAsync()
         {
-            if (Settings.WorkshopID != null)
+            if (m_settings != null && m_settings.WorkshopID != null)
             {
                 m_changeList.Clear();
                 m_rawChanges = "";
@@ -192,7 +181,7 @@ namespace CimTools.Workshop
                 try
                 {
                     m_webClient.DownloadStringCompleted += M_webClient_DownloadStringCompleted;
-                    m_webClient.DownloadStringAsync(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + Settings.WorkshopID.ToString()));
+                    m_webClient.DownloadStringAsync(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + m_settings.WorkshopID.ToString()));
                 }
                 catch (Exception exception)
                 {

@@ -1,7 +1,7 @@
 ﻿using ColossalFramework.UI;
 using UnityEngine;
 
-namespace CimTools.Elements
+namespace CimTools.V1.Elements
 {
     public class UITitleBar : UIPanel
     {

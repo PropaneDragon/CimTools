@@ -1,11 +1,10 @@
-﻿using CimTools.File;
+﻿using CimTools.V1.File;
 using ColossalFramework.UI;
 using ICities;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-namespace CimTools.Utilities
+namespace CimTools.V1.Utilities
 {
     /// <summary>
     /// When the user has saved the options
@@ -15,32 +14,41 @@ namespace CimTools.Utilities
     /// <summary>
     /// Handles options on the mod option panel ingame
     /// </summary>
-    public class ModOptionUtilities : MonoBehaviour
+    public class ModOptionUtilities
     {
-        public List<OptionsItemBase> options = new List<OptionsItemBase>();
+        private CimToolBase _mToolBase = null;
+        private List<OptionsItemBase> _options = new List<OptionsItemBase>();
 
         /// <summary>
         /// When the options have been saved by the user.
         /// </summary>
         public event OptionPanelSaved OnOptionPanelSaved;
 
+        public ModOptionUtilities(CimToolBase toolBase)
+        {
+            _mToolBase = toolBase;
+        }
+
         /// <summary>
         /// Creates options on a panel using the helper
         /// </summary>
         /// <param name="helper">The UIHelper to put the options on</param>
         /// <param name="groupName">The title of the group in the options panel.</param>
-        public void CreateOptions(UIHelperBase helper, string groupName = "Options")
+        public void CreateOptions(UIHelperBase helper, List<OptionsItemBase> options, string groupName = "Options")
         {
+            _options = options;
             LoadOptions();
 
             UIHelperBase optionGroup = helper.AddGroup(groupName);
 
-            foreach(OptionsItemBase option in options)
+            foreach(OptionsItemBase option in _options)
             {
                 option.Create(optionGroup);
             }
 
             UIButton saveButton = optionGroup.AddButton("Apply", SaveOptions) as UIButton;
+            saveButton.width = 120;
+            saveButton.color = new Color32(0, 255, 0, 255);
         }
 
         /// <summary>
@@ -49,9 +57,9 @@ namespace CimTools.Utilities
         /// </summary>
         public void SaveOptions()
         {
-            foreach(OptionsItemBase option in options)
+            foreach(OptionsItemBase option in _options)
             {
-                PersistentOptions.Instance().SetValue(option.uniqueName, option.m_value, "IngameOptions");
+                _mToolBase.XMLFileOptions.Data.SetValue(option.uniqueName, option.m_value, "IngameOptions");
             }
 
             if (OnOptionPanelSaved != null)
@@ -59,7 +67,7 @@ namespace CimTools.Utilities
                 OnOptionPanelSaved();
             }
 
-            PersistentOptions.Save();
+            _mToolBase.XMLFileOptions.Save();
         }
 
         /// <summary>
@@ -67,17 +75,35 @@ namespace CimTools.Utilities
         /// </summary>
         public void LoadOptions()
         {
-            PersistentOptions.Load();
+            _mToolBase.XMLFileOptions.Load();
 
-            foreach (OptionsItemBase option in options)
+            foreach (OptionsItemBase option in _options)
             {
-                object foundValue;
+                object foundValue = null;
 
-                if(PersistentOptions.Instance().GetValue(option.uniqueName, out foundValue, "IngameOptions") == PersistentOptions.OptionError.NoError)
+                if(_mToolBase.XMLFileOptions.Data.GetValue(option.uniqueName, ref foundValue, "IngameOptions", false) == ExportOptionBase.OptionError.NoError)
                 {
                     option.m_value = foundValue;
                 }
             }
+        }
+
+        public bool GetOptionValue<T>(string uniqueName, ref T value)
+        {
+            bool found = false;
+
+            foreach (OptionsItemBase option in _options)
+            {
+                if(option.uniqueName == uniqueName)
+                {
+                    value = (T)option.m_value;
+                    found = true;
+
+                    break;
+                }
+            }
+
+            return found;
         }
     }
 
@@ -102,7 +128,7 @@ namespace CimTools.Utilities
         /// <summary>
         /// Whether the option is enabled or not
         /// </summary>
-        public bool enabled = false;
+        public bool enabled = true;
 
         /// <summary>
         /// Create the element on the helper
@@ -133,9 +159,10 @@ namespace CimTools.Utilities
         /// <param name="helper">The UIHelper to attach the element to</param>
         public override void Create(UIHelperBase helper)
         {
-            UICheckBox checkBox = helper.AddCheckbox(readableName, true, IgnoredFunction) as UICheckBox;
+            UICheckBox checkBox = helper.AddCheckbox(readableName, value, IgnoredFunction) as UICheckBox;
             checkBox.readOnly = !enabled;
             checkBox.name = uniqueName;
+            checkBox.disabledColor = new Color32(100, 100, 100, 255);
             checkBox.eventCheckChanged += new PropertyChangedEventHandler<bool>(delegate (UIComponent component, bool newValue)
             {
                 value = newValue;

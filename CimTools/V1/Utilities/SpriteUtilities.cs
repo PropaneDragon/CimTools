@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace CimTools.Utilities
+namespace CimTools.V1.Utilities
 {
     /// <summary>
     /// Utilities for sprite handling. Takes care of atlases and sprites.
@@ -21,14 +21,14 @@ namespace CimTools.Utilities
           multiple sprites, and locations to those areas of the atlas.
           It's much better than storing individual sprites.
         */
-        internal static Dictionary<string, UITextureAtlas> m_atlasStore = new Dictionary<string, UITextureAtlas>();
+        internal Dictionary<string, UITextureAtlas> m_atlasStore = new Dictionary<string, UITextureAtlas>();
 
         /// <summary>
         /// Returns a stored atlas.
         /// </summary>
         /// <param name="atlasName">The name of the atlas to return.</param>
         /// <returns></returns>
-        public static UITextureAtlas GetAtlas(string atlasName)
+        public UITextureAtlas GetAtlas(string atlasName)
         {
             UITextureAtlas returnAtlas = null;
 
@@ -46,7 +46,7 @@ namespace CimTools.Utilities
         /// <param name="texturePath">The full path to the texture.</param>
         /// <param name="atlasName">The name to give the atlas. Used for finding and using later.</param>
         /// <returns>Whether the atlas was created successfully.</returns>
-        public static bool InitialiseAtlas(string texturePath, string atlasName)
+        public bool InitialiseAtlas(string texturePath, string atlasName)
         {
             bool createdAtlas = false;
 
@@ -81,17 +81,17 @@ namespace CimTools.Utilities
                     }
                     else
                     {
-                        Debug.LogError("Road Namer: Could not find atlas at " + texturePath);
+                        Debug.LogError("SpriteUtilities: Could not find atlas at " + texturePath);
                     }
                 }
                 else
                 {
-                    Debug.LogError("Road Namer: Couldn't find the default UI Shader!");
+                    Debug.LogError("SpriteUtilities: Couldn't find the default UI Shader!");
                 }
             }
             else
             {
-                Debug.LogError("Road Namer: Could not find the mod path, which is odd.");
+                Debug.LogError("SpriteUtilities: Could not find the mod path, which is odd.");
             }
 
             return createdAtlas;
@@ -104,7 +104,7 @@ namespace CimTools.Utilities
         /// <param name="spriteName">The name of the sprite to create</param>
         /// <param name="atlasName">The name of the atlas to add the sprite to.</param>
         /// <returns></returns>
-        public static bool AddSpriteToAtlas(Rect dimensions, string spriteName, string atlasName)
+        public bool AddSpriteToAtlas(Rect dimensions, string spriteName, string atlasName)
         {
             bool returnValue = false;
 

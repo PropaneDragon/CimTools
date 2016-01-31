@@ -1,14 +1,15 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Plugins;
+using System.Collections.Generic;
 
-namespace CimTools.File
+namespace CimTools.V1.File
 {
     /// <summary>
     /// Handles system paths
     /// </summary>
     public class Path
     {
-        internal static string m_savedModPath = null;
+        internal string m_savedModPath = null;
 
         /// <summary>
         /// Gets the full path of the mod
@@ -16,7 +17,7 @@ namespace CimTools.File
         /// <param name="workshopId">The workshop ID of the mod</param>
         /// <param name="modName">The name of the mod</param>
         /// <returns>The full path of the mod</returns>
-        public static string GetModPath(ulong workshopId, string modName)
+        public string GetModPath(ulong workshopId, string modName)
         {
             if (m_savedModPath == null)
             {

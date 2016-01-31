@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CimTools.Utilities
+namespace CimTools.V1.Utilities
 {
     /// <summary>
     /// Utilities for adding items to the UI
     /// </summary>
     public class UIUtilities
     {
-        static Dictionary<string, UITextureAtlas> sm_atlases = new Dictionary<string, UITextureAtlas>();
-
         // Figuring all this was a pain (no documentation whatsoever)
         // So if your are using it for your mod consider thanking me (SamsamTS)
         // Extended Public Transport UI's code helped me a lot so thanks a lot AcidFire

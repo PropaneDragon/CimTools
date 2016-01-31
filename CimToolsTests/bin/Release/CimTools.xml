@@ -46,7 +46,7 @@
         </member>
         <member name="F:CimTools.File.ExportOptionBase.SavedData">
             <summary>
-            Data that gets saved to disk. You shouldn't have to modify this
+            Contains all saveable data. You shouldn't have to modify this
             manually, and instead should use the SetValue and GetValue methods.
             </summary>
         </member>
@@ -107,18 +107,6 @@
             SavedElements in the group
             </summary>
         </member>
-        <member name="M:CimTools.File.InternalOptions.Instance">
-            <summary>
-            Gets an instance of the SavedOptions
-            </summary>
-            <returns>An instance of SavedOptions</returns>
-        </member>
-        <member name="M:CimTools.File.InternalOptions.SetInstance(CimTools.File.InternalOptions)">
-            <summary>
-            Change the instance used for the options.
-            </summary>
-            <param name="optionManager">The SavedOptions to replace the existing instance</param>
-        </member>
         <member name="T:CimTools.File.Path">
             <summary>
             Handles system paths
@@ -132,7 +120,7 @@
             <param name="modName">The name of the mod</param>
             <returns>The full path of the mod</returns>
         </member>
-        <member name="T:CimTools.File.PersistentOptions">
+        <member name="T:CimTools.File.XmlFileManager">
             <summary>
             Persistent options are not saved inside the save file for a level,
             and persist regardless of the level that is loaded. These are good
@@ -146,30 +134,18 @@
             </para>
             </summary>
         </member>
-        <member name="F:CimTools.File.PersistentOptions.OptionVersion">
+        <member name="F:CimTools.File.XmlFileManager.OptionVersion">
             <summary>
             The current version of the PersistentOptions class. This is for
             doing upgrades from older versions of the class if needed.
             </summary>
         </member>
-        <member name="M:CimTools.File.PersistentOptions.Instance">
-            <summary>
-            Gets an instance of the SavedOptions
-            </summary>
-            <returns>An instance of SavedOptions</returns>
-        </member>
-        <member name="M:CimTools.File.PersistentOptions.SetInstance(CimTools.File.PersistentOptions)">
-            <summary>
-            Change the instance used for the options.
-            </summary>
-            <param name="optionManager">The SavedOptions to replace the existing instance</param>
-        </member>
-        <member name="M:CimTools.File.PersistentOptions.Save">
+        <member name="M:CimTools.File.XmlFileManager.Save">
             <summary>
             Saves all options to the disk. Make sure you've updated the options first.
             </summary>
         </member>
-        <member name="M:CimTools.File.PersistentOptions.Load">
+        <member name="M:CimTools.File.XmlFileManager.Load">
             <summary>
             Load all options from the disk.
             </summary>
@@ -245,29 +221,6 @@
         <member name="T:CimTools.Utilities.ModOptionUtilities">
             <summary>
             Handles options on the mod option panel ingame
-            </summary>
-        </member>
-        <member name="E:CimTools.Utilities.ModOptionUtilities.OnOptionPanelSaved">
-            <summary>
-            When the options have been saved by the user.
-            </summary>
-        </member>
-        <member name="M:CimTools.Utilities.ModOptionUtilities.CreateOptions(ICities.UIHelperBase,System.String)">
-            <summary>
-            Creates options on a panel using the helper
-            </summary>
-            <param name="helper">The UIHelper to put the options on</param>
-            <param name="groupName">The title of the group in the options panel.</param>
-        </member>
-        <member name="M:CimTools.Utilities.ModOptionUtilities.SaveOptions">
-            <summary>
-            Manually save the UI options to the persistent options. When this is called
-            by the class internally, you can get the event using OnOptionPanelSaved()
-            </summary>
-        </member>
-        <member name="M:CimTools.Utilities.ModOptionUtilities.LoadOptions">
-            <summary>
-            Manually load the UI options onto the existing panel elements.
             </summary>
         </member>
         <member name="T:CimTools.Utilities.OptionsItemBase">
@@ -466,35 +419,29 @@
             <param name="name">The atlas name to retrieve</param>
             <returns>The named atlas, or null if none is found.</returns>
         </member>
-        <member name="T:CimTools.Settings">
+        <member name="T:CimTools.CimToolSettings">
             <summary>
             Global settings for CimTools. Set these up before doing anything
             with the tools, or elements may not work properly.
             </summary>
         </member>
-        <member name="F:CimTools.Settings.ModName">
+        <member name="P:CimTools.CimToolSettings.ModName">
             <summary>
-            The name of the mod you wish to use.
-            <para>
-            Required for: Path, PersistentOptions
-            </para>
+            The name of the mod. This should be the same as the workshop
+            name.
             </summary>
         </member>
-        <member name="F:CimTools.Settings.ModAssembly">
+        <member name="P:CimTools.CimToolSettings.WorkshopID">
             <summary>
-            The assembly to get the version name from. Use <code>Assembly.GetExecutingAssembly()</code> if unsure.
-            <para>
-            Required for: Version.
-            </para>
+            Workshop ID of the mod. You can find the ID
             </summary>
         </member>
-        <member name="F:CimTools.Settings.WorkshopID">
+        <member name="M:CimTools.CimToolSettings.#ctor(System.String,System.Nullable{System.UInt64})">
             <summary>
-            The workshop ID of the mod.
-            <para>
-            Required for: Changelog.
-            </para>
+            Initialises the settings for the rest of the mod
             </summary>
+            <param name="modName">The name of the mod you wish to use.</param>
+            <param name="workshopId">The workshop ID of the mod.</param>
         </member>
         <member name="T:CimTools.Workshop.Changelog">
             <summary>
@@ -506,11 +453,6 @@
             be correctly formatted when getting the output from the class. Every change must be
             within [list][/list] tags with [*] before each item when entering them into the workshop.
             </para>
-            </summary>
-        </member>
-        <member name="F:CimTools.Workshop.Changelog.m_instance">
-            <summary>
-            The class instance
             </summary>
         </member>
         <member name="F:CimTools.Workshop.Changelog.m_webClient">
@@ -580,12 +522,6 @@
             <summary>
             A list of tags to replace with colours.
             </summary>
-        </member>
-        <member name="M:CimTools.Workshop.Changelog.Instance">
-            <summary>
-            Gets and creates an instance of the Changelog class, if required.
-            </summary>
-            <returns>A Changelog class</returns>
         </member>
         <member name="M:CimTools.Workshop.Changelog.DownloadChangelog">
             <summary>
