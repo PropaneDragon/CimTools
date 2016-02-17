@@ -112,7 +112,7 @@ namespace CimTools.V1.Utilities
     /// </summary>
     public abstract class OptionsItemBase
     {
-        internal object m_value = default(object);
+        public object m_value = default(object);
 
         /// <summary>
         /// The unique option name. Can't clash with any other option names
@@ -136,7 +136,7 @@ namespace CimTools.V1.Utilities
         /// <param name="helper">The UIHelper to attach the element to</param>
         public abstract void Create(UIHelperBase helper);
 
-        internal void IgnoredFunction<T>(T ignored) { }
+        public void IgnoredFunction<T>(T ignored) { }
     }
 
     /// <summary>

@@ -18,6 +18,8 @@ namespace CimTools.V1
         private Path m_path;
         private Version m_version;
         private ModOptionUtilities m_modOptions;
+        private DetailedLogger m_detailedLogger;
+        private NamedLogger m_namedLogger;
 
         /// <summary>
         /// Returns an instance of CimToolSettings
@@ -80,6 +82,16 @@ namespace CimTools.V1
             get { return m_modOptions; }
         }
 
+        public DetailedLogger DetailedLogger
+        {
+            get { return m_detailedLogger; }
+        }
+
+        public NamedLogger NamedLogger
+        {
+            get { return m_namedLogger; }
+        }
+
         /// <summary>
         /// Create a new CimToolBase with your mod settings. This will create
         /// instances of useful tools and you can access them from this class.
@@ -89,12 +101,14 @@ namespace CimTools.V1
         {
             m_modSettings = modSettings;
             m_spriteUtilities = new SpriteUtilities();
-            m_path = new Path();
+            m_path = new Path(modSettings);
             m_version = new Version(modSettings.ModAssembly);
             m_saveFileOptions = new SaveFileManager(modSettings);
             m_xmlOptions = new XmlFileManager(modSettings);
             m_changelog = new Changelog(modSettings);
             m_modOptions = new ModOptionUtilities(this);
+            m_detailedLogger = new DetailedLogger(modSettings);
+            m_namedLogger = new NamedLogger(modSettings);
 
             m_xmlOptions.Load();
         }

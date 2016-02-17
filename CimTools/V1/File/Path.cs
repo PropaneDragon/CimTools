@@ -10,6 +10,12 @@ namespace CimTools.V1.File
     public class Path
     {
         internal string m_savedModPath = null;
+        internal CimToolSettings m_settings = null;
+
+        public Path(CimToolSettings settings)
+        {
+            m_settings = settings;
+        }
 
         /// <summary>
         /// Gets the full path of the mod
@@ -33,6 +39,11 @@ namespace CimTools.V1.File
             }
 
             return m_savedModPath;
+        }
+
+        public string GetModPath()
+        {
+            return GetModPath(m_settings.WorkshopID ?? 0, m_settings.ModName);
         }
     }
 }

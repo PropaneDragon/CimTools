@@ -60,7 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="V1\Elements\UITitleBar.cs" />
+    <Compile Include="V1\File\DetailedLogger.cs" />
     <Compile Include="V1\File\ExportOptionBase.cs" />
+    <Compile Include="V1\File\NamedLogger.cs" />
     <Compile Include="V1\File\Path.cs" />
     <Compile Include="V1\File\XmlFileManager.cs" />
     <Compile Include="V1\File\Version.cs" />

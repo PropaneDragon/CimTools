@@ -154,7 +154,15 @@ namespace CimTools.V1.Workshop
 
                 m_downloadError = true;
 
-                ExtractData(m_webClient.DownloadString(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + m_settings.WorkshopID.ToString())));
+                try
+                {
+                    ExtractData(m_webClient.DownloadString(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + m_settings.WorkshopID.ToString())));
+                    m_downloadError = false;
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogException(exception);
+                }
 
                 m_downloadComplete = true;
             }
