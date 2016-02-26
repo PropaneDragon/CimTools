@@ -4,115 +4,27 @@
         <name>CimTools</name>
     </assembly>
     <members>
-        <member name="T:CimTools.V1.File.ExportOptionBase.OptionError">
+        <member name="T:CimTools.v2.Logging.DetailedLogger">
             <summary>
-            Any errors that could occur in the options.
+            Allows you to log detailed messages about your mod in its own file.
             </summary>
         </member>
-        <member name="F:CimTools.V1.File.ExportOptionBase.OptionError.NoError">
+        <member name="T:CimTools.v2.Logging.DetailedLogger.LogType">
             <summary>
-            No error has occurred.
+            The type of log to create.
             </summary>
         </member>
-        <member name="F:CimTools.V1.File.ExportOptionBase.OptionError.SaveFailed">
+        <member name="T:CimTools.v2.Logging.NamedLogger">
             <summary>
-            Could not save the data.
+            Logs to the Unity console with your mods name.
             </summary>
         </member>
-        <member name="F:CimTools.V1.File.ExportOptionBase.OptionError.LoadFailed">
-            <summary>
-            Could not load the data.
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.File.ExportOptionBase.OptionError.FileNotFound">
-            <summary>
-            The saved data file could not be found.
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.File.ExportOptionBase.OptionError.GroupNotFound">
-            <summary>
-            The group could not be retrieved.
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.File.ExportOptionBase.OptionError.OptionNotFound">
-            <summary>
-            The option could not be retrieved.
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.File.ExportOptionBase.OptionError.CastFailed">
-            <summary>
-            Could not cast the option to the specified type.
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.File.ExportOptionBase.SavedData">
-            <summary>
-            Contains all saveable data. You shouldn't have to modify this
-            manually, and instead should use the SetValue and GetValue methods.
-            </summary>
-        </member>
-        <member name="M:CimTools.V1.File.ExportOptionBase.GetValues``1(System.String,System.Boolean)">
-            <summary>
-            Gets all values of type T under the specified group name.
-            </summary>
-            <typeparam name="T">The type of the items to return.</typeparam>
-            <param name="groupName">The group to search under.</param>
-            <returns></returns>
-        </member>
-        <member name="M:CimTools.V1.File.ExportOptionBase.GetValue``1(System.String,``0@,System.String,System.Boolean)">
-            <summary>
-            Gets a stored value of type T.
-            </summary>
-            <typeparam name="T">The type of the item to return.</typeparam>
-            <param name="name">The unique name of the data.</param>
-            <param name="value">The output value of the data.</param>
-            <param name="groupName">The name of the group to load the data from.</param>
-            <returns>Whether the data could be retrieved or not.</returns>
-        </member>
-        <member name="M:CimTools.V1.File.ExportOptionBase.SetValue``1(System.String,``0,System.String)">
-            <summary>
-            Sets a value to be saved to disk automatically.
-            </summary>
-            <typeparam name="T">The type of the item to set.</typeparam>
-            <param name="name">The unique name of the data.</param>
-            <param name="value">The input value of the data.</param>
-            <param name="groupName">The name of the group to save this data in.</param>
-        </member>
-        <member name="T:CimTools.V1.File.SavedElement">
-            <summary>
-            Container for saving data to disk.
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.File.SavedElement.name">
-            <summary>
-            Unique item name
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.File.SavedElement.value">
-            <summary>
-            Value of the item
-            </summary>
-        </member>
-        <member name="T:CimTools.V1.File.SavedGroup">
-            <summary>
-            Container for saving groups of data to disk.
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.File.SavedGroup.name">
-            <summary>
-            Unique group name
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.File.SavedGroup.elements">
-            <summary>
-            SavedElements in the group
-            </summary>
-        </member>
-        <member name="T:CimTools.V1.File.Path">
+        <member name="T:CimTools.v2.File.Path">
             <summary>
             Handles system paths
             </summary>
         </member>
-        <member name="M:CimTools.V1.File.Path.GetModPath(System.UInt64,System.String)">
+        <member name="M:CimTools.v2.File.Path.GetModPath(System.UInt64,System.String)">
             <summary>
             Gets the full path of the mod
             </summary>
@@ -120,92 +32,85 @@
             <param name="modName">The name of the mod</param>
             <returns>The full path of the mod</returns>
         </member>
-        <member name="T:CimTools.V1.File.XmlFileManager">
+        <member name="M:CimTools.v2.File.XmlFileManager.#ctor(CimTools.v2.CimToolSettings)">
             <summary>
-            Persistent options are not saved inside the save file for a level,
-            and persist regardless of the level that is loaded. These are good
-            for saving options for a mod, which do not need to interact with
-            elements within a certain level, or elements that can change between
-            saved files.
-            <para>
-            All data stored in here is saved to the same folder as the game
-            executable. This can be edited at any time by the user, and is not
-            protected. It is stored as XML.
-            </para>
+            Handles IO between classes and the options XML file.
+            </summary>
+            <param name="modSettings"></param>
+        </member>
+        <member name="M:CimTools.v2.File.XmlFileManager.AddObjectToSave(System.Object)">
+            <summary>
+            Automatically handles saving and loading of variables to
+            XML for this object.
+            </summary>
+            <param name="objectToSave">The object you wish to save to XML</param>
+        </member>
+        <member name="M:CimTools.v2.File.XmlFileManager.Save">
+            <summary>
+            Save an XML document to the default location
             </summary>
         </member>
-        <member name="F:CimTools.V1.File.XmlFileManager.OptionVersion">
+        <member name="M:CimTools.v2.File.XmlFileManager.Save(System.IO.TextWriter)">
             <summary>
-            The current version of the PersistentOptions class. This is for
-            doing upgrades from older versions of the class if needed.
+            Save an XML document to a custom writer
             </summary>
+            <param name="writer">The writer to save the XML document to</param>
         </member>
-        <member name="M:CimTools.V1.File.XmlFileManager.Save(System.IO.TextWriter)">
-            <summary>
-            Saves all options to the disk. Make sure you've updated the options first.
-            </summary>
-        </member>
-        <member name="M:CimTools.V1.File.XmlFileManager.Load(System.IO.TextReader)">
-            <summary>
-            Load all options from the disk.
-            </summary>
-            <returns>Whether loading was successful</returns>
-        </member>
-        <member name="T:CimTools.V1.File.Version">
+        <member name="T:CimTools.v2.Utilities.Version">
             <summary>
             Handles everything to do with the mod version number
             </summary>
         </member>
-        <member name="T:CimTools.V1.File.Version.Limit">
+        <member name="T:CimTools.v2.Utilities.Version.Limit">
             <summary>
             How far to limit the version numbering to.
             </summary>
         </member>
-        <member name="F:CimTools.V1.File.Version.Limit.Major">
+        <member name="F:CimTools.v2.Utilities.Version.Limit.Major">
             <summary>
             Major version ([1].2.35.623)
             </summary>
         </member>
-        <member name="F:CimTools.V1.File.Version.Limit.Minor">
+        <member name="F:CimTools.v2.Utilities.Version.Limit.Minor">
             <summary>
             Minor version (1.[2].35.623)
             </summary>
         </member>
-        <member name="F:CimTools.V1.File.Version.Limit.Build">
+        <member name="F:CimTools.v2.Utilities.Version.Limit.Build">
             <summary>
             Build version (1.2.[35].623)
             </summary>
         </member>
-        <member name="F:CimTools.V1.File.Version.Limit.Revision">
+        <member name="F:CimTools.v2.Utilities.Version.Limit.Revision">
             <summary>
             Revision version (1.2.35.[623])
             </summary>
         </member>
-        <member name="M:CimTools.V1.File.Version.Major">
+        <member name="M:CimTools.v2.Utilities.Version.Major">
             <summary>
             Major version ([1].2.35.623)
             </summary>
             <returns>The major number</returns>
         </member>
-        <member name="M:CimTools.V1.File.Version.Minor">
+        <member name="M:CimTools.v2.Utilities.Version.Minor">
             <summary>
             Minor version (1.[2].35.623)
             </summary>
             <returns>The minor number</returns>
         </member>
-        <member name="M:CimTools.V1.File.Version.Build">
+        <member name="M:CimTools.v2.Utilities.Version.Build">
             <summary>
             Build version (1.2.[35].623)
             </summary>
             <returns>The build number</returns>
         </member>
-        <member name="M:CimTools.V1.File.Version.Revision">
+        <member name="M:CimTools.v2.Utilities.Version.Revision">
             <summary>
             Revision version (1.2.35.[623])
             </summary>
             <returns>The revision number</returns>
         </member>
-        <member name="M:CimTools.V1.File.Version.Delimited(CimTools.V1.File.Version.Limit,System.String)">
+        <member name="M:CimTools.v2.Utilities.Version.Delimited(CimTools.v2.Utilities.Version.Limit,System.String)">
             <summary>
             Returns a delimited version string
             </summary>
@@ -213,135 +118,135 @@
             <param name="upTo">Return a version number up to this limit.</param>
             <returns>A delimited version string</returns>
         </member>
-        <member name="T:CimTools.V1.Utilities.OptionPanelSaved">
+        <member name="T:CimTools.v2.Utilities.OptionPanelSaved">
             <summary>
             When the user has saved the options
             </summary>
         </member>
-        <member name="T:CimTools.V1.Utilities.ModOptionUtilities">
+        <member name="T:CimTools.v2.Utilities.ModOptionUtilities">
             <summary>
             Handles options on the mod option panel ingame
             </summary>
         </member>
-        <member name="E:CimTools.V1.Utilities.ModOptionUtilities.OnOptionPanelSaved">
+        <member name="E:CimTools.v2.Utilities.ModOptionUtilities.OnOptionPanelSaved">
             <summary>
             When the options have been saved by the user.
             </summary>
         </member>
-        <member name="M:CimTools.V1.Utilities.ModOptionUtilities.CreateOptions(ICities.UIHelperBase,System.Collections.Generic.List{CimTools.V1.Utilities.OptionsItemBase},System.String)">
+        <member name="M:CimTools.v2.Utilities.ModOptionUtilities.CreateOptions(ICities.UIHelperBase,System.Collections.Generic.List{CimTools.v2.Utilities.OptionsItemBase},System.String)">
             <summary>
             Creates options on a panel using the helper
             </summary>
             <param name="helper">The UIHelper to put the options on</param>
             <param name="groupName">The title of the group in the options panel.</param>
         </member>
-        <member name="M:CimTools.V1.Utilities.ModOptionUtilities.SaveOptions">
+        <member name="M:CimTools.v2.Utilities.ModOptionUtilities.SaveOptions">
             <summary>
             Manually save the UI options to the persistent options. When this is called
             by the class internally, you can get the event using OnOptionPanelSaved()
             </summary>
         </member>
-        <member name="M:CimTools.V1.Utilities.ModOptionUtilities.LoadOptions">
+        <member name="M:CimTools.v2.Utilities.ModOptionUtilities.LoadOptions">
             <summary>
             Manually load the UI options onto the existing panel elements.
             </summary>
         </member>
-        <member name="T:CimTools.V1.Utilities.OptionsItemBase">
+        <member name="T:CimTools.v2.Utilities.OptionsItemBase">
             <summary>
             Base class for all option panel options.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Utilities.OptionsItemBase.uniqueName">
+        <member name="F:CimTools.v2.Utilities.OptionsItemBase.uniqueName">
             <summary>
             The unique option name. Can't clash with any other option names
             or you'll lose data.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Utilities.OptionsItemBase.readableName">
+        <member name="F:CimTools.v2.Utilities.OptionsItemBase.readableName">
             <summary>
             The name that appears on the UI.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Utilities.OptionsItemBase.enabled">
+        <member name="F:CimTools.v2.Utilities.OptionsItemBase.enabled">
             <summary>
             Whether the option is enabled or not
             </summary>
         </member>
-        <member name="M:CimTools.V1.Utilities.OptionsItemBase.Create(ICities.UIHelperBase)">
+        <member name="M:CimTools.v2.Utilities.OptionsItemBase.Create(ICities.UIHelperBase)">
             <summary>
             Create the element on the helper
             </summary>
             <param name="helper">The UIHelper to attach the element to</param>
         </member>
-        <member name="T:CimTools.V1.Utilities.OptionsCheckbox">
+        <member name="T:CimTools.v2.Utilities.OptionsCheckbox">
             <summary>
             Checkbox option
             </summary>
         </member>
-        <member name="P:CimTools.V1.Utilities.OptionsCheckbox.value">
+        <member name="P:CimTools.v2.Utilities.OptionsCheckbox.value">
             <summary>
             The default value of the object, or the saved value if loaded.
             </summary>
         </member>
-        <member name="M:CimTools.V1.Utilities.OptionsCheckbox.Create(ICities.UIHelperBase)">
+        <member name="M:CimTools.v2.Utilities.OptionsCheckbox.Create(ICities.UIHelperBase)">
             <summary>
             Create the element on the helper
             </summary>
             <param name="helper">The UIHelper to attach the element to</param>
         </member>
-        <member name="T:CimTools.V1.Utilities.OptionsSlider">
+        <member name="T:CimTools.v2.Utilities.OptionsSlider">
             <summary>
             Slider option
             </summary>
         </member>
-        <member name="P:CimTools.V1.Utilities.OptionsSlider.value">
+        <member name="P:CimTools.v2.Utilities.OptionsSlider.value">
             <summary>
             The default value of the object, or the saved value if loaded.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Utilities.OptionsSlider.min">
+        <member name="F:CimTools.v2.Utilities.OptionsSlider.min">
             <summary>
             Lower bound for the slider
             </summary>
         </member>
-        <member name="F:CimTools.V1.Utilities.OptionsSlider.max">
+        <member name="F:CimTools.v2.Utilities.OptionsSlider.max">
             <summary>
             Upper bound for the slider
             </summary>
         </member>
-        <member name="F:CimTools.V1.Utilities.OptionsSlider.step">
+        <member name="F:CimTools.v2.Utilities.OptionsSlider.step">
             <summary>
             The amount to step when the user slides the slider
             </summary>
         </member>
-        <member name="M:CimTools.V1.Utilities.OptionsSlider.Create(ICities.UIHelperBase)">
+        <member name="M:CimTools.v2.Utilities.OptionsSlider.Create(ICities.UIHelperBase)">
             <summary>
             Create the element on the helper
             </summary>
             <param name="helper">The UIHelper to attach the element to</param>
         </member>
-        <member name="T:CimTools.V1.Utilities.OptionsDropdown">
+        <member name="T:CimTools.v2.Utilities.OptionsDropdown">
             <summary>
             Dropdown option
             </summary>
         </member>
-        <member name="P:CimTools.V1.Utilities.OptionsDropdown.value">
+        <member name="P:CimTools.v2.Utilities.OptionsDropdown.value">
             <summary>
             The default value of the object, or the saved value if loaded.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Utilities.OptionsDropdown.options">
+        <member name="F:CimTools.v2.Utilities.OptionsDropdown.options">
             <summary>
             All available options to select in the dropdown
             </summary>
         </member>
-        <member name="M:CimTools.V1.Utilities.OptionsDropdown.Create(ICities.UIHelperBase)">
+        <member name="M:CimTools.v2.Utilities.OptionsDropdown.Create(ICities.UIHelperBase)">
             <summary>
             Create the element on the helper
             </summary>
             <param name="helper">The UIHelper to attach the element to</param>
         </member>
-        <member name="T:CimTools.V1.Utilities.SpriteUtilities">
+        <member name="T:CimTools.v2.Utilities.SpriteUtilities">
             <summary>
             Utilities for sprite handling. Takes care of atlases and sprites.
             <para>
@@ -351,14 +256,14 @@
             </para>
             </summary>
         </member>
-        <member name="M:CimTools.V1.Utilities.SpriteUtilities.GetAtlas(System.String)">
+        <member name="M:CimTools.v2.Utilities.SpriteUtilities.GetAtlas(System.String)">
             <summary>
             Returns a stored atlas.
             </summary>
             <param name="atlasName">The name of the atlas to return.</param>
             <returns></returns>
         </member>
-        <member name="M:CimTools.V1.Utilities.SpriteUtilities.InitialiseAtlas(System.String,System.String)">
+        <member name="M:CimTools.v2.Utilities.SpriteUtilities.InitialiseAtlas(System.String,System.String)">
             <summary>
             Creates a new atlas from a texture and a name.
             </summary>
@@ -366,7 +271,7 @@
             <param name="atlasName">The name to give the atlas. Used for finding and using later.</param>
             <returns>Whether the atlas was created successfully.</returns>
         </member>
-        <member name="M:CimTools.V1.Utilities.SpriteUtilities.AddSpriteToAtlas(UnityEngine.Rect,System.String,System.String)">
+        <member name="M:CimTools.v2.Utilities.SpriteUtilities.AddSpriteToAtlas(UnityEngine.Rect,System.String,System.String)">
             <summary>
             Creates a new sprite using the size of the image inside the atlas.
             </summary>
@@ -375,54 +280,54 @@
             <param name="atlasName">The name of the atlas to add the sprite to.</param>
             <returns></returns>
         </member>
-        <member name="M:CimTools.V1.Utilities.SpriteUtilities.FixTransparency(UnityEngine.Texture2D)">
+        <member name="M:CimTools.v2.Utilities.SpriteUtilities.FixTransparency(UnityEngine.Texture2D)">
             <summary>
             Copy the values of adjacent pixels to transparent pixels color info, to
             remove the white border artifact when importing transparent .PNGs.
             </summary>
             <param name="texture"></param>
         </member>
-        <member name="T:CimTools.V1.Utilities.UIUtilities">
+        <member name="T:CimTools.v2.Utilities.UIUtilities">
             <summary>
             Utilities for adding items to the UI
             </summary>
         </member>
-        <member name="M:CimTools.V1.Utilities.UIUtilities.CreateButton(ColossalFramework.UI.UIComponent)">
+        <member name="M:CimTools.v2.Utilities.UIUtilities.CreateButton(ColossalFramework.UI.UIComponent)">
             <summary>
             Creates a button on the component
             </summary>
             <param name="parent">The component to add the button to</param>
             <returns>A new button</returns>
         </member>
-        <member name="M:CimTools.V1.Utilities.UIUtilities.CreateCheckBox(ColossalFramework.UI.UIComponent)">
+        <member name="M:CimTools.v2.Utilities.UIUtilities.CreateCheckBox(ColossalFramework.UI.UIComponent)">
             <summary>
             Creates a checkbox on the component
             </summary>
             <param name="parent">The component to add the checbox to</param>
             <returns>A new checkbox</returns>
         </member>
-        <member name="M:CimTools.V1.Utilities.UIUtilities.CreateTextField(ColossalFramework.UI.UIComponent)">
+        <member name="M:CimTools.v2.Utilities.UIUtilities.CreateTextField(ColossalFramework.UI.UIComponent)">
             <summary>
             Creates a text field on the component
             </summary>
             <param name="parent">The component to add the text field to</param>
             <returns>A new text field</returns>
         </member>
-        <member name="M:CimTools.V1.Utilities.UIUtilities.CreateDropDown(ColossalFramework.UI.UIComponent)">
+        <member name="M:CimTools.v2.Utilities.UIUtilities.CreateDropDown(ColossalFramework.UI.UIComponent)">
             <summary>
             Creates a dropdown on the component
             </summary>
             <param name="parent">The component to add the dropdown to</param>
             <returns>A new dropdown</returns>
         </member>
-        <member name="M:CimTools.V1.Utilities.UIUtilities.CreateColorField(ColossalFramework.UI.UIComponent)">
+        <member name="M:CimTools.v2.Utilities.UIUtilities.CreateColorField(ColossalFramework.UI.UIComponent)">
             <summary>
             Creates a color field on the component
             </summary>
             <param name="parent">The component to add the color field to</param>
             <returns>A new color field</returns>
         </member>
-        <member name="M:CimTools.V1.Utilities.UIUtilities.ResizeIcon(ColossalFramework.UI.UISprite,UnityEngine.Vector2)">
+        <member name="M:CimTools.v2.Utilities.UIUtilities.ResizeIcon(ColossalFramework.UI.UISprite,UnityEngine.Vector2)">
             <summary>
             Resizes a sprite to fit within certain bounds. It doesn't stretch the sprite
             and keeps the correct ratio.
@@ -430,97 +335,103 @@
             <param name="icon">The sprite to resize</param>
             <param name="maxSize">The maximum size of the sprite</param>
         </member>
-        <member name="P:CimTools.V1.Utilities.UIUtilities.defaultAtlas">
+        <member name="P:CimTools.v2.Utilities.UIUtilities.defaultAtlas">
             <summary>
             The default game atlas
             </summary>
         </member>
-        <member name="M:CimTools.V1.Utilities.UIUtilities.GetAtlas(System.String)">
+        <member name="M:CimTools.v2.Utilities.UIUtilities.GetAtlas(System.String)">
             <summary>
             Gets an atlas by name
             </summary>
             <param name="name">The atlas name to retrieve</param>
             <returns>The named atlas, or null if none is found.</returns>
         </member>
-        <member name="T:CimTools.V1.CimToolSettings">
+        <member name="T:CimTools.v2.CimToolSettings">
             <summary>
-            Global settings for CimTools.V1. Set these up before doing anything
+            Global settings for CimTools.v2. Set these up before doing anything
             with the tools, or elements may not work properly.
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolSettings.ModName">
+        <member name="P:CimTools.v2.CimToolSettings.ModFolderName">
+            <summary>
+            The folder name of the mod.
+            </summary>
+        </member>
+        <member name="P:CimTools.v2.CimToolSettings.ModName">
             <summary>
             The name of the mod. This should be the same as the workshop
             name.
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolSettings.WorkshopID">
+        <member name="P:CimTools.v2.CimToolSettings.WorkshopID">
             <summary>
             Workshop ID of the mod.
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolSettings.ModAssembly">
+        <member name="P:CimTools.v2.CimToolSettings.ModAssembly">
             <summary>
             Assembly of the mod.
             </summary>
         </member>
-        <member name="M:CimTools.V1.CimToolSettings.#ctor(System.String,System.Reflection.Assembly,System.Nullable{System.UInt64})">
+        <member name="M:CimTools.v2.CimToolSettings.#ctor(System.String,System.String,System.Reflection.Assembly,System.Nullable{System.UInt64})">
             <summary>
             Initialises the settings for the rest of the mod
             </summary>
-            <param name="modName">The name of the mod you wish to use.</param>
+            <param name="readableName">How you want the mods name to appear in game</param>
+            <param name="modFolderName">The name of the folder this mod belongs to (in the Mods folder, not on the workshop).</param>
             <param name="modAssembly">The assembly of the mod. If null it will just use GetCallingAssembly.</param>
             <param name="workshopId">The workshop ID of the mod (if you have one).</param>
         </member>
-        <member name="T:CimTools.V1.CimToolBase">
+        <member name="T:CimTools.v2.CimToolBase">
             <summary>
             The base for CimTools. Create a static version of this in your
             project and access everything through here.
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolBase.ModSettings">
+        <member name="P:CimTools.v2.CimToolBase.ModSettings">
             <summary>
             Returns an instance of CimToolSettings
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolBase.SpriteUtilities">
+        <member name="P:CimTools.v2.CimToolBase.SpriteUtilities">
             <summary>
             Returns an instance of SpriteUtilities
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolBase.Changelog">
+        <member name="P:CimTools.v2.CimToolBase.Changelog">
             <summary>
             Returns an instance of Changelog
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolBase.SaveFileOptions">
+        <member name="P:CimTools.v2.CimToolBase.SaveFileOptions">
             <summary>
             Returns an instance of SaveFileManager
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolBase.XMLFileOptions">
+        <member name="P:CimTools.v2.CimToolBase.XMLFileOptions">
             <summary>
             Returns an instance of XmlFileManager
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolBase.Path">
+        <member name="P:CimTools.v2.CimToolBase.Path">
             <summary>
             Returns an instance of Path
             </summary>
         </member>
-        <member name="P:CimTools.V1.CimToolBase.Version">
+        <member name="P:CimTools.v2.CimToolBase.Version">
             <summary>
             Returns an instance of Version
             </summary>
         </member>
-        <member name="M:CimTools.V1.CimToolBase.#ctor(CimTools.V1.CimToolSettings)">
+        <member name="M:CimTools.v2.CimToolBase.#ctor(CimTools.v2.CimToolSettings)">
             <summary>
             Create a new CimToolBase with your mod settings. This will create
             instances of useful tools and you can access them from this class.
             </summary>
             <param name="modSettings">Your mod settings</param>
         </member>
-        <member name="T:CimTools.V1.Workshop.Changelog">
+        <member name="T:CimTools.v2.Workshop.Changelog">
             <summary>
             Used for grabbing change logs from the Steam Workshop. This will automatically
             get the most recent change log on the page and return it in either a list or a
@@ -532,91 +443,91 @@
             </para>
             </summary>
         </member>
-        <member name="F:CimTools.V1.Workshop.Changelog.m_webClient">
+        <member name="F:CimTools.v2.Workshop.Changelog.m_webClient">
             <summary>
             The web client that accesses the community and downloads the changes
             </summary>
         </member>
-        <member name="F:CimTools.V1.Workshop.Changelog.m_changeList">
+        <member name="F:CimTools.v2.Workshop.Changelog.m_changeList">
             <summary>
             A list of changes which is populated upon download.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Workshop.Changelog.m_rawChanges">
+        <member name="F:CimTools.v2.Workshop.Changelog.m_rawChanges">
             <summary>
             A string which contains all changes. Populated upon download.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Workshop.Changelog.m_downloadComplete">
+        <member name="F:CimTools.v2.Workshop.Changelog.m_downloadComplete">
             <summary>
             Whether the download is complete or not.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Workshop.Changelog.m_downloadInProgress">
+        <member name="F:CimTools.v2.Workshop.Changelog.m_downloadInProgress">
             <summary>
             Whether a download is in progress or not.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Workshop.Changelog.m_downloadError">
+        <member name="F:CimTools.v2.Workshop.Changelog.m_downloadError">
             <summary>
             Whether the download has encountered an error.
             </summary>
         </member>
-        <member name="P:CimTools.V1.Workshop.Changelog.DownloadInProgress">
+        <member name="P:CimTools.v2.Workshop.Changelog.DownloadInProgress">
             <summary>
             If downloading Async, this determines whether or not there is an ongoing
             download.
             </summary>
         </member>
-        <member name="P:CimTools.V1.Workshop.Changelog.DownloadComplete">
+        <member name="P:CimTools.v2.Workshop.Changelog.DownloadComplete">
             <summary>
             If downloading Async, this will return whether the download has completed from
             that request. If the download fails it will still be false.
             </summary>
         </member>
-        <member name="P:CimTools.V1.Workshop.Changelog.DownloadError">
+        <member name="P:CimTools.v2.Workshop.Changelog.DownloadError">
             <summary>
             Whether an error has occured while downloading the most recent changes.
             </summary>
         </member>
-        <member name="P:CimTools.V1.Workshop.Changelog.ChangesString">
+        <member name="P:CimTools.v2.Workshop.Changelog.ChangesString">
             <summary>
             A formatted string of change logs. Each change log is separated by
             \n\n.
             </summary>
         </member>
-        <member name="P:CimTools.V1.Workshop.Changelog.ChangesList">
+        <member name="P:CimTools.v2.Workshop.Changelog.ChangesList">
             <summary>
             A list of change logs.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Workshop.Changelog.m_colouriseTags">
+        <member name="F:CimTools.v2.Workshop.Changelog.m_colouriseTags">
             <summary>
             Whether or not to replace HTML tags with colours.
             </summary>
         </member>
-        <member name="F:CimTools.V1.Workshop.Changelog.m_tagsToColourise">
+        <member name="F:CimTools.v2.Workshop.Changelog.m_tagsToColourise">
             <summary>
             A list of tags to replace with colours.
             </summary>
         </member>
-        <member name="M:CimTools.V1.Workshop.Changelog.DownloadChangelog">
+        <member name="M:CimTools.v2.Workshop.Changelog.DownloadChangelog">
             <summary>
             Downloads the latest changelog from a workshop item using the ID provided. Please note
             that this will stop the calling thread while it downloads, but you can guarantee the
             download will be complete when the thread resumes.
             </summary>
         </member>
-        <member name="M:CimTools.V1.Workshop.Changelog.DownloadChangelogAsync">
+        <member name="M:CimTools.v2.Workshop.Changelog.DownloadChangelogAsync">
             <summary>
             Downloads the latest changelog from a workshop item using the ID provided. Please note
             that while this works on a separate thread, you can't guarantee the download will be
             complete immediately. You should check for a complete download using m_downloadCompleted
             before trying to get data from it.
             </summary>
-            <seealso cref="F:CimTools.V1.Workshop.Changelog.m_downloadComplete"/>
+            <seealso cref="F:CimTools.v2.Workshop.Changelog.m_downloadComplete"/>
         </member>
-        <member name="M:CimTools.V1.Workshop.Changelog.ExtractData(System.String)">
+        <member name="M:CimTools.v2.Workshop.Changelog.ExtractData(System.String)">
             <summary>
             Extracts data from a HTML page. This will only work on the Steam Workshop
             due to certain div IDs. You shouldn't need to call this yourself really, and
@@ -624,56 +535,12 @@
             </summary>
             <param name="rawData"></param>
         </member>
-        <member name="T:CimTools.V1.Panels.UpdatePanel">
+        <member name="T:CimTools.v2.Panels.UpdatePanel">
             <summary>
             A speech bubble which contains the latest changes to your mod.
             The bubble can be clicked and expanded to reveal new changes, rather than
             taking up loads of space.
             </summary>
-        </member>
-        <member name="F:CimTools.V1.Panels.UpdatePanel.m_changelogDownloader">
-            <summary>
-            Set and get a Changelog downloader. By default this uses the default Changelog
-            instance, but you can pass your own through here if you wish to use your own.
-            <para>
-            Please note that if you are using the default Changelog instance you will need to set
-            it up for your mod, otherwise you'll get no changes.
-            </para>
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.Panels.UpdatePanel.m_updatedTitleMessage">
-            <summary>
-            The initial message title when an update has been detected.
-            </summary>
-        </member>
-        <member name="F:CimTools.V1.Panels.UpdatePanel.m_updatedContentMessage">
-            <summary>
-            The initial message content when an update has been detected.
-            </summary>
-        </member>
-        <member name="M:CimTools.V1.Panels.UpdatePanel.Initialise(CimTools.V1.CimToolBase)">
-            <summary>
-            Automatically initialises the update panel with settings from
-            the tool base.
-            </summary>
-            <param name="toolBase">Your internally saved CimToolBase</param>
-        </member>
-        <member name="M:CimTools.V1.Panels.UpdatePanel.Awake">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:CimTools.V1.Panels.UpdatePanel.Start">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:CimTools.V1.Panels.UpdatePanel.SetPositionSpeakyPoint(UnityEngine.Vector2)">
-            <summary>
-            Sets the position of the panel based on the "speaky point" of the
-            speech bubble it creates
-            </summary>
-            <param name="position">Position to set the panel to</param>
         </member>
     </members>
 </doc>

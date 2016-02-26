@@ -1,4 +1,4 @@
-﻿using CimTools.V1.File;
+﻿using CimTools.v2.File;
 using ICities;
 using System;
 using System.IO;
@@ -6,11 +6,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using UnityEngine;
 
-namespace CimTools.V1.Utilities
+namespace CimTools.v2.Utilities
 {
     public class SaveFileManager
     {
-        private CimToolSettings _modSettings = null;
+        /*private CimToolSettings _modSettings = null;
         private XmlFileManager _xmlManager = null;
 
         public XmlFileOptions Data
@@ -84,6 +84,6 @@ namespace CimTools.V1.Utilities
                     }
                 }
             }
-        }
+        }*/
     }
 }

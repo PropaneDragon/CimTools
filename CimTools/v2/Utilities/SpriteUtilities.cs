@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace CimTools.V1.Utilities
+namespace CimTools.v2.Utilities
 {
     /// <summary>
     /// Utilities for sprite handling. Takes care of atlases and sprites.

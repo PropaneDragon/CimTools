@@ -1,9 +1,9 @@
-﻿using CimTools.V1.Elements;
-using CimTools.V1.Workshop;
+﻿using CimTools.v2.Elements;
+using CimTools.v2.Workshop;
 using ColossalFramework.UI;
 using UnityEngine;
 
-namespace CimTools.V1.Panels
+namespace CimTools.v2.Panels
 {
     /// <summary>
     /// A speech bubble which contains the latest changes to your mod.
@@ -12,7 +12,7 @@ namespace CimTools.V1.Panels
     /// </summary>
     public class UpdatePanel : UIPanel
     {
-        private RectOffset m_UIPadding = new RectOffset(5, 5, 5, 5);
+        /*private RectOffset m_UIPadding = new RectOffset(5, 5, 5, 5);
         private UITitleBar m_panelTitle;
         private UILabel m_infoLabel;
         private CimToolBase m_toolBase = null;
@@ -145,6 +145,6 @@ namespace CimTools.V1.Panels
                 m_toolBase.XMLFileOptions.Data.SetValue("lastUpdatedVersion", m_toolBase.Version.Delimited(File.Version.Limit.Revision), "UpdatePanel");
                 m_toolBase.XMLFileOptions.Save();
             }
-        }
+        }*/
     }
 }

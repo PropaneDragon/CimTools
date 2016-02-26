@@ -59,27 +59,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="V1\Elements\UITitleBar.cs" />
-    <Compile Include="V1\File\DetailedLogger.cs" />
-    <Compile Include="V1\File\ExportOptionBase.cs" />
-    <Compile Include="V1\File\NamedLogger.cs" />
-    <Compile Include="V1\File\Path.cs" />
-    <Compile Include="V1\File\XmlFileManager.cs" />
-    <Compile Include="V1\File\Version.cs" />
-    <Compile Include="V1\File\SaveFileManager.cs" />
-    <Compile Include="V1\File\XmlFileOptions.cs" />
-    <Compile Include="V1\CimToolSettings.cs" />
-    <Compile Include="V1\CimToolBase.cs" />
-    <Compile Include="V1\Utilities\ModOptionUtilities.cs" />
-    <Compile Include="V1\Utilities\SpriteUtilities.cs" />
-    <Compile Include="V1\Utilities\UIUtilities.cs" />
-    <Compile Include="V1\Workshop\Changelog.cs" />
-    <Compile Include="V1\Panels\UpdatePanel.cs" />
+    <Compile Include="v2\Attributes\XmlOptionsAttribute.cs" />
+    <Compile Include="v2\Elements\UITitleBar.cs" />
+    <Compile Include="v2\Logging\DetailedLogger.cs" />
+    <Compile Include="v2\Logging\NamedLogger.cs" />
+    <Compile Include="v2\File\Path.cs" />
+    <Compile Include="v2\File\XmlFileManager.cs" />
+    <Compile Include="v2\Utilities\Version.cs" />
+    <Compile Include="v2\File\SaveFileManager.cs" />
+    <Compile Include="v2\CimToolSettings.cs" />
+    <Compile Include="v2\CimToolBase.cs" />
+    <Compile Include="v2\Utilities\ModOptionUtilities.cs" />
+    <Compile Include="v2\Utilities\SpriteUtilities.cs" />
+    <Compile Include="v2\Utilities\UIUtilities.cs" />
+    <Compile Include="v2\Workshop\Changelog.cs" />
+    <Compile Include="v2\Panels\UpdatePanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /s /y "$(TargetDir)*.dll" "D:\Projects\Git\RushHour\RushHour\CimTools\"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

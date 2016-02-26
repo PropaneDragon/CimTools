@@ -1,10 +1,10 @@
-﻿using CimTools.V1.File;
+﻿using CimTools.v2.File;
 using ColossalFramework.UI;
 using ICities;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CimTools.V1.Utilities
+namespace CimTools.v2.Utilities
 {
     /// <summary>
     /// When the user has saved the options
@@ -36,12 +36,12 @@ namespace CimTools.V1.Utilities
         /// <param name="groupName">The title of the group in the options panel.</param>
         public void CreateOptions(UIHelperBase helper, List<OptionsItemBase> options, string groupName = "Options")
         {
-            _options = options;
+            _options.AddRange(options);
             LoadOptions();
 
             UIHelperBase optionGroup = helper.AddGroup(groupName);
 
-            foreach(OptionsItemBase option in _options)
+            foreach(OptionsItemBase option in options)
             {
                 option.Create(optionGroup);
             }
@@ -57,7 +57,7 @@ namespace CimTools.V1.Utilities
         /// </summary>
         public void SaveOptions()
         {
-            foreach(OptionsItemBase option in _options)
+            /*foreach(OptionsItemBase option in _options)
             {
                 _mToolBase.XMLFileOptions.Data.SetValue(option.uniqueName, option.m_value, "IngameOptions");
             }
@@ -67,7 +67,7 @@ namespace CimTools.V1.Utilities
                 OnOptionPanelSaved();
             }
 
-            _mToolBase.XMLFileOptions.Save();
+            _mToolBase.XMLFileOptions.Save();*/
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace CimTools.V1.Utilities
         /// </summary>
         public void LoadOptions()
         {
-            _mToolBase.XMLFileOptions.Load();
+            /*_mToolBase.XMLFileOptions.Load();
 
             foreach (OptionsItemBase option in _options)
             {
@@ -85,7 +85,7 @@ namespace CimTools.V1.Utilities
                 {
                     option.m_value = foundValue;
                 }
-            }
+            }*/
         }
 
         public bool GetOptionValue<T>(string uniqueName, ref T value)

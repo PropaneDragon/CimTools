@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CimTools.V1.Utilities
+namespace CimTools.v2.Utilities
 {
     /// <summary>
     /// Utilities for adding items to the UI

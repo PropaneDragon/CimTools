@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace CimTools.V1.Workshop
+namespace CimTools.v2.Workshop
 {
     /// <summary>
     /// Used for grabbing change logs from the Steam Workshop. This will automatically

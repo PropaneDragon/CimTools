@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace CimTools.V1.Workshop
+namespace CimTools.v2.Workshop
 {
     class ChangelogTest : Changelog
     {

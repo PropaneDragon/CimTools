@@ -1,8 +1,9 @@
-﻿using CimTools.V1.File;
-using CimTools.V1.Utilities;
-using CimTools.V1.Workshop;
+﻿using CimTools.v2.File;
+using CimTools.v2.Logging;
+using CimTools.v2.Utilities;
+using CimTools.v2.Workshop;
 
-namespace CimTools.V1
+namespace CimTools.v2
 {
     /// <summary>
     /// The base for CimTools. Create a static version of this in your
@@ -100,17 +101,18 @@ namespace CimTools.V1
         public CimToolBase(CimToolSettings modSettings)
         {
             m_modSettings = modSettings;
+
             m_spriteUtilities = new SpriteUtilities();
             m_path = new Path(modSettings);
             m_version = new Version(modSettings.ModAssembly);
-            m_saveFileOptions = new SaveFileManager(modSettings);
+            //m_saveFileOptions = new SaveFileManager(modSettings);
             m_xmlOptions = new XmlFileManager(modSettings);
             m_changelog = new Changelog(modSettings);
             m_modOptions = new ModOptionUtilities(this);
             m_detailedLogger = new DetailedLogger(modSettings);
             m_namedLogger = new NamedLogger(modSettings);
 
-            m_xmlOptions.Load();
+            //m_xmlOptions.Load();
         }
     }
 }

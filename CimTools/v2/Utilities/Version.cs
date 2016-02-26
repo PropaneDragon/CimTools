@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace CimTools.V1.File
+namespace CimTools.v2.Utilities
 {
     /// <summary>
     /// Handles everything to do with the mod version number

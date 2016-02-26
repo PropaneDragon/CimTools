@@ -2,10 +2,16 @@
 using System.IO;
 using System.Timers;
 
-namespace CimTools.V1.File
+namespace CimTools.v2.Logging
 {
+    /// <summary>
+    /// Allows you to log detailed messages about your mod in its own file.
+    /// </summary>
     public class DetailedLogger
     {
+        /// <summary>
+        /// The type of log to create.
+        /// </summary>
         public enum LogType { Message, Warning, Error };
 
         private string _fileName;
