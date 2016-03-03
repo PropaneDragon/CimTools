@@ -83,11 +83,17 @@ namespace CimTools.v2
             get { return m_modOptions; }
         }
 
+        /// <summary>
+        /// Returns an instance of the DetailedLogger
+        /// </summary>
         public DetailedLogger DetailedLogger
         {
             get { return m_detailedLogger; }
         }
 
+        /// <summary>
+        /// Returns an instance of the NamedLogger
+        /// </summary>
         public NamedLogger NamedLogger
         {
             get { return m_namedLogger; }
@@ -112,7 +118,13 @@ namespace CimTools.v2
             m_detailedLogger = new DetailedLogger(modSettings);
             m_namedLogger = new NamedLogger(modSettings);
 
-            //m_xmlOptions.Load();
+            SetUpInternalSavedXML();
+            m_xmlOptions.Load();
+        }
+
+        private void SetUpInternalSavedXML()
+        {
+
         }
     }
 }
