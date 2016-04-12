@@ -56,6 +56,46 @@
             </summary>
             <param name="writer">The writer to save the XML document to</param>
         </member>
+        <member name="T:CimTools.v2.Utilities.Translation">
+            <summary>
+            Handles localisation for a mod.
+            </summary>
+        </member>
+        <member name="M:CimTools.v2.Utilities.Translation.GenerateLanguageTemplate">
+            <summary>
+            Generates a language template for the mod
+            </summary>
+        </member>
+        <member name="M:CimTools.v2.Utilities.Translation.GetTranslatableFields(System.Reflection.Assembly)">
+            <summary>
+            Gets all fields that can be translated from the specified assembly.
+            </summary>
+            <param name="containingAssembly">The assembly to get the translatable fields from</param>
+            <returns>A list of fields which can be translated</returns>
+        </member>
+        <member name="M:CimTools.v2.Utilities.Translation.LoadLanguages">
+            <summary>
+            Loads all languages from the Locale folder
+            </summary>
+        </member>
+        <member name="M:CimTools.v2.Utilities.Translation.AvailableLanguagesReadable">
+            <summary>
+            Returns a list of languages which are available to the mod. This will return readable languages for use on the UI
+            </summary>
+            <returns>A list of languages available.</returns>
+        </member>
+        <member name="M:CimTools.v2.Utilities.Translation.AvailableLanguages">
+            <summary>
+            Returns a list of languages which are available to the mod. This will return language IDs for searching.
+            </summary>
+            <returns>A list of languages available.</returns>
+        </member>
+        <member name="M:CimTools.v2.Utilities.Translation.TranslateTo(System.String)">
+            <summary>
+            Translate all text into the specified language
+            </summary>
+            <param name="languageID">The unique language name to translate to</param>
+        </member>
         <member name="T:CimTools.v2.Utilities.Version">
             <summary>
             Handles everything to do with the mod version number
@@ -424,6 +464,16 @@
             Returns an instance of Version
             </summary>
         </member>
+        <member name="P:CimTools.v2.CimToolBase.DetailedLogger">
+            <summary>
+            Returns an instance of the DetailedLogger
+            </summary>
+        </member>
+        <member name="P:CimTools.v2.CimToolBase.NamedLogger">
+            <summary>
+            Returns an instance of the NamedLogger
+            </summary>
+        </member>
         <member name="M:CimTools.v2.CimToolBase.#ctor(CimTools.v2.CimToolSettings)">
             <summary>
             Create a new CimToolBase with your mod settings. This will create
@@ -541,6 +591,50 @@
             The bubble can be clicked and expanded to reveal new changes, rather than
             taking up loads of space.
             </summary>
+        </member>
+        <member name="F:CimTools.v2.Panels.UpdatePanel.m_changelogDownloader">
+            <summary>
+            Set and get a Changelog downloader. By default this uses the default Changelog
+            instance, but you can pass your own through here if you wish to use your own.
+            <para>
+            Please note that if you are using the default Changelog instance you will need to set
+            it up for your mod, otherwise you'll get no changes.
+            </para>
+            </summary>
+        </member>
+        <member name="F:CimTools.v2.Panels.UpdatePanel.m_updatedTitleMessage">
+            <summary>
+            The initial message title when an update has been detected.
+            </summary>
+        </member>
+        <member name="F:CimTools.v2.Panels.UpdatePanel.m_updatedContentMessage">
+            <summary>
+            The initial message content when an update has been detected.
+            </summary>
+        </member>
+        <member name="M:CimTools.v2.Panels.UpdatePanel.Initialise(CimTools.v2.CimToolBase)">
+            <summary>
+            Automatically initialises the update panel with settings from
+            the tool base.
+            </summary>
+            <param name="toolBase">Your internally saved CimToolBase</param>
+        </member>
+        <member name="M:CimTools.v2.Panels.UpdatePanel.Awake">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CimTools.v2.Panels.UpdatePanel.Start">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CimTools.v2.Panels.UpdatePanel.SetPositionSpeakyPoint(UnityEngine.Vector2)">
+            <summary>
+            Sets the position of the panel based on the "speaky point" of the
+            speech bubble it creates
+            </summary>
+            <param name="position">Position to set the panel to</param>
         </member>
     </members>
 </doc>

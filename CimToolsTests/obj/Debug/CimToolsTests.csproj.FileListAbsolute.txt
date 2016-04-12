@@ -3,7 +3,6 @@ D:\Projects\Git\CimTools\CimToolsTests\bin\Debug\CimToolsTests.pdb
 D:\Projects\Git\CimTools\CimToolsTests\obj\Debug\CimToolsTests.csprojResolveAssemblyReference.cache
 D:\Projects\Git\CimTools\CimToolsTests\obj\Debug\CimToolsTests.dll
 D:\Projects\Git\CimTools\CimToolsTests\obj\Debug\CimToolsTests.pdb
-D:\Projects\Git\CimTools\CimToolsTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Debug\CimTools.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Debug\ICSharpCode.SharpZipLib.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Debug\CimTools.pdb

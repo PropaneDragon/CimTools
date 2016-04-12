@@ -59,12 +59,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="v2\Attributes\TranslatableAttribute.cs" />
     <Compile Include="v2\Attributes\XmlOptionsAttribute.cs" />
     <Compile Include="v2\Elements\UITitleBar.cs" />
     <Compile Include="v2\Logging\DetailedLogger.cs" />
     <Compile Include="v2\Logging\NamedLogger.cs" />
     <Compile Include="v2\File\Path.cs" />
     <Compile Include="v2\File\XmlFileManager.cs" />
+    <Compile Include="v2\Utilities\Translation.cs" />
     <Compile Include="v2\Utilities\Version.cs" />
     <Compile Include="v2\File\SaveFileManager.cs" />
     <Compile Include="v2\CimToolSettings.cs" />

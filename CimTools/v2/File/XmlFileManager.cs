@@ -79,8 +79,11 @@ namespace CimTools.v2.File
 
         public void Load()
         {
-            StreamReader reader = new StreamReader(m_modSettings.ModName + "Options.xml");
-            Load(reader);
+            if (System.IO.File.Exists(m_modSettings.ModName + "Options.xml"))
+            {
+                StreamReader reader = new StreamReader(m_modSettings.ModName + "Options.xml");
+                Load(reader);
+            }
         }
 
         public void Load(TextReader reader)

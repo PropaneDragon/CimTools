@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" UniqueName="export" ReadableName="Exported Language">
+  <Translations>
+    <Translation>
+      <ID>translateTextA</ID>
+      <String />
+    </Translation>
+    <Translation>
+      <ID>translateTextB</ID>
+      <String />
+    </Translation>
+  </Translations>
+</Language>

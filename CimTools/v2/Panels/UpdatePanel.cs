@@ -57,10 +57,10 @@ namespace CimTools.v2.Panels
 
             string lastSavedVersion = "0.0";
 
-            if(toolBase.XMLFileOptions.Data.GetValue("lastUpdatedVersion", ref lastSavedVersion, "UpdatePanel") == File.ExportOptionBase.OptionError.NoError)
+            /*if(toolBase.XMLFileOptions.Data.GetValue("lastUpdatedVersion", ref lastSavedVersion, "UpdatePanel") == File.ExportOptionBase.OptionError.NoError)
             {
                 showInitially = lastSavedVersion != toolBase.Version.Delimited(File.Version.Limit.Revision);
-            }
+            }*/
 
             if(showInitially)
             {
@@ -149,7 +149,7 @@ namespace CimTools.v2.Panels
 
             if(m_toolBase != null)
             {
-                m_toolBase.XMLFileOptions.Data.SetValue("lastUpdatedVersion", m_toolBase.Version.Delimited(File.Version.Limit.Revision), "UpdatePanel");
+                //m_toolBase.XMLFileOptions.Data.SetValue("lastUpdatedVersion", m_toolBase.Version.Delimited(File.Version.Limit.Revision), "UpdatePanel");
                 m_toolBase.XMLFileOptions.Save();
             }
         }
