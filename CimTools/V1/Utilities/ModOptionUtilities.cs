@@ -9,7 +9,7 @@ namespace CimTools.V1.Utilities
     /// <summary>
     /// When the user has saved the options
     /// </summary>
-    public delegate void OptionPanelSaved();
+    public delegate void OptionPanelSavedEventHandler();
 
     /// <summary>
     /// Handles options on the mod option panel ingame
@@ -17,12 +17,12 @@ namespace CimTools.V1.Utilities
     public class ModOptionUtilities
     {
         private CimToolBase _mToolBase = null;
-        private List<OptionsItemBase> _options = new List<OptionsItemBase>();
+        private Dictionary<string, List<OptionsItemBase>> _options = new Dictionary<string, List<OptionsItemBase>>();
 
         /// <summary>
         /// When the options have been saved by the user.
         /// </summary>
-        public event OptionPanelSaved OnOptionPanelSaved;
+        public event OptionPanelSavedEventHandler OnOptionPanelSaved;
 
         public ModOptionUtilities(CimToolBase toolBase)
         {
@@ -34,21 +34,72 @@ namespace CimTools.V1.Utilities
         /// </summary>
         /// <param name="helper">The UIHelper to put the options on</param>
         /// <param name="groupName">The title of the group in the options panel.</param>
-        public void CreateOptions(UIHelperBase helper, List<OptionsItemBase> options, string groupName = "Options")
+        /// <param name="translationId">The ID of the translation to apply to the name.</param>
+        public void CreateOptions(UIHelperBase helper, List<OptionsItemBase> options, string groupName = "Options", string translationId = null)
         {
-            _options = options;
+            _options[groupName] = options;
             LoadOptions();
 
             UIHelperBase optionGroup = helper.AddGroup(groupName);
 
-            foreach(OptionsItemBase option in _options)
+            foreach (OptionsItemBase option in options)
             {
                 option.Create(optionGroup);
+                option.Translate(_mToolBase.Translation);
+
+                _mToolBase.Translation.OnLanguageChanged += new LanguageChangedEventHandler(delegate (string languageIdentifier)
+                {
+                    option.Translate(_mToolBase.Translation);
+                });
             }
 
             UIButton saveButton = optionGroup.AddButton("Apply", SaveOptions) as UIButton;
             saveButton.width = 120;
             saveButton.color = new Color32(0, 255, 0, 255);
+
+            TranslateGroupItems(saveButton, optionGroup, translationId);
+
+            _mToolBase.Translation.OnLanguageChanged += new LanguageChangedEventHandler(delegate (string languageIdentifier)
+            {
+                TranslateGroupItems(saveButton, optionGroup, translationId);
+            });
+        }
+
+        private void TranslateGroupItems(UIButton saveButton, UIHelperBase group, string groupTranslationId)
+        {
+            if (_mToolBase.Translation.HasTranslation("OptionButton_Apply"))
+            {
+                saveButton.text = _mToolBase.Translation.GetTranslation("OptionButton_Apply");
+            }
+            else
+            {
+                _mToolBase.DetailedLogger.LogWarning("There is no option group translation for the options apply button!");
+            }
+
+            if (groupTranslationId != null && _mToolBase.Translation.HasTranslation("OptionGroup_" + groupTranslationId))
+            {
+                UIHelper mainHelper = group as UIHelper;
+
+                if (mainHelper != null)
+                {
+                    UIComponent uiComponent = mainHelper.self as UIComponent;
+
+                    if (uiComponent != null)
+                    {
+                        UIComponent parent = uiComponent.parent;
+                        UILabel label = parent.Find<UILabel>("Label");
+
+                        if (label != null)
+                        {
+                            label.text = _mToolBase.Translation.GetTranslation("OptionGroup_" + groupTranslationId);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                _mToolBase.DetailedLogger.LogWarning("There is no option group translation for " + groupTranslationId);
+            }
         }
 
         /// <summary>
@@ -57,9 +108,19 @@ namespace CimTools.V1.Utilities
         /// </summary>
         public void SaveOptions()
         {
-            foreach(OptionsItemBase option in _options)
+            foreach (KeyValuePair<string, List<OptionsItemBase>> optionGroup in _options)
             {
-                _mToolBase.XMLFileOptions.Data.SetValue(option.uniqueName, option.m_value, "IngameOptions");
+                foreach (OptionsItemBase option in optionGroup.Value)
+                {
+                    if (option.uniqueName != "")
+                    {
+                        _mToolBase.XMLFileOptions.Data.SetValue(option.uniqueName, option.m_value, "IngameOptions");
+                    }
+                    else
+                    {
+                        _mToolBase.DetailedLogger.LogWarning("An option had no unique name, so wasn't saved! (" + option.GetType().ToString() + ")");
+                    }
+                }
             }
 
             if (OnOptionPanelSaved != null)
@@ -77,13 +138,16 @@ namespace CimTools.V1.Utilities
         {
             _mToolBase.XMLFileOptions.Load();
 
-            foreach (OptionsItemBase option in _options)
+            foreach (KeyValuePair<string, List<OptionsItemBase>> optionGroup in _options)
             {
-                object foundValue = null;
-
-                if(_mToolBase.XMLFileOptions.Data.GetValue(option.uniqueName, ref foundValue, "IngameOptions", false) == ExportOptionBase.OptionError.NoError)
+                foreach (OptionsItemBase option in optionGroup.Value)
                 {
-                    option.m_value = foundValue;
+                    object foundValue = null;
+
+                    if (_mToolBase.XMLFileOptions.Data.GetValue(option.uniqueName, ref foundValue, "IngameOptions", false) == ExportOptionBase.OptionError.NoError)
+                    {
+                        option.m_value = foundValue;
+                    }
                 }
             }
         }
@@ -92,19 +156,23 @@ namespace CimTools.V1.Utilities
         {
             bool found = false;
 
-            foreach (OptionsItemBase option in _options)
+            foreach (KeyValuePair<string, List<OptionsItemBase>> optionGroup in _options)
             {
-                if(option.uniqueName == uniqueName)
+                foreach (OptionsItemBase option in optionGroup.Value)
                 {
-                    value = (T)option.m_value;
-                    found = true;
+                    if (option.uniqueName == uniqueName)
+                    {
+                        value = (T)option.m_value;
+                        found = true;
 
-                    break;
+                        break;
+                    }
                 }
             }
 
             return found;
         }
+
     }
 
     /// <summary>
@@ -123,18 +191,31 @@ namespace CimTools.V1.Utilities
         /// <summary>
         /// The name that appears on the UI.
         /// </summary>
-        public string readableName = "";
+        //public string readableName = "";
+
+        /// <summary>
+        /// The identifier to link to the translatable attribute.
+        /// </summary>
+        public string translationIdentifier = "";
 
         /// <summary>
         /// Whether the option is enabled or not
         /// </summary>
         public bool enabled = true;
 
+        protected UIComponent component = null;
+
         /// <summary>
         /// Create the element on the helper
         /// </summary>
         /// <param name="helper">The UIHelper to attach the element to</param>
         public abstract void Create(UIHelperBase helper);
+
+        /// <summary>
+        /// Called when translations change
+        /// </summary>
+        /// <param name="translation">The translation data</param>
+        public abstract void Translate(Translation translation);
 
         public void IgnoredFunction<T>(T ignored) { }
     }
@@ -159,7 +240,7 @@ namespace CimTools.V1.Utilities
         /// <param name="helper">The UIHelper to attach the element to</param>
         public override void Create(UIHelperBase helper)
         {
-            UICheckBox checkBox = helper.AddCheckbox(readableName, value, IgnoredFunction) as UICheckBox;
+            UICheckBox checkBox = helper.AddCheckbox("translate me", value, IgnoredFunction) as UICheckBox;
             checkBox.readOnly = !enabled;
             checkBox.name = uniqueName;
             checkBox.disabledColor = new Color32(100, 100, 100, 255);
@@ -167,6 +248,24 @@ namespace CimTools.V1.Utilities
             {
                 value = newValue;
             });
+
+            component = checkBox;
+        }
+
+        public override void Translate(Translation translation)
+        {
+            UICheckBox uiObject = component as UICheckBox;
+            uiObject.tooltip = translation.GetTranslation("OptionTooltip_" + (translationIdentifier == "" ? uniqueName : translationIdentifier));
+            uiObject.label.text = translation.GetTranslation("Option_" + (translationIdentifier == "" ? uniqueName : translationIdentifier));
+
+            try
+            {
+                uiObject.RefreshTooltip();
+            }
+            catch
+            {
+                //Tooltip isn't created yet, so can't be refreshed. Not nice :(
+            }
         }
     }
 
@@ -205,7 +304,7 @@ namespace CimTools.V1.Utilities
         /// <param name="helper">The UIHelper to attach the element to</param>
         public override void Create(UIHelperBase helper)
         {
-            UISlider slider = helper.AddSlider(readableName, min, max, step, value, IgnoredFunction) as UISlider;
+            UISlider slider = helper.AddSlider("translate me", min, max, step, value, IgnoredFunction) as UISlider;
             slider.enabled = enabled;
             slider.name = uniqueName;
             slider.tooltip = value.ToString();
@@ -215,6 +314,24 @@ namespace CimTools.V1.Utilities
                 slider.tooltip = value.ToString();
                 slider.RefreshTooltip();
             });
+
+            component = slider;
+        }
+
+        public override void Translate(Translation translation)
+        {
+            UISlider uiObject = component as UISlider;
+
+            UIPanel sliderParent = uiObject.parent as UIPanel;
+            if (sliderParent != null)
+            {
+                UILabel label = sliderParent.Find<UILabel>("Label");
+
+                if (label != null)
+                {
+                    label.text = translation.GetTranslation("Option_" + (translationIdentifier == "" ? uniqueName : translationIdentifier));
+                }
+            }
         }
     }
 
@@ -242,16 +359,98 @@ namespace CimTools.V1.Utilities
         /// <param name="helper">The UIHelper to attach the element to</param>
         public override void Create(UIHelperBase helper)
         {
-            UIDropDown dropdown = helper.AddDropdown(readableName, options, 0, IgnoredFunction) as UIDropDown;
+            int selectedIndex = 0;
+            for (; selectedIndex < options.Length; ++selectedIndex)
+            {
+                if(options[selectedIndex] == value)
+                {
+                    break;
+                }
+            }
+
+            UIDropDown dropdown = helper.AddDropdown("translate me", options, selectedIndex, IgnoredFunction) as UIDropDown;
             dropdown.enabled = enabled;
             dropdown.name = uniqueName;
-            dropdown.tooltip = readableName;
+            dropdown.tooltip = value;
             dropdown.eventSelectedIndexChanged += new PropertyChangedEventHandler<int>(delegate (UIComponent component, int newValue)
             {
                 value = dropdown.selectedValue;
-                dropdown.tooltip = readableName;
-                dropdown.RefreshTooltip();
             });
+
+            component = dropdown;
+        }
+
+        public override void Translate(Translation translation)
+        {
+            UIDropDown uiObject = component as UIDropDown;
+            uiObject.tooltip = translation.GetTranslation("OptionTooltip_" + (translationIdentifier == "" ? uniqueName : translationIdentifier));
+
+            string[] translatedItems = translation.GetTranslation("Option_" + (translationIdentifier == "" ? uniqueName : translationIdentifier)).Split('|');
+            string[] uiItems = uiObject.items;
+
+            if(translatedItems.Length == uiItems.Length + 1)
+            {
+                for(int index = 0; index < translatedItems.Length; ++index)
+                {
+                    uiItems[index] = translatedItems[index + 1];
+                }
+            }
+
+            if(translatedItems.Length == uiItems.Length + 1 || translatedItems.Length == 1)
+            {
+                UIPanel sliderParent = uiObject.parent as UIPanel;
+                if (sliderParent != null)
+                {
+                    UILabel label = sliderParent.Find<UILabel>("Label");
+
+                    if (label != null)
+                    {
+                        label.text = translatedItems[0];
+                    }
+                }
+            }
+
+            try
+            {
+                uiObject.RefreshTooltip();
+            }
+            catch
+            {
+                //Tooltip isn't created yet, so can't be refreshed. Not nice :(
+            }
+        }
+    }
+
+    /// <summary>
+    /// Dropdown option
+    /// </summary>
+    public class OptionsSpace : OptionsItemBase
+    {
+        /// <summary>
+        /// The default value of the object, or the saved value if loaded.
+        /// </summary>
+        public object value
+        {
+            get { return null; }
+            set { m_value = value; }
+        }
+
+        /// <summary>
+        /// Set the spacing of the UI between this spacer.
+        /// </summary>
+        public int spacing = 15;
+
+        /// <summary>
+        /// Create the element on the helper
+        /// </summary>
+        /// <param name="helper">The UIHelper to attach the element to</param>
+        public override void Create(UIHelperBase helper)
+        {
+            helper.AddSpace(spacing);
+        }
+
+        public override void Translate(Translation translation)
+        {
         }
     }
 }

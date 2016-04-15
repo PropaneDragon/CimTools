@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="V1\Attributes\TranslatableAttribute.cs" />
     <Compile Include="V1\Elements\UITitleBar.cs" />
     <Compile Include="V1\File\DetailedLogger.cs" />
     <Compile Include="V1\File\ExportOptionBase.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="V1\CimToolBase.cs" />
     <Compile Include="V1\Utilities\ModOptionUtilities.cs" />
     <Compile Include="V1\Utilities\SpriteUtilities.cs" />
+    <Compile Include="V1\Utilities\Translation.cs" />
     <Compile Include="V1\Utilities\UIUtilities.cs" />
     <Compile Include="V1\Workshop\Changelog.cs" />
     <Compile Include="V1\Panels\UpdatePanel.cs" />
@@ -79,7 +81,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /s /y "$(TargetDir)*.dll" "D:\Projects\Git\RushHour\RushHour\CimTools\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /s /y "$(TargetDir)*.dll" "D:\Projects\Git\RushHour\RushHour\CimTools\"
+xcopy /s /y "$(TargetDir)*.dll" "D:\Projects\Git\Cimtographer\Mapper\CimTools\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

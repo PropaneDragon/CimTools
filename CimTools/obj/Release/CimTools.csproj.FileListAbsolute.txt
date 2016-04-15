@@ -2,3 +2,7 @@ D:\Projects\Git\CimTools\CimTools\bin\Release\CimTools.dll
 D:\Projects\Git\CimTools\CimTools\obj\Release\CimTools.csprojResolveAssemblyReference.cache
 D:\Projects\Git\CimTools\CimTools\obj\Release\CimTools.dll
 D:\Projects\Git\CimTools\CimTools\bin\Release\CimTools.xml
+D:\Projects\Git\CimToolsLegacy\CimTools\bin\Release\CimTools.xml
+D:\Projects\Git\CimToolsLegacy\CimTools\bin\Release\CimTools.dll
+D:\Projects\Git\CimToolsLegacy\CimTools\obj\Release\CimTools.dll
+D:\Projects\Git\CimToolsLegacy\CimTools\obj\Release\CimTools.csprojResolveAssemblyReference.cache
