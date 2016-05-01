@@ -47,10 +47,11 @@ namespace CimTools.V1.Utilities
                 option.Create(optionGroup);
                 option.Translate(_mToolBase.Translation);
 
-                _mToolBase.Translation.OnLanguageChanged += new LanguageChangedEventHandler(delegate (string languageIdentifier)
+                _mToolBase.Translation.OnLanguageChanged += delegate (string languageIdentifier)
                 {
+                    _mToolBase.DetailedLogger.Log("Translating option " + option.translationIdentifier);
                     option.Translate(_mToolBase.Translation);
-                });
+                };
             }
 
             UIButton saveButton = optionGroup.AddButton("Apply", SaveOptions) as UIButton;
@@ -59,46 +60,73 @@ namespace CimTools.V1.Utilities
 
             TranslateGroupItems(saveButton, optionGroup, translationId);
 
-            _mToolBase.Translation.OnLanguageChanged += new LanguageChangedEventHandler(delegate (string languageIdentifier)
+            _mToolBase.Translation.OnLanguageChanged += delegate (string languageIdentifier)
             {
+                _mToolBase.DetailedLogger.Log("Translating option group " + groupName);
                 TranslateGroupItems(saveButton, optionGroup, translationId);
-            });
+            };
         }
 
         private void TranslateGroupItems(UIButton saveButton, UIHelperBase group, string groupTranslationId)
         {
-            if (_mToolBase.Translation.HasTranslation("OptionButton_Apply"))
+            if (saveButton != null && group != null)
             {
-                saveButton.text = _mToolBase.Translation.GetTranslation("OptionButton_Apply");
-            }
-            else
-            {
-                _mToolBase.DetailedLogger.LogWarning("There is no option group translation for the options apply button!");
-            }
-
-            if (groupTranslationId != null && _mToolBase.Translation.HasTranslation("OptionGroup_" + groupTranslationId))
-            {
-                UIHelper mainHelper = group as UIHelper;
-
-                if (mainHelper != null)
+                if (_mToolBase.Translation.HasTranslation("OptionButton_Apply"))
                 {
-                    UIComponent uiComponent = mainHelper.self as UIComponent;
+                    saveButton.text = _mToolBase.Translation.GetTranslation("OptionButton_Apply");
+                }
+                else
+                {
+                    _mToolBase.DetailedLogger.LogWarning("There is no option group translation for the options apply button!");
+                }
 
-                    if (uiComponent != null)
+                if (groupTranslationId != null && _mToolBase.Translation.HasTranslation("OptionGroup_" + groupTranslationId))
+                {
+                    _mToolBase.DetailedLogger.Log("Translating option " + groupTranslationId);
+
+                    UIHelper mainHelper = group as UIHelper;
+
+                    if (mainHelper != null)
                     {
-                        UIComponent parent = uiComponent.parent;
-                        UILabel label = parent.Find<UILabel>("Label");
+                        _mToolBase.DetailedLogger.Log("Found group helper");
 
-                        if (label != null)
+                        UIComponent uiComponent = mainHelper.self as UIComponent;
+
+                        if (uiComponent != null)
                         {
-                            label.text = _mToolBase.Translation.GetTranslation("OptionGroup_" + groupTranslationId);
+                            _mToolBase.DetailedLogger.Log("Found group UIComponent");
+
+                            UIComponent parent = uiComponent.parent;
+                            UILabel label = parent.Find<UILabel>("Label");
+
+                            if (label != null)
+                            {
+                                _mToolBase.DetailedLogger.Log("Found group label");
+                                label.text = _mToolBase.Translation.GetTranslation("OptionGroup_" + groupTranslationId);
+                            }
+                            else
+                            {
+                                _mToolBase.DetailedLogger.LogWarning("The group has no label to translate!");
+                            }
+                        }
+                        else
+                        {
+                            _mToolBase.DetailedLogger.LogWarning("Could not find the UIComponent for the group!");
                         }
                     }
+                    else
+                    {
+                        _mToolBase.DetailedLogger.LogWarning("There is no helper for the group!");
+                    }
+                }
+                else
+                {
+                    _mToolBase.DetailedLogger.LogWarning("There is no option group translation for " + groupTranslationId);
                 }
             }
             else
             {
-                _mToolBase.DetailedLogger.LogWarning("There is no option group translation for " + groupTranslationId);
+                _mToolBase.DetailedLogger.LogWarning("The button or the helper are invalid");
             }
         }
 
@@ -209,7 +237,7 @@ namespace CimTools.V1.Utilities
         /// Create the element on the helper
         /// </summary>
         /// <param name="helper">The UIHelper to attach the element to</param>
-        public abstract void Create(UIHelperBase helper);
+        public abstract UIComponent Create(UIHelperBase helper);
 
         /// <summary>
         /// Called when translations change
@@ -238,7 +266,7 @@ namespace CimTools.V1.Utilities
         /// Create the element on the helper
         /// </summary>
         /// <param name="helper">The UIHelper to attach the element to</param>
-        public override void Create(UIHelperBase helper)
+        public override UIComponent Create(UIHelperBase helper)
         {
             UICheckBox checkBox = helper.AddCheckbox("translate me", value, IgnoredFunction) as UICheckBox;
             checkBox.readOnly = !enabled;
@@ -250,6 +278,7 @@ namespace CimTools.V1.Utilities
             });
 
             component = checkBox;
+            return checkBox;
         }
 
         public override void Translate(Translation translation)
@@ -302,7 +331,7 @@ namespace CimTools.V1.Utilities
         /// Create the element on the helper
         /// </summary>
         /// <param name="helper">The UIHelper to attach the element to</param>
-        public override void Create(UIHelperBase helper)
+        public override UIComponent Create(UIHelperBase helper)
         {
             UISlider slider = helper.AddSlider("translate me", min, max, step, value, IgnoredFunction) as UISlider;
             slider.enabled = enabled;
@@ -316,6 +345,7 @@ namespace CimTools.V1.Utilities
             });
 
             component = slider;
+            return component;
         }
 
         public override void Translate(Translation translation)
@@ -357,7 +387,7 @@ namespace CimTools.V1.Utilities
         /// Create the element on the helper
         /// </summary>
         /// <param name="helper">The UIHelper to attach the element to</param>
-        public override void Create(UIHelperBase helper)
+        public override UIComponent Create(UIHelperBase helper)
         {
             int selectedIndex = 0;
             for (; selectedIndex < options.Length; ++selectedIndex)
@@ -378,6 +408,7 @@ namespace CimTools.V1.Utilities
             });
 
             component = dropdown;
+            return dropdown;
         }
 
         public override void Translate(Translation translation)
@@ -444,9 +475,9 @@ namespace CimTools.V1.Utilities
         /// Create the element on the helper
         /// </summary>
         /// <param name="helper">The UIHelper to attach the element to</param>
-        public override void Create(UIHelperBase helper)
+        public override UIComponent Create(UIHelperBase helper)
         {
-            helper.AddSpace(spacing);
+            return helper.AddSpace(spacing) as UIComponent;
         }
 
         public override void Translate(Translation translation)

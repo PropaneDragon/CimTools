@@ -21,6 +21,7 @@ namespace CimTools.V1
         private DetailedLogger m_detailedLogger;
         private NamedLogger m_namedLogger;
         private Translation m_translation;
+        private UIUtilities m_uiUtilities;
 
         /// <summary>
         /// Returns an instance of CimToolSettings
@@ -98,6 +99,11 @@ namespace CimTools.V1
             get { return m_translation; }
         }
 
+        public UIUtilities UIUtilities
+        {
+            get { return m_uiUtilities; }
+        }
+
         /// <summary>
         /// Create a new CimToolBase with your mod settings. This will create
         /// instances of useful tools and you can access them from this class.
@@ -116,6 +122,7 @@ namespace CimTools.V1
             m_detailedLogger = new DetailedLogger(modSettings);
             m_namedLogger = new NamedLogger(modSettings);
             m_translation = new Translation(this);
+            m_uiUtilities = new UIUtilities();
 
             m_xmlOptions.Load();
         }

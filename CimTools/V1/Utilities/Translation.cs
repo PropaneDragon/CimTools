@@ -228,6 +228,7 @@ namespace CimTools.V1.Utilities
                             if (_currentLanguage._conversionDictionary.ContainsKey(identifier))
                             {
                                 translatableField.SetValue(null, _currentLanguage._conversionDictionary[identifier]);
+                                _toolBase.DetailedLogger.Log("Translation language \"" + languageID + "\" is returning \"" + _currentLanguage._conversionDictionary[identifier] + "\" for \"" + identifier + "\"");
                             }
                             else
                             {
@@ -239,7 +240,18 @@ namespace CimTools.V1.Utilities
 
                     if (OnLanguageChanged != null)
                     {
-                        OnLanguageChanged(languageID);
+                        Delegate[] invocationList = OnLanguageChanged.GetInvocationList();
+
+                        _toolBase.DetailedLogger.Log("Invocation list size: " + invocationList.Length.ToString());
+                        
+                        int count = 0;
+
+                        foreach (Delegate method in invocationList)
+                        {
+                            _toolBase.DetailedLogger.Log("Event #" + (++count).ToString());
+                            _toolBase.DetailedLogger.Log("Invoking language change on " + method.Method.Name);
+                            method.DynamicInvoke(languageID);
+                        }
                     }
 
                     success = true;
@@ -269,10 +281,11 @@ namespace CimTools.V1.Utilities
                 if (HasTranslation(translationId))
                 {
                     translatedText = _currentLanguage._conversionDictionary[translationId];
+                    _toolBase.DetailedLogger.Log("Returned translation for language \"" + _currentLanguage._uniqueName + "\" is returning \"" + translatedText + "\" for \"" + translationId + "\"");
                 }
                 else
                 {
-                    _toolBase.DetailedLogger.LogWarning("Translation language \"" + _currentLanguage._uniqueName + "\" doesn't contain a suitable translation for \"" + translationId + "\"");
+                    _toolBase.DetailedLogger.LogWarning("Returned translation for language \"" + _currentLanguage._uniqueName + "\" doesn't contain a suitable translation for \"" + translationId + "\"");
                 }
             }
             else
