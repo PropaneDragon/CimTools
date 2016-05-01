@@ -18,16 +18,16 @@ namespace CimTools.v2.File
 
     public class XmlFileManager
     {        
-        internal CimToolSettings m_modSettings;
+        internal CimToolBase m_toolBase;
         internal List<object> m_nonStaticObjectsToSave = new List<object>();
 
         /// <summary>
         /// Handles IO between classes and the options XML file.
         /// </summary>
-        /// <param name="modSettings"></param>
-        public XmlFileManager(CimToolSettings modSettings)
+        /// <param name="toolBase"></param>
+        public XmlFileManager(CimToolBase toolBase)
         {
-            m_modSettings = modSettings;
+            m_toolBase = toolBase;
         }
 
         /// <summary>
@@ -43,18 +43,18 @@ namespace CimTools.v2.File
         /// <summary>
         /// Save an XML document to the default location
         /// </summary>
-        public void Save()
+        public bool Save()
         {
-            StreamWriter writer = new StreamWriter(m_modSettings.ModName + "Options.xml");
+            StreamWriter writer = new StreamWriter(m_toolBase.ModSettings.ModName + "Options.xml");
 
-            Save(writer);
+            return Save(writer);
         }
 
         /// <summary>
         /// Save an XML document to a custom writer
         /// </summary>
         /// <param name="writer">The writer to save the XML document to</param>
-        public void Save(TextWriter writer)
+        public bool Save(TextWriter writer)
         {
             List<ClassData> hierarchies = GetHierarchy();
             XmlWriter xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings() { NewLineOnAttributes = true, Indent = true });
@@ -75,13 +75,15 @@ namespace CimTools.v2.File
             xmlWriter.Close();
 
             writer.Close();
+
+            return true; //Should be temporary until I can think of something that can cause this to fail
         }
 
         public void Load()
         {
-            if (System.IO.File.Exists(m_modSettings.ModName + "Options.xml"))
+            if (System.IO.File.Exists(m_toolBase.ModSettings.ModName + "Options.xml"))
             {
-                StreamReader reader = new StreamReader(m_modSettings.ModName + "Options.xml");
+                StreamReader reader = new StreamReader(m_toolBase.ModSettings.ModName + "Options.xml");
                 Load(reader);
             }
         }
@@ -166,10 +168,13 @@ namespace CimTools.v2.File
         private List<ClassData> GetHierarchy()
         {
             List<ClassData> returnList = new List<ClassData>();
-            
-            foreach (Type individualType in m_modSettings.ModAssembly.GetTypes())
+
+            foreach (Assembly assembly in m_toolBase.ModSettings.Assemblies)
             {
-                AddClassToList(individualType, null, ref returnList);
+                foreach (Type individualType in assembly.GetTypes())
+                {
+                    AddClassToList(individualType, null, ref returnList);
+                }
             }
 
             foreach(object nonStaticObject in m_nonStaticObjectsToSave)

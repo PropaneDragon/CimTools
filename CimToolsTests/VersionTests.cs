@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CimTools.v2;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
 
@@ -10,7 +11,7 @@ namespace CimToolsTests
         [TestMethod]
         public void Delimited()
         {
-            CimTools.v2.Utilities.Version versionTest = new CimTools.v2.Utilities.Version(Assembly.GetExecutingAssembly());
+            CimTools.v2.Utilities.Version versionTest = new CimTools.v2.Utilities.Version(new CimToolBase(new CimToolSettings("", "VersionTestDelimited", Assembly.GetCallingAssembly())));
 
             string version = versionTest.Delimited();
             Assert.AreEqual(version.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries).Length, 3);

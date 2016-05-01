@@ -1,4 +1,5 @@
-﻿using CimTools.v2.Attributes;
+﻿using CimTools.v2;
+using CimTools.v2.Attributes;
 using CimTools.v2.File;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ namespace CimToolsTests
         [TestMethod]
         public void SaveLoadUsingAttributes()
         {
-            XmlFileManager testManager = new XmlFileManager(new CimTools.v2.CimToolSettings("SaveLoadUsingAttributesTest", modAssembly: Assembly.GetExecutingAssembly()));
+            XmlFileManager testManager = new XmlFileManager(new CimToolBase(new CimToolSettings("", "SaveLoadUsingAttributesTest", modAssembly: Assembly.GetExecutingAssembly())));
 
             TestNonStaticOverriddenClass testClassOverridden = new TestNonStaticOverriddenClass();
             TestNonStaticNonOverriddenClass testClassNonOverridden = new TestNonStaticNonOverriddenClass();

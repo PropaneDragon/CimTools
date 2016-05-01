@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace CimTools.v2.Utilities
+﻿namespace CimTools.v2.Utilities
 {
     /// <summary>
     /// Handles everything to do with the mod version number
@@ -33,11 +31,11 @@ namespace CimTools.v2.Utilities
             Revision
         };
 
-        Assembly m_assembly = null;
+        CimToolBase m_toolBase = null;
 
-        public Version(Assembly assemblyForVersion)
+        public Version(CimToolBase toolBase)
         {
-            m_assembly = assemblyForVersion;
+            m_toolBase = toolBase;
         }
 
         /// <summary>
@@ -46,7 +44,7 @@ namespace CimTools.v2.Utilities
         /// <returns>The major number</returns>
         public int Major()
         {
-            return m_assembly != null ? m_assembly.GetName().Version.Major : -1;
+            return m_toolBase != null ? m_toolBase.ModSettings.MainAssembly.GetName().Version.Major : -1;
         }
 
         /// <summary>
@@ -55,7 +53,7 @@ namespace CimTools.v2.Utilities
         /// <returns>The minor number</returns>
         public int Minor()
         {
-            return m_assembly != null ? m_assembly.GetName().Version.Minor : -1;
+            return m_toolBase != null ? m_toolBase.ModSettings.MainAssembly.GetName().Version.Minor : -1;
         }
 
         /// <summary>
@@ -64,7 +62,7 @@ namespace CimTools.v2.Utilities
         /// <returns>The build number</returns>
         public int Build()
         {
-            return m_assembly != null ? m_assembly.GetName().Version.Build : -1;
+            return m_toolBase != null ? m_toolBase.ModSettings.MainAssembly.GetName().Version.Build : -1;
         }
 
         /// <summary>
@@ -73,7 +71,7 @@ namespace CimTools.v2.Utilities
         /// <returns>The revision number</returns>
         public int Revision()
         {
-            return m_assembly != null ? m_assembly.GetName().Version.Revision : -1;
+            return m_toolBase != null ? m_toolBase.ModSettings.MainAssembly.GetName().Version.Revision : -1;
         }
 
         /// <summary>

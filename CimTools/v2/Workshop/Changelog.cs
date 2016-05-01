@@ -133,11 +133,11 @@ namespace CimTools.v2.Workshop
             new KeyValuePair<string, Color>("u", new Color(.96f, .5f, .5f))
         };
 
-        internal CimToolSettings m_settings = null;
+        internal CimToolBase m_toolBase = null;
 
-        public Changelog(CimToolSettings settings)
+        public Changelog(CimToolBase toolBase)
         {
-            m_settings = settings;
+            m_toolBase = toolBase;
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace CimTools.v2.Workshop
         /// </summary>
         public void DownloadChangelog()
         {
-            if (m_settings != null && m_settings.WorkshopID != null)
+            if (m_toolBase != null && m_toolBase.ModSettings.WorkshopID != null)
             {
                 m_changeList.Clear();
                 m_rawChanges = "";
@@ -156,7 +156,7 @@ namespace CimTools.v2.Workshop
 
                 try
                 {
-                    ExtractData(m_webClient.DownloadString(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + m_settings.WorkshopID.ToString())));
+                    ExtractData(m_webClient.DownloadString(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + m_toolBase.ModSettings.WorkshopID.ToString())));
                     m_downloadError = false;
                 }
                 catch (Exception exception)
@@ -177,7 +177,7 @@ namespace CimTools.v2.Workshop
         /// <seealso cref="m_downloadComplete"/>
         public void DownloadChangelogAsync()
         {
-            if (m_settings != null && m_settings.WorkshopID != null)
+            if (m_toolBase != null && m_toolBase.ModSettings.WorkshopID != null)
             {
                 m_changeList.Clear();
                 m_rawChanges = "";
@@ -189,7 +189,7 @@ namespace CimTools.v2.Workshop
                 try
                 {
                     m_webClient.DownloadStringCompleted += M_webClient_DownloadStringCompleted;
-                    m_webClient.DownloadStringAsync(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + m_settings.WorkshopID.ToString()));
+                    m_webClient.DownloadStringAsync(new Uri("http://steamcommunity.com/sharedfiles/filedetails/changelog/" + m_toolBase.ModSettings.WorkshopID.ToString()));
                 }
                 catch (Exception exception)
                 {

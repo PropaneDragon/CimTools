@@ -6,7 +6,7 @@ using CimTools.v2.Workshop;
 namespace CimTools.v2
 {
     /// <summary>
-    /// The base for CimTools. Create a static version of this in your
+    /// The base for CimTools. Create a static/instanced version of this in your
     /// project and access everything through here.
     /// </summary>
     public class CimToolBase
@@ -18,7 +18,7 @@ namespace CimTools.v2
         private XmlFileManager m_xmlOptions;
         private Path m_path;
         private Version m_version;
-        private ModOptionUtilities m_modOptions;
+        private ModOptionPanelUtilities m_modOptions;
         private DetailedLogger m_detailedLogger;
         private NamedLogger m_namedLogger;
         private Translation m_translation;
@@ -79,7 +79,7 @@ namespace CimTools.v2
             get { return m_version; }
         }
 
-        public ModOptionUtilities ModOptions
+        public ModOptionPanelUtilities ModPanelOptions
         {
             get { return m_modOptions; }
         }
@@ -100,6 +100,9 @@ namespace CimTools.v2
             get { return m_namedLogger; }
         }
 
+        /// <summary>
+        /// Returns an instance of Translation
+        /// </summary>
         public Translation Translation
         {
             get { return m_translation; }
@@ -115,23 +118,15 @@ namespace CimTools.v2
             m_modSettings = modSettings;
 
             m_spriteUtilities = new SpriteUtilities();
-            m_path = new Path(modSettings);
-            m_version = new Version(modSettings.ModAssembly);
-            //m_saveFileOptions = new SaveFileManager(modSettings);
-            m_xmlOptions = new XmlFileManager(modSettings);
-            m_changelog = new Changelog(modSettings);
-            m_modOptions = new ModOptionUtilities(this);
-            m_detailedLogger = new DetailedLogger(modSettings);
-            m_namedLogger = new NamedLogger(modSettings);
+            m_path = new Path(this);
+            m_version = new Version(this);
+            m_detailedLogger = new DetailedLogger(this);
+            m_namedLogger = new NamedLogger(this);
             m_translation = new Translation(this);
-
-            SetUpInternalSavedXML();
-            m_xmlOptions.Load();
-        }
-
-        private void SetUpInternalSavedXML()
-        {
-
+            m_xmlOptions = new XmlFileManager(this);
+            m_saveFileOptions = new SaveFileManager(this);
+            m_changelog = new Changelog(this);
+            m_modOptions = new ModOptionPanelUtilities(this);
         }
     }
 }

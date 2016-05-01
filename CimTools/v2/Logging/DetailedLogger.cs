@@ -18,13 +18,13 @@ namespace CimTools.v2.Logging
         private Timer _saveTimer = new Timer(10000);
         private List<KeyValuePair<LogType, string>> _queuedMessages = new List<KeyValuePair<LogType, string>>();
 
-        public DetailedLogger(CimToolSettings modSettings)
+        public DetailedLogger(CimToolBase toolBase)
         {
             _saveTimer.Elapsed += SaveTimer_Elapsed;
             _saveTimer.Enabled = true;
             _saveTimer.AutoReset = true;
 
-            _fileName = modSettings.ModName + "-detailed.log";
+            _fileName = toolBase.ModSettings.ModName + "-detailed.log";
             
             System.IO.File.Delete(_fileName);
             System.IO.File.CreateText(_fileName);

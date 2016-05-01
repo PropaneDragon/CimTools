@@ -4,6 +4,16 @@
         <name>CimTools</name>
     </assembly>
     <members>
+        <member name="T:CimTools.v2.Attributes.TranslatableAttribute">
+            <summary>
+            Translates the specified field into the value denoted by the identifier
+            </summary>
+        </member>
+        <member name="F:CimTools.v2.Attributes.TranslatableAttribute.identifier">
+            <summary>
+            The translation ID
+            </summary>
+        </member>
         <member name="T:CimTools.v2.Logging.DetailedLogger">
             <summary>
             Allows you to log detailed messages about your mod in its own file.
@@ -32,11 +42,11 @@
             <param name="modName">The name of the mod</param>
             <returns>The full path of the mod</returns>
         </member>
-        <member name="M:CimTools.v2.File.XmlFileManager.#ctor(CimTools.v2.CimToolSettings)">
+        <member name="M:CimTools.v2.File.XmlFileManager.#ctor(CimTools.v2.CimToolBase)">
             <summary>
             Handles IO between classes and the options XML file.
             </summary>
-            <param name="modSettings"></param>
+            <param name="toolBase"></param>
         </member>
         <member name="M:CimTools.v2.File.XmlFileManager.AddObjectToSave(System.Object)">
             <summary>
@@ -73,7 +83,7 @@
             <param name="containingAssembly">The assembly to get the translatable fields from</param>
             <returns>A list of fields which can be translated</returns>
         </member>
-        <member name="M:CimTools.v2.Utilities.Translation.LoadLanguages">
+        <member name="M:CimTools.v2.Utilities.Translation.RefreshLanguages">
             <summary>
             Loads all languages from the Locale folder
             </summary>
@@ -89,6 +99,13 @@
             Returns a list of languages which are available to the mod. This will return language IDs for searching.
             </summary>
             <returns>A list of languages available.</returns>
+        </member>
+        <member name="M:CimTools.v2.Utilities.Translation.GetLanguageIDsFromName(System.String)">
+            <summary>
+            Returns a list of Language unique IDs that have the name
+            </summary>
+            <param name="name">The name of the language to get IDs for</param>
+            <returns>A list of IDs that match</returns>
         </member>
         <member name="M:CimTools.v2.Utilities.Translation.TranslateTo(System.String)">
             <summary>
@@ -158,35 +175,37 @@
             <param name="upTo">Return a version number up to this limit.</param>
             <returns>A delimited version string</returns>
         </member>
-        <member name="T:CimTools.v2.Utilities.OptionPanelSaved">
+        <member name="T:CimTools.v2.Utilities.OptionPanelSavedEventHandler">
             <summary>
             When the user has saved the options
             </summary>
         </member>
-        <member name="T:CimTools.v2.Utilities.ModOptionUtilities">
+        <member name="T:CimTools.v2.Utilities.ModOptionPanelUtilities">
             <summary>
             Handles options on the mod option panel ingame
             </summary>
         </member>
-        <member name="E:CimTools.v2.Utilities.ModOptionUtilities.OnOptionPanelSaved">
+        <member name="E:CimTools.v2.Utilities.ModOptionPanelUtilities.OnOptionPanelSaved">
             <summary>
             When the options have been saved by the user.
             </summary>
         </member>
-        <member name="M:CimTools.v2.Utilities.ModOptionUtilities.CreateOptions(ICities.UIHelperBase,System.Collections.Generic.List{CimTools.v2.Utilities.OptionsItemBase},System.String)">
+        <member name="M:CimTools.v2.Utilities.ModOptionPanelUtilities.CreateOptions(ICities.UIHelperBase,System.Collections.Generic.List{CimTools.v2.Utilities.OptionsItemBase},System.String,System.String)">
             <summary>
             Creates options on a panel using the helper
             </summary>
             <param name="helper">The UIHelper to put the options on</param>
+            <param name="options">The options to put inside the group</param>
             <param name="groupName">The title of the group in the options panel.</param>
+            <param name="translationId">The ID of the translation to apply to the name.</param>
         </member>
-        <member name="M:CimTools.v2.Utilities.ModOptionUtilities.SaveOptions">
+        <member name="M:CimTools.v2.Utilities.ModOptionPanelUtilities.SaveOptions">
             <summary>
             Manually save the UI options to the persistent options. When this is called
             by the class internally, you can get the event using OnOptionPanelSaved()
             </summary>
         </member>
-        <member name="M:CimTools.v2.Utilities.ModOptionUtilities.LoadOptions">
+        <member name="M:CimTools.v2.Utilities.ModOptionPanelUtilities.LoadOptions">
             <summary>
             Manually load the UI options onto the existing panel elements.
             </summary>
@@ -202,9 +221,9 @@
             or you'll lose data.
             </summary>
         </member>
-        <member name="F:CimTools.v2.Utilities.OptionsItemBase.readableName">
+        <member name="F:CimTools.v2.Utilities.OptionsItemBase.translationIdentifier">
             <summary>
-            The name that appears on the UI.
+            The identifier to link to the translatable attribute.
             </summary>
         </member>
         <member name="F:CimTools.v2.Utilities.OptionsItemBase.enabled">
@@ -217,6 +236,12 @@
             Create the element on the helper
             </summary>
             <param name="helper">The UIHelper to attach the element to</param>
+        </member>
+        <member name="M:CimTools.v2.Utilities.OptionsItemBase.Translate(CimTools.v2.Utilities.Translation)">
+            <summary>
+            Called when translations change
+            </summary>
+            <param name="translation">The translation data</param>
         </member>
         <member name="T:CimTools.v2.Utilities.OptionsCheckbox">
             <summary>
@@ -281,6 +306,27 @@
             </summary>
         </member>
         <member name="M:CimTools.v2.Utilities.OptionsDropdown.Create(ICities.UIHelperBase)">
+            <summary>
+            Create the element on the helper
+            </summary>
+            <param name="helper">The UIHelper to attach the element to</param>
+        </member>
+        <member name="T:CimTools.v2.Utilities.OptionsSpace">
+            <summary>
+            Dropdown option
+            </summary>
+        </member>
+        <member name="P:CimTools.v2.Utilities.OptionsSpace.value">
+            <summary>
+            The default value of the object, or the saved value if loaded.
+            </summary>
+        </member>
+        <member name="F:CimTools.v2.Utilities.OptionsSpace.spacing">
+            <summary>
+            Set the spacing of the UI between this spacer.
+            </summary>
+        </member>
+        <member name="M:CimTools.v2.Utilities.OptionsSpace.Create(ICities.UIHelperBase)">
             <summary>
             Create the element on the helper
             </summary>
@@ -393,12 +439,12 @@
             with the tools, or elements may not work properly.
             </summary>
         </member>
-        <member name="P:CimTools.v2.CimToolSettings.ModFolderName">
+        <member name="P:CimTools.v2.CimToolSettings.ModName">
             <summary>
             The folder name of the mod.
             </summary>
         </member>
-        <member name="P:CimTools.v2.CimToolSettings.ModName">
+        <member name="P:CimTools.v2.CimToolSettings.ReadableName">
             <summary>
             The name of the mod. This should be the same as the workshop
             name.
@@ -409,9 +455,14 @@
             Workshop ID of the mod.
             </summary>
         </member>
-        <member name="P:CimTools.v2.CimToolSettings.ModAssembly">
+        <member name="P:CimTools.v2.CimToolSettings.MainAssembly">
             <summary>
             Assembly of the mod.
+            </summary>
+        </member>
+        <member name="P:CimTools.v2.CimToolSettings.Assemblies">
+            <summary>
+            All assemblies in the mod
             </summary>
         </member>
         <member name="M:CimTools.v2.CimToolSettings.#ctor(System.String,System.String,System.Reflection.Assembly,System.Nullable{System.UInt64})">
@@ -419,13 +470,13 @@
             Initialises the settings for the rest of the mod
             </summary>
             <param name="readableName">How you want the mods name to appear in game</param>
-            <param name="modFolderName">The name of the folder this mod belongs to (in the Mods folder, not on the workshop).</param>
+            <param name="modName">The actual file name of the mod.</param>
             <param name="modAssembly">The assembly of the mod. If null it will just use GetCallingAssembly.</param>
             <param name="workshopId">The workshop ID of the mod (if you have one).</param>
         </member>
         <member name="T:CimTools.v2.CimToolBase">
             <summary>
-            The base for CimTools. Create a static version of this in your
+            The base for CimTools. Create a static/instanced version of this in your
             project and access everything through here.
             </summary>
         </member>
@@ -472,6 +523,11 @@
         <member name="P:CimTools.v2.CimToolBase.NamedLogger">
             <summary>
             Returns an instance of the NamedLogger
+            </summary>
+        </member>
+        <member name="P:CimTools.v2.CimToolBase.Translation">
+            <summary>
+            Returns an instance of Translation
             </summary>
         </member>
         <member name="M:CimTools.v2.CimToolBase.#ctor(CimTools.v2.CimToolSettings)">

@@ -7,26 +7,26 @@ namespace CimTools.v2.Logging
     /// </summary>
     public class NamedLogger
     {
-        private CimToolSettings _modSettings;
+        private CimToolBase _toolBase;
 
-        public NamedLogger(CimToolSettings modSettings)
+        public NamedLogger(CimToolBase toolBase)
         {
-            _modSettings = modSettings;
+            _toolBase = toolBase;
         }
 
         public void LogError(string message)
         {
-            Debug.LogError(_modSettings.ModName + ": " + message);
+            Debug.LogError(_toolBase.ModSettings.ReadableName + ": " + message);
         }
 
         public void LogWarning(string message)
         {
-            Debug.LogWarning(_modSettings.ModName + ": " + message);
+            Debug.LogWarning(_toolBase.ModSettings.ReadableName + ": " + message);
         }
 
         public void Log(string message)
         {
-            Debug.Log(_modSettings.ModName + ": " + message);
+            Debug.Log(_toolBase.ModSettings.ReadableName + ": " + message);
         }
     }
 }

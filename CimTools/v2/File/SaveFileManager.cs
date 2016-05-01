@@ -3,34 +3,28 @@ using ICities;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
 using UnityEngine;
 
 namespace CimTools.v2.Utilities
 {
     public class SaveFileManager
     {
-        /*private CimToolSettings _modSettings = null;
+        private CimToolBase _toolBase = null;
         private XmlFileManager _xmlManager = null;
 
-        public XmlFileOptions Data
+        public SaveFileManager(CimToolBase toolBase)
         {
-            get { return _xmlManager.Data; }
-        }
-
-        public SaveFileManager(CimToolSettings modSettings)
-        {
-            _modSettings = modSettings;
-            _xmlManager = new XmlFileManager(modSettings);
+            _toolBase = toolBase;
+            _xmlManager = new XmlFileManager(toolBase);
         }
 
         public void OnSaveData(ISerializableData serialisableDataManager)
         {
-            if (_modSettings.ModName != null)
+            if (_toolBase.ModSettings.ModName != null)
             {                
                 StringWriter stringWriter = new StringWriter();
 
-                if (_xmlManager.Save(stringWriter) == ExportOptionBase.OptionError.NoError)
+                if (_xmlManager.Save(stringWriter))
                 {
                     BinaryFormatter binaryFormatter = new BinaryFormatter();
                     MemoryStream memoryStream = new MemoryStream();
@@ -38,7 +32,7 @@ namespace CimTools.v2.Utilities
                     Debug.Log(stringWriter.ToString());
 
                     binaryFormatter.Serialize(memoryStream, stringWriter.ToString());
-                    serialisableDataManager.SaveData(_modSettings.ModName + "Data", memoryStream.ToArray());
+                    serialisableDataManager.SaveData(_toolBase.ModSettings.ModName + "Data", memoryStream.ToArray());
 
                     memoryStream.Close();
                 }
@@ -51,9 +45,9 @@ namespace CimTools.v2.Utilities
 
         public void OnLoadData(ISerializableData serialisableDataManager)
         {
-            if(_modSettings.ModName != null)
+            if(_toolBase.ModSettings.ModName != null)
             {
-                byte[] deserialisedData = serialisableDataManager.LoadData(_modSettings.ModName + "Data");
+                byte[] deserialisedData = serialisableDataManager.LoadData(_toolBase.ModSettings.ModName + "Data");
 
                 if(deserialisedData != null)
                 {
@@ -84,6 +78,6 @@ namespace CimTools.v2.Utilities
                     }
                 }
             }
-        }*/
+        }
     }
 }

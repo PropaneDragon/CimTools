@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="v2\Attributes\TranslatableAttribute.cs" />
     <Compile Include="v2\Attributes\XmlOptionsAttribute.cs" />
+    <Compile Include="v2\Data\OptionPanelSavedData.cs" />
     <Compile Include="v2\Elements\UITitleBar.cs" />
     <Compile Include="v2\Logging\DetailedLogger.cs" />
     <Compile Include="v2\Logging\NamedLogger.cs" />
@@ -71,7 +72,7 @@
     <Compile Include="v2\File\SaveFileManager.cs" />
     <Compile Include="v2\CimToolSettings.cs" />
     <Compile Include="v2\CimToolBase.cs" />
-    <Compile Include="v2\Utilities\ModOptionUtilities.cs" />
+    <Compile Include="v2\Utilities\ModOptionPanelUtilities.cs" />
     <Compile Include="v2\Utilities\SpriteUtilities.cs" />
     <Compile Include="v2\Utilities\UIUtilities.cs" />
     <Compile Include="v2\Workshop\Changelog.cs" />

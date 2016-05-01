@@ -5,7 +5,7 @@ namespace CimTools.v2.Workshop
 {
     class ChangelogTest : Changelog
     {
-        public ChangelogTest(CimToolSettings settings) : base(settings)
+        public ChangelogTest(CimToolBase settings) : base(settings)
         {            
         }
 
@@ -21,7 +21,7 @@ namespace CimTools.v2.Workshop
         [TestMethod]
         public void ReturnList()
         {
-            ChangelogTest tester = new ChangelogTest(new CimToolSettings(""));
+            ChangelogTest tester = new ChangelogTest(new CimToolBase(new CimToolSettings("", "ChangeLogReturnList")));
             string testData = "<div class=\"test\"><u><b><i><div class=\"headline\"></div><ul class=\"bb_ul\"><li><b>TEST</b><u> test2</u></li><li>Another <invalid tag with stuff in><b>test</b> list</ul><div class=\"commentsLink changeLog\"></div></div>";
 
             tester.ForceExtractData(testData);
@@ -40,7 +40,7 @@ namespace CimTools.v2.Workshop
         [TestMethod]
         public void ReturnString()
         {
-            ChangelogTest tester = new ChangelogTest(new CimToolSettings(""));
+            ChangelogTest tester = new ChangelogTest(new CimToolBase(new CimToolSettings("", "ChangeLogReturnString")));
             string testData = "<div class=\"test\"><u><b><i><div class=\"headline\"></div><ul class=\"bb_ul\"><li><b>TEST</b><u> test2</u></li><li>Another <invalid tag with stuff in><b>test</b> list</ul><div class=\"commentsLink changeLog\"></div></div>";
 
             tester.ForceExtractData(testData);

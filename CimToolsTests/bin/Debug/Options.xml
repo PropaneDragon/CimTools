@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+  <OverriddenStaticName>
+    <testDictionaryDouble>
+      <doublekey1>5E-05</doublekey1>
+    </testDictionaryDouble>
+    <testListInt>
+      <Item>1</Item>
+      <Item>2</Item>
+      <Item>3</Item>
+      <Item>4</Item>
+      <Item>5</Item>
+      <Item>6</Item>
+    </testListInt>
+    <testInt>15</testInt>
+    <testString>test string</testString>
+  </OverriddenStaticName>
+  <TestNonOverriddenNameClass>
+    <testDictionaryString>
+      <stringkey1>test dictionary string 1</stringkey1>
+    </testDictionaryString>
+    <testListDouble>
+      <Item>1.1234</Item>
+      <Item>2.2345</Item>
+      <Item>3.3456</Item>
+      <Item>4.4567</Item>
+      <Item>5.5678</Item>
+      <Item>6.6789</Item>
+    </testListDouble>
+    <testInt>1000</testInt>
+    <testString>another test string</testString>
+  </TestNonOverriddenNameClass>
+  <OverriddenNonStaticName>
+    <testDictionaryDouble>
+      <doublekey2>5E-05</doublekey2>
+    </testDictionaryDouble>
+    <testListInt>
+      <Item>10</Item>
+      <Item>20</Item>
+      <Item>30</Item>
+      <Item>40</Item>
+      <Item>50</Item>
+      <Item>60</Item>
+    </testListInt>
+    <testInt>150</testInt>
+    <testString>test non static string</testString>
+  </OverriddenNonStaticName>
+  <TestNonStaticNonOverriddenClass>
+    <testDictionaryString>
+      <stringkey2>test dictionary string 2</stringkey2>
+    </testDictionaryString>
+    <testListDouble>
+      <Item>10.1234</Item>
+      <Item>20.2345</Item>
+      <Item>30.3456</Item>
+      <Item>40.4567</Item>
+      <Item>50.5678</Item>
+      <Item>60.6789</Item>
+    </testListDouble>
+    <testInt>50000</testInt>
+    <testString>another another non static test string</testString>
+  </TestNonStaticNonOverriddenClass>
+</Settings>

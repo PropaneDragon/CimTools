@@ -19,7 +19,7 @@ namespace CimToolsTests
 
     public class TranslationTester : Translation
     {
-        public TranslationTester(CimToolBase toolBase) : base(toolBase)
+        public TranslationTester(CimToolBase toolBase) : base(toolBase, false)
         {
         }
 
@@ -47,7 +47,7 @@ namespace CimToolsTests
         [TestMethod]
         public void SaveLanguageFile()
         {
-            CimToolBase toolBase = new CimToolBase(new CimToolSettings("SaveLanguageFileTest", modAssembly: Assembly.GetExecutingAssembly()));
+            CimToolBase toolBase = new CimToolBase(new CimToolSettings("", "SaveLanguageFileTest", modAssembly: Assembly.GetExecutingAssembly()));
             TranslationTester translation = new TranslationTester(toolBase);
 
             translation.GenerateLanguageTemplate();
@@ -56,20 +56,14 @@ namespace CimToolsTests
         [TestMethod]
         public void InterpretLanguageFile()
         {
-            CimToolBase toolBase = new CimToolBase(new CimToolSettings("InterpretLanguageFileTest", modAssembly: Assembly.GetExecutingAssembly()));
+            CimToolBase toolBase = new CimToolBase(new CimToolSettings("", "InterpretLanguageFileTest", modAssembly: Assembly.GetExecutingAssembly()));
             TranslationTester translation = new TranslationTester(toolBase);
 
             string xmlText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
             "<Language xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" UniqueName=\"export\" ReadableName=\"Exported Language\">\n" +
                 "<Translations>\n" +
-                "<Translation>\n" +
-                    "<ID>translateTextA</ID>\n" +
-                    "<String />\n" +
-                "</Translation>\n" +
-                "<Translation>\n" +
-                    "<ID>translateTextB</ID>\n" +
-                    "<String />\n" +
-                "</Translation>\n" +
+                    "<Translation ID=\"translateTextA\" String=\"\" />\n" +
+                    "<Translation ID=\"translateTextB\" String=\"\" />\n" +
                 "</Translations>\n" +
             "</Language>\n";
 
@@ -81,7 +75,7 @@ namespace CimToolsTests
         [TestMethod]
         public void TranslateToLanguage()
         {
-            CimToolBase toolBase = new CimToolBase(new CimToolSettings("TranslateToLanguageTest", modAssembly: Assembly.GetExecutingAssembly()));
+            CimToolBase toolBase = new CimToolBase(new CimToolSettings("", "TranslateToLanguageTest", modAssembly: Assembly.GetExecutingAssembly()));
             TranslationTester translation = new TranslationTester(toolBase);
 
             ExportTranslations.TranslationA = "";
@@ -93,14 +87,8 @@ namespace CimToolsTests
             string xmlText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
             "<Language xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" UniqueName=\"export\" ReadableName=\"Exported Language\">\n" +
                 "<Translations>\n" +
-                "<Translation>\n" +
-                    "<ID>translateTextA</ID>\n" +
-                    "<String>ChangedTextA</String>\n" +
-                "</Translation>\n" +
-                "<Translation>\n" +
-                    "<ID>translateTextB</ID>\n" +
-                    "<String>Changed Text B</String>\n" +
-                "</Translation>\n" +
+                    "<Translation ID=\"translateTextA\" String=\"ChangedTextA\" />\n" +
+                    "<Translation ID=\"translateTextB\" String=\"Changed Text B\"/>\n" +
                 "</Translations>\n" +
             "</Language>\n";
 

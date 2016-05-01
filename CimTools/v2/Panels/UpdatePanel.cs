@@ -53,7 +53,7 @@ namespace CimTools.v2.Panels
         public void Initialise(CimToolBase toolBase)
         {
             m_changelogDownloader = toolBase.Changelog;
-            m_updatedTitleMessage = string.Format("{0} has updated!", toolBase.ModSettings.ModName);
+            m_updatedTitleMessage = string.Format("{0} has updated!", toolBase.ModSettings.ReadableName);
 
             string lastSavedVersion = "0.0";
 

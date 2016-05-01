@@ -4,7 +4,6 @@ D:\Projects\Git\CimTools\CimToolsTests\bin\Release\Assembly-CSharp.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\CimTools.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\ColossalManaged.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\ICities.dll
-D:\Projects\Git\CimTools\CimToolsTests\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\UnityEngine.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\Assembly-CSharp-firstpass.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\ICSharpCode.SharpZipLib.dll

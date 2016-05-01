@@ -9,26 +9,26 @@ namespace CimTools.v2
     /// </summary>
     public class CimToolSettings
     {
-        internal string m_modName = null;
-        internal string m_modFolderName = null;
-        internal ulong? m_workshopID = null;
-        internal Assembly m_assembly = null;
+        private string m_readableName = null;
+        private string m_internalName = null;
+        private ulong? m_workshopID = null;
+        private List<Assembly> m_assembly = null;
 
         /// <summary>
         /// The folder name of the mod.
         /// </summary>
-        public string ModFolderName
+        public string ModName
         {
-            get { return m_modFolderName; }
+            get { return m_internalName; }
         }
 
         /// <summary>
         /// The name of the mod. This should be the same as the workshop
         /// name.
         /// </summary>
-        public string ModName
+        public string ReadableName
         {
-            get { return m_modName; }
+            get { return m_readableName; }
         }
 
         /// <summary>
@@ -42,7 +42,15 @@ namespace CimTools.v2
         /// <summary>
         /// Assembly of the mod.
         /// </summary>
-        public Assembly ModAssembly
+        public Assembly MainAssembly
+        {
+            get { return m_assembly[0]; }
+        }
+
+        /// <summary>
+        /// All assemblies in the mod
+        /// </summary>
+        public List<Assembly> Assemblies
         {
             get { return m_assembly; }
         }
@@ -51,22 +59,35 @@ namespace CimTools.v2
         /// Initialises the settings for the rest of the mod
         /// </summary>
         /// <param name="readableName">How you want the mods name to appear in game</param>
-        /// <param name="modFolderName">The name of the folder this mod belongs to (in the Mods folder, not on the workshop).</param>
+        /// <param name="modName">The actual file name of the mod.</param>
         /// <param name="modAssembly">The assembly of the mod. If null it will just use GetCallingAssembly.</param>
         /// <param name="workshopId">The workshop ID of the mod (if you have one).</param>
-        public CimToolSettings(string readableName, string modFolderName = null, Assembly modAssembly = null, ulong? workshopId = null)
+        public CimToolSettings(string readableName, string modName = null, Assembly modAssembly = null, ulong? workshopId = null)
         {
-            m_modName = readableName;
-            m_modFolderName = modFolderName;
+            m_readableName = readableName;
+            m_internalName = modName;
             m_workshopID = workshopId;
+
+            if(m_assembly == null)
+            {
+                m_assembly = new List<Assembly>();
+            }
 
             if(modAssembly == null)
             {
-                m_assembly = Assembly.GetCallingAssembly();
+                m_assembly.Add(Assembly.GetCallingAssembly());
             }
             else
             {
-                m_assembly = modAssembly;
+                m_assembly.Add(modAssembly);
+            }
+        }
+
+        public void AddAssembly(Assembly assemblyToAdd)
+        {
+            if(!m_assembly.Contains(assemblyToAdd))
+            {
+                m_assembly.Add(assemblyToAdd);
             }
         }
     }
