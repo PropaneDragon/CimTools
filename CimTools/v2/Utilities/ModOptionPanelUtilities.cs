@@ -1,7 +1,8 @@
-﻿using CimTools.v2.Attributes;
-using CimTools.v2.Data;
+﻿using CimTools.v2.Data;
+using CimTools.v2.Logging;
 using ColossalFramework.UI;
 using ICities;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,11 @@ namespace CimTools.v2.Utilities
         private Dictionary<string, List<OptionsItemBase>> _options = new Dictionary<string, List<OptionsItemBase>>();
         private OptionPanelSavedData _savedData;
 
+        public OptionPanelSavedData Data
+        {
+            get { return _savedData; }
+        }
+
         /// <summary>
         /// When the options have been saved by the user.
         /// </summary>
@@ -33,8 +39,9 @@ namespace CimTools.v2.Utilities
         public ModOptionPanelUtilities(CimToolBase toolBase)
         {
             _toolBase = toolBase;
-            _savedData = new OptionPanelSavedData();
+            _toolBase.DetailedLogger.Log("Init ModOptionPanelUtilities");
 
+            _savedData = new OptionPanelSavedData();
             toolBase.XMLFileOptions.AddObjectToSave(_savedData);
         }
 
@@ -152,7 +159,14 @@ namespace CimTools.v2.Utilities
                 {
                     if (option.uniqueName != "")
                     {
-                        _savedData.data.Add(option.uniqueName, option.m_value);
+                        if (_savedData.data.ContainsKey(option.uniqueName))
+                        {
+                            _savedData.data[option.uniqueName] = option.m_value;
+                        }
+                        else
+                        {
+                            _savedData.data.Add(option.uniqueName, option.m_value);
+                        }
                     }
                     else
                     {
@@ -161,12 +175,12 @@ namespace CimTools.v2.Utilities
                 }
             }
 
+            _toolBase.XMLFileOptions.Save();
+
             if (OnOptionPanelSaved != null)
             {
                 OnOptionPanelSaved();
             }
-
-            _toolBase.XMLFileOptions.Save();
         }
 
         /// <summary>
@@ -174,22 +188,32 @@ namespace CimTools.v2.Utilities
         /// </summary>
         public void LoadOptions()
         {
+            _toolBase.DetailedLogger.Log("Loading options up");
             _toolBase.XMLFileOptions.Load();
 
             foreach (KeyValuePair<string, List<OptionsItemBase>> optionGroup in _options)
             {
+                _toolBase.DetailedLogger.Log("Loading option group " + optionGroup.Key);
                 foreach (OptionsItemBase option in optionGroup.Value)
                 {
-                    object foundValue = null;
+                    _toolBase.DetailedLogger.Log("Loading option " + option.uniqueName);
 
                     if (_savedData.data.ContainsKey(option.uniqueName))
                     {
-                        option.m_value = foundValue;
+                        object value = _savedData.data[option.uniqueName];
+                        option.m_value = value;
                     }
-                }               
+                }
             }
         }
 
+        /// <summary>
+        /// Gets the value of the option as type T
+        /// </summary>
+        /// <typeparam name="T">The type the option should be returned as</typeparam>
+        /// <param name="uniqueName">The option name</param>
+        /// <param name="value">The value to insert the returned data into</param>
+        /// <returns></returns>
         public bool GetOptionValue<T>(string uniqueName, ref T value)
         {
             bool found = false;
@@ -200,7 +224,7 @@ namespace CimTools.v2.Utilities
                 {
                     if (option.uniqueName == uniqueName)
                     {
-                        value = (T)option.m_value;
+                        value = (T)Convert.ChangeType(option.m_value, typeof(T));
                         found = true;
 
                         break;
@@ -218,6 +242,9 @@ namespace CimTools.v2.Utilities
     /// </summary>
     public abstract class OptionsItemBase
     {
+        /// <summary>
+        /// The object value of this item. Use value to get and set the value as the correct type.
+        /// </summary>
         public object m_value = default(object);
 
         /// <summary>
@@ -241,6 +268,9 @@ namespace CimTools.v2.Utilities
         /// </summary>
         public bool enabled = true;
 
+        /// <summary>
+        /// The UIComponent of this item
+        /// </summary>
         protected UIComponent component = null;
 
         /// <summary>
@@ -255,6 +285,11 @@ namespace CimTools.v2.Utilities
         /// <param name="translation">The translation data</param>
         public abstract void Translate(Translation translation);
 
+        /// <summary>
+        /// Required for creating UI elements. Ignored by this utility.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ignored"></param>
         public void IgnoredFunction<T>(T ignored) { }
     }
 
@@ -268,7 +303,11 @@ namespace CimTools.v2.Utilities
         /// </summary>
         public bool value
         {
-            get { return (bool)m_value; }
+            get
+            {
+                bool? convertedValue = Convert.ChangeType(m_value, typeof(bool)) as bool?;
+                return convertedValue.HasValue ? convertedValue.Value : false;
+            }
             set { m_value = value; }
         }
 
@@ -318,7 +357,11 @@ namespace CimTools.v2.Utilities
         /// </summary>
         public float value
         {
-            get { return (float)m_value; }
+            get
+            {
+                float? convertedValue = Convert.ChangeType(m_value, typeof(float)) as float?;
+                return convertedValue.HasValue ? convertedValue.Value : 0f;
+            }
             set { m_value = value; }
         }
 

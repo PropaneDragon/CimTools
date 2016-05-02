@@ -18,7 +18,7 @@ namespace CimTools.v2.File
         }
 
         /// <summary>
-        /// Gets the full path of the mod
+        /// Gets the full path of a particular mod
         /// </summary>
         /// <param name="workshopId">The workshop ID of the mod</param>
         /// <param name="modName">The name of the mod</param>
@@ -41,6 +41,10 @@ namespace CimTools.v2.File
             return m_savedModPath;
         }
 
+        /// <summary>
+        /// Gets the full path of the mod
+        /// </summary>
+        /// <returns>The full path of the mod</returns>
         public string GetModPath()
         {
             return GetModPath(m_toolBase.ModSettings.WorkshopID ?? 0, m_toolBase.ModSettings.ModName);

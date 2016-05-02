@@ -9,6 +9,7 @@ namespace CimTools.v2.Elements
         private UILabel m_title;
         private UIButton m_close;
         private UIDragHandle m_drag;
+        private CimToolBase m_toolBase;
 
         public string iconSprite
         {
@@ -19,15 +20,15 @@ namespace CimTools.v2.Elements
                 {
                     m_icon.spriteName = value;
 
-                    if (m_icon.atlas == null)
+                    if (m_icon.atlas == null && m_toolBase != null)
                     {
-                        m_icon.atlas = Utilities.UIUtilities.defaultAtlas;
+                        m_icon.atlas = m_toolBase.SpriteUtilities.GetAtlas("Ingame");
                     }
 
-                    if (m_icon.spriteInfo != null)
+                    if (m_icon.spriteInfo != null && m_toolBase != null)
                     {
                         m_icon.size = m_icon.spriteInfo.pixelSize;
-                        Utilities.UIUtilities.ResizeIcon(m_icon, new Vector2(32, 32));
+                        m_toolBase.UIUtilities.ResizeIcon(m_icon, new Vector2(32, 32));
                         m_icon.relativePosition = new Vector3(10, 5);
                     }
                 }
@@ -51,6 +52,11 @@ namespace CimTools.v2.Elements
             set { m_title.text = value; }
         }
 
+        public void Initialise(CimToolBase toolBase)
+        {
+            m_toolBase = toolBase;
+        }
+
         public override void Awake()
         {
             base.Awake();
@@ -68,34 +74,39 @@ namespace CimTools.v2.Elements
 
         public override void Start()
         {
-            base.Start();
+            if (m_toolBase != null)
+            {
+                base.Start();
 
-            width = parent.width;
-            relativePosition = Vector3.zero;
-            isVisible = true;
-            canFocus = true;
-            isInteractive = true;
+                width = parent.width;
+                relativePosition = Vector3.zero;
+                isVisible = true;
+                canFocus = true;
+                isInteractive = true;
 
-            m_drag.width = width - 50;
-            m_drag.height = height;
-            m_drag.relativePosition = Vector3.zero;
-            m_drag.target = parent;
+                m_drag.width = width - 50;
+                m_drag.height = height;
+                m_drag.relativePosition = Vector3.zero;
+                m_drag.target = parent;
 
-            m_icon.spriteName = iconSprite;
-            m_icon.relativePosition = new Vector3(10, 5);
+                m_icon.spriteName = iconSprite;
+                m_icon.relativePosition = new Vector3(10, 5);
 
-            m_title.relativePosition = new Vector3(50, 13);
-            m_title.text = title;
-            m_title.textAlignment = UIHorizontalAlignment.Center;
+                m_title.relativePosition = new Vector3(50, 13);
+                m_title.text = title;
+                m_title.autoSize = false;
+                m_title.textAlignment = UIHorizontalAlignment.Center;
+                m_title.verticalAlignment = UIVerticalAlignment.Middle;
 
-            m_close.atlas = Utilities.UIUtilities.defaultAtlas;
-            m_close.relativePosition = new Vector3(width - 35, 2);
-            m_close.normalBgSprite = "buttonclose";
-            m_close.hoveredBgSprite = "buttonclosehover";
-            m_close.pressedBgSprite = "buttonclosepressed";
-            m_close.eventClick += (component, param) => parent.Hide();
+                m_close.atlas = m_toolBase.SpriteUtilities.GetAtlas("Ingame");
+                m_close.relativePosition = new Vector3(width - 35, 2);
+                m_close.normalBgSprite = "buttonclose";
+                m_close.hoveredBgSprite = "buttonclosehover";
+                m_close.pressedBgSprite = "buttonclosepressed";
+                m_close.eventClick += (component, param) => parent.Hide();
 
-            m_title.width = parent.width - relativePosition.x - m_close.width - 10;
+                m_title.width = parent.width - relativePosition.x - m_close.width - 10;
+            }
         }
     }
 }

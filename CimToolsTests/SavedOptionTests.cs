@@ -7,10 +7,10 @@ using System.Reflection;
 
 namespace CimToolsTests
 {
-    [XmlOptions(Key = "OverriddenStaticName")]
+    [XmlOptions(key = "OverriddenStaticName")]
     public static class TestOverriddenNameClass
     {
-        public static Dictionary<string, double> testDictionaryDouble = new Dictionary<string, double>() { { "doublekey1", 0.00005 } };
+        public static Dictionary<string, double> testDictionaryDouble = new Dictionary<string, double>() { { "doublekey1", 0.00005 }, { "doublekey2", 0.5555555 } };
         public static List<int> testListInt = new List<int>() { 1, 2, 3, 4, 5, 6 };
         public static int testInt = 15;
         public static string testString = "test string";
@@ -25,7 +25,7 @@ namespace CimToolsTests
         public static string testString = "another test string";
     }
 
-    [XmlOptions(Key = "OverriddenNonStaticName")]
+    [XmlOptions(key = "OverriddenNonStaticName")]
     public class TestNonStaticOverriddenClass
     {
         public Dictionary<string, double> testDictionaryDouble = new Dictionary<string, double>() { { "doublekey2", 0.00005 } };
@@ -85,7 +85,7 @@ namespace CimToolsTests
             Assert.AreEqual(15, TestOverriddenNameClass.testInt);
             Assert.AreEqual("test string", TestOverriddenNameClass.testString);
             Assert.AreEqual(0.00005, TestOverriddenNameClass.testDictionaryDouble["doublekey1"]);
-            Assert.AreEqual(1, TestOverriddenNameClass.testDictionaryDouble.Count);
+            Assert.AreEqual(2, TestOverriddenNameClass.testDictionaryDouble.Count);
             Assert.AreEqual(6, TestOverriddenNameClass.testListInt.Count);
             Assert.AreEqual(1, TestOverriddenNameClass.testListInt[0]);
             Assert.AreEqual(2, TestOverriddenNameClass.testListInt[1]);

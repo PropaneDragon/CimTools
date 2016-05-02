@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace CimTools.v2.Data
 {
-    [XmlOptions(Key = "OptionPanel")]
+    [XmlOptions("OptionPanel")]
     public class OptionPanelSavedData
     {
-        public Dictionary<string, object> data;
+        public Dictionary<string, object> data = new Dictionary<string, object>();
     }
 }

@@ -59,9 +59,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CimToolsMod.cs" />
     <Compile Include="v2\Attributes\TranslatableAttribute.cs" />
     <Compile Include="v2\Attributes\XmlOptionsAttribute.cs" />
+    <Compile Include="v2\Data\Strings.cs" />
     <Compile Include="v2\Data\OptionPanelSavedData.cs" />
+    <Compile Include="v2\Data\UpdatePanelSavedData.cs" />
     <Compile Include="v2\Elements\UITitleBar.cs" />
     <Compile Include="v2\Logging\DetailedLogger.cs" />
     <Compile Include="v2\Logging\NamedLogger.cs" />
@@ -81,8 +84,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy /v /e /y "$(TargetDir)*" "%25STEAM_HOME%25\steamapps\workshop\content\255710\676481286\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

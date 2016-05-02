@@ -1,4 +1,5 @@
-﻿using CimTools.v2.File;
+﻿using CimTools.v2.Data;
+using CimTools.v2.File;
 using CimTools.v2.Logging;
 using CimTools.v2.Utilities;
 using CimTools.v2.Workshop;
@@ -13,6 +14,7 @@ namespace CimTools.v2
     {
         private CimToolSettings m_modSettings = null;
         private SpriteUtilities m_spriteUtilities;
+        private UIUtilities m_uiUtilities;
         private Changelog m_changelog;
         private SaveFileManager m_saveFileOptions;
         private XmlFileManager m_xmlOptions;
@@ -22,9 +24,10 @@ namespace CimTools.v2
         private DetailedLogger m_detailedLogger;
         private NamedLogger m_namedLogger;
         private Translation m_translation;
+        private Strings m_strings;
 
         /// <summary>
-        /// Returns an instance of CimToolSettings
+        /// Settings CimTools uses
         /// </summary>
         public CimToolSettings ModSettings
         {
@@ -32,7 +35,7 @@ namespace CimTools.v2
         }
 
         /// <summary>
-        /// Returns an instance of SpriteUtilities
+        /// Utilities for retrieving and manipulating sprites and atlases
         /// </summary>
         public SpriteUtilities SpriteUtilities
         {
@@ -40,7 +43,15 @@ namespace CimTools.v2
         }
 
         /// <summary>
-        /// Returns an instance of Changelog
+        /// Utilities for dealing with the UI
+        /// </summary>
+        public UIUtilities UIUtilities
+        {
+            get { return m_uiUtilities; }
+        }
+
+        /// <summary>
+        /// Handles parsing and displaying the changelog of your mod automatically
         /// </summary>
         public Changelog Changelog
         {
@@ -48,7 +59,7 @@ namespace CimTools.v2
         }
 
         /// <summary>
-        /// Returns an instance of SaveFileManager
+        /// Handles saving and loading to and from the game save file
         /// </summary>
         public SaveFileManager SaveFileOptions
         {
@@ -56,7 +67,7 @@ namespace CimTools.v2
         }
 
         /// <summary>
-        /// Returns an instance of XmlFileManager
+        /// Handles saving and loading to and from XML
         /// </summary>
         public XmlFileManager XMLFileOptions
         {
@@ -64,7 +75,7 @@ namespace CimTools.v2
         }
 
         /// <summary>
-        /// Returns an instance of Path
+        /// Handles system paths for the mod
         /// </summary>
         public Path Path
         {
@@ -72,20 +83,23 @@ namespace CimTools.v2
         }
 
         /// <summary>
-        /// Returns an instance of Version
+        /// Handles version numbers and strings for the mod
         /// </summary>
         public Version Version
         {
             get { return m_version; }
         }
 
+        /// <summary>
+        /// Handles items on the settings panel in Cities
+        /// </summary>
         public ModOptionPanelUtilities ModPanelOptions
         {
             get { return m_modOptions; }
         }
 
         /// <summary>
-        /// Returns an instance of the DetailedLogger
+        /// Handles logging to a separate text file with the mod name for detailed debugging
         /// </summary>
         public DetailedLogger DetailedLogger
         {
@@ -93,7 +107,7 @@ namespace CimTools.v2
         }
 
         /// <summary>
-        /// Returns an instance of the NamedLogger
+        /// Handles logging to Unity with the mod name
         /// </summary>
         public NamedLogger NamedLogger
         {
@@ -101,11 +115,19 @@ namespace CimTools.v2
         }
 
         /// <summary>
-        /// Returns an instance of Translation
+        /// Handles translation and localisation of strings
         /// </summary>
         public Translation Translation
         {
             get { return m_translation; }
+        }
+
+        /// <summary>
+        /// Contains all constant strings the tool uses
+        /// </summary>
+        public Strings Strings
+        {
+            get { return m_strings; }
         }
 
         /// <summary>
@@ -118,6 +140,8 @@ namespace CimTools.v2
             m_modSettings = modSettings;
 
             m_spriteUtilities = new SpriteUtilities();
+            m_uiUtilities = new UIUtilities();
+            m_strings = new Strings(this);
             m_path = new Path(this);
             m_version = new Version(this);
             m_detailedLogger = new DetailedLogger(this);

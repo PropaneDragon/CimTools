@@ -1,4 +1,4 @@
-﻿using CimTools.v2.Attributes;
+﻿using CimTools.v2.Data;
 using CimTools.v2.Elements;
 using CimTools.v2.Workshop;
 using ColossalFramework.UI;
@@ -6,12 +6,6 @@ using UnityEngine;
 
 namespace CimTools.v2.Panels
 {
-    [XmlOptions]
-    public class UpdatePanelSavedData
-    {
-        public string LastUpdatedVersion = "0.0";
-    }
-
     /// <summary>
     /// A speech bubble which contains the latest changes to your mod.
     /// The bubble can be clicked and expanded to reveal new changes, rather than
@@ -23,6 +17,7 @@ namespace CimTools.v2.Panels
         private UITitleBar m_panelTitle;
         private UILabel m_infoLabel;
         private CimToolBase m_toolBase = null;
+        private UpdatePanelSavedData _savedData = null;
         private bool showInitially = true;
 
         /// <summary>
@@ -52,15 +47,14 @@ namespace CimTools.v2.Panels
         /// <param name="toolBase">Your internally saved CimToolBase</param>
         public void Initialise(CimToolBase toolBase)
         {
+            _savedData = new UpdatePanelSavedData();
+            toolBase.XMLFileOptions.AddObjectToSave(_savedData);
+            toolBase.XMLFileOptions.Load();
+
             m_changelogDownloader = toolBase.Changelog;
             m_updatedTitleMessage = string.Format("{0} has updated!", toolBase.ModSettings.ReadableName);
-
-            string lastSavedVersion = "0.0";
-
-            /*if(toolBase.XMLFileOptions.Data.GetValue("lastUpdatedVersion", ref lastSavedVersion, "UpdatePanel") == File.ExportOptionBase.OptionError.NoError)
-            {
-                showInitially = lastSavedVersion != toolBase.Version.Delimited(File.Version.Limit.Revision);
-            }*/
+            
+            showInitially = _savedData.lastCheckedVersion != toolBase.Version.Delimited(Utilities.Version.Limit.Revision);
 
             if(showInitially)
             {
@@ -73,43 +67,41 @@ namespace CimTools.v2.Panels
 
             m_toolBase = toolBase;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         public override void Awake()
         {
-            this.isInteractive = true;
-            this.enabled = true;
-            this.width = 300;
-            this.height = 100;
+            isInteractive = true;
+            enabled = true;
+            width = 300;
+            height = 100;
 
             base.Awake();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         public override void Start()
         {
-            base.Start();
+            if (m_toolBase != null)
+            {
+                base.Start();
 
-            m_panelTitle = this.AddUIComponent<UITitleBar>();
-            m_panelTitle.title = m_updatedTitleMessage;
+                m_panelTitle = this.AddUIComponent<UITitleBar>();
+                m_panelTitle.Initialise(m_toolBase);
+                m_panelTitle.title = m_updatedTitleMessage;
 
-            m_infoLabel = this.AddUIComponent<UILabel>();
-            m_infoLabel.width = this.width - m_UIPadding.left - m_UIPadding.right;
-            m_infoLabel.wordWrap = true;
-            m_infoLabel.processMarkup = true;
-            m_infoLabel.autoHeight = true;
-            m_infoLabel.text = m_updatedContentMessage;
-            m_infoLabel.textScale = 0.6f;
-            m_infoLabel.relativePosition = new Vector3(m_UIPadding.left, m_panelTitle.height + m_UIPadding.bottom);
-            m_infoLabel.eventClicked += M_infoLabel_eventClicked;
+                m_infoLabel = this.AddUIComponent<UILabel>();
+                m_infoLabel.width = this.width - m_UIPadding.left - m_UIPadding.right;
+                m_infoLabel.wordWrap = true;
+                m_infoLabel.processMarkup = true;
+                m_infoLabel.autoHeight = true;
+                m_infoLabel.text = m_updatedContentMessage;
+                m_infoLabel.textScale = 0.6f;
+                m_infoLabel.relativePosition = new Vector3(m_UIPadding.left, m_panelTitle.height + m_UIPadding.bottom);
+                m_infoLabel.eventClicked += M_infoLabel_eventClicked;
 
-            this.atlas = Utilities.UIUtilities.GetAtlas("Ingame");
-            this.backgroundSprite = "InfoBubble";
-            this.height = m_infoLabel.relativePosition.y + m_infoLabel.height + m_UIPadding.bottom + 20;
+                this.atlas = m_toolBase.SpriteUtilities.GetAtlas("Ingame");
+                this.backgroundSprite = "InfoBubble";
+                this.height = m_infoLabel.relativePosition.y + m_infoLabel.height + m_UIPadding.bottom + 20;
+            }
         }
 
         private void M_infoLabel_eventClicked(UIComponent component, UIMouseEventParameter eventParam)
@@ -144,12 +136,12 @@ namespace CimTools.v2.Panels
 
             float heightDifference = m_infoLabel.height - lastHeight;
 
-            this.height = m_infoLabel.relativePosition.y + m_infoLabel.height + m_UIPadding.bottom + 20;
-            this.relativePosition -= new Vector3(0, heightDifference);
+            height = m_infoLabel.relativePosition.y + m_infoLabel.height + m_UIPadding.bottom + 20;
+            relativePosition -= new Vector3(0, heightDifference);
 
             if(m_toolBase != null)
             {
-                //m_toolBase.XMLFileOptions.Data.SetValue("lastUpdatedVersion", m_toolBase.Version.Delimited(File.Version.Limit.Revision), "UpdatePanel");
+                _savedData.lastCheckedVersion = m_toolBase.Version.Delimited(Utilities.Version.Limit.Revision);
                 m_toolBase.XMLFileOptions.Save();
             }
         }

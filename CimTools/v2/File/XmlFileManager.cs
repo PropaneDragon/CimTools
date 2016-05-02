@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace CimTools.v2.File
 {
@@ -18,16 +17,18 @@ namespace CimTools.v2.File
 
     public class XmlFileManager
     {        
-        internal CimToolBase m_toolBase;
-        internal List<object> m_nonStaticObjectsToSave = new List<object>();
+        protected CimToolBase m_toolBase;
+        protected List<object> m_nonStaticObjectsToSave = new List<object>();
+        protected XmlOptionsAttribute.OptionType m_optionType = XmlOptionsAttribute.OptionType.XmlFile;
 
         /// <summary>
         /// Handles IO between classes and the options XML file.
         /// </summary>
         /// <param name="toolBase"></param>
-        public XmlFileManager(CimToolBase toolBase)
+        public XmlFileManager(CimToolBase toolBase, XmlOptionsAttribute.OptionType optionType = XmlOptionsAttribute.OptionType.XmlFile)
         {
             m_toolBase = toolBase;
+            m_optionType = optionType;
         }
 
         /// <summary>
@@ -91,10 +92,12 @@ namespace CimTools.v2.File
         public void Load(TextReader reader)
         {
             List<ClassData> hierarchies = GetHierarchy();
-            XDocument xmlDocument = XDocument.Load(XmlReader.Create(reader));
-            XElement settingsElement = xmlDocument.Element("Settings");
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(reader);
 
-            foreach (XElement element in settingsElement.Descendants())
+            XmlNodeList settingsElement = xmlDocument.GetElementsByTagName("Settings");
+
+            foreach (XmlNode element in settingsElement[0])
             {
                 foreach(ClassData hierarchyData in hierarchies)
                 {
@@ -102,7 +105,18 @@ namespace CimTools.v2.File
                     {
                         foreach (FieldInfo field in hierarchyData.fields)
                         {
-                            foreach(XElement innerElement in element.Descendants(field.Name))
+                            XmlNode foundNode = null;
+
+                            foreach (XmlNode innerElement in element.ChildNodes)
+                            {
+                                if (innerElement.Name == field.Name)
+                                {
+                                    foundNode = innerElement;
+                                    break;
+                                }
+                            }
+
+                            if (foundNode != null)
                             {
                                 Type elementType = field.FieldType;
 
@@ -115,11 +129,11 @@ namespace CimTools.v2.File
                                     IDictionary dictionary = field.GetValue(hierarchyData.instance) as IDictionary;
                                     dictionary.Clear();
 
-                                    foreach (XElement keyValuePair in innerElement.Descendants())
+                                    foreach (XmlNode innerElement in foundNode.ChildNodes)
                                     {
                                         try
                                         {
-                                            dictionary.Add(keyValuePair.Name.ToString(), Convert.ChangeType(keyValuePair.Value, valueType));
+                                            dictionary.Add(innerElement.Name.ToString(), Convert.ChangeType(innerElement.InnerText, valueType));
                                         }
                                         catch
                                         {
@@ -135,11 +149,12 @@ namespace CimTools.v2.File
                                     IList list = field.GetValue(hierarchyData.instance) as IList;
                                     list.Clear();
 
-                                    foreach (XElement keyValuePair in innerElement.Descendants())
+                                    foreach (XmlNode innerElement in foundNode.ChildNodes)
                                     {
+
                                         try
                                         {
-                                            list.Add(Convert.ChangeType(keyValuePair.Value, valueType));
+                                            list.Add(Convert.ChangeType(innerElement.InnerText, valueType));
                                         }
                                         catch
                                         {
@@ -151,7 +166,7 @@ namespace CimTools.v2.File
                                 {
                                     try
                                     {
-                                        field.SetValue(hierarchyData.instance, Convert.ChangeType(innerElement.Value, field.FieldType));
+                                        field.SetValue(hierarchyData.instance, Convert.ChangeType(foundNode.InnerText, field.FieldType));
                                     }
                                     catch
                                     {
@@ -163,6 +178,8 @@ namespace CimTools.v2.File
                     }
                 }
             }
+
+            reader.Close();
         }
 
         private List<ClassData> GetHierarchy()
@@ -198,9 +215,9 @@ namespace CimTools.v2.File
 
                 if(fields.Length > 0)
                 {
-                    if (thisAttribute != null && thisAttribute.Key != null)
+                    if (thisAttribute != null && thisAttribute.key != null && thisAttribute.type == m_optionType)
                     {
-                        savedName = thisAttribute.Key;
+                        savedName = thisAttribute.key;
                     }
 
                     referenceList.Add(new ClassData() { fields = fields, instance = classObject, outputName = savedName });
@@ -218,7 +235,6 @@ namespace CimTools.v2.File
                 {
                     Type[] dictionaryTypes = elementType.GetGenericArguments();
                     Type keyType = dictionaryTypes[0];
-                    Type valueType = dictionaryTypes[1];
 
                     if (keyType == typeof(string))
                     {
@@ -235,7 +251,7 @@ namespace CimTools.v2.File
                 }
                 else
                 {
-                    writer.WriteElementString(field.Name, field.GetValue(classInfo.instance).ToString());
+                    writer.WriteElementString(field.Name, Convert.ChangeType(field.GetValue(classInfo.instance), typeof(string)) as string);
                 }
             }
         }
@@ -261,7 +277,7 @@ namespace CimTools.v2.File
                 }
                 else
                 {
-                    writer.WriteElementString(field.Key, field.Value.ToString());
+                    writer.WriteElementString(field.Key, Convert.ChangeType(field.Value, typeof(string)) as string);
                 }
             }
         }
@@ -280,7 +296,7 @@ namespace CimTools.v2.File
                 }
                 else
                 {
-                    writer.WriteElementString("Item", field.ToString());
+                    writer.WriteElementString("Item", Convert.ChangeType(field, typeof(string)) as string);
                 }
             }
         }

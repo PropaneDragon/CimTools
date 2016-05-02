@@ -3,6 +3,7 @@
   <OverriddenStaticName>
     <testDictionaryDouble>
       <doublekey1>5E-05</doublekey1>
+      <doublekey2>0.5555555</doublekey2>
     </testDictionaryDouble>
     <testListInt>
       <Item>1</Item>

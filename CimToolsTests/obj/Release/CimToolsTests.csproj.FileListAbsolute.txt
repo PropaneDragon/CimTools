@@ -7,8 +7,8 @@ D:\Projects\Git\CimTools\CimToolsTests\bin\Release\ICities.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\UnityEngine.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\Assembly-CSharp-firstpass.dll
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\Projects\Git\CimTools\CimToolsTests\bin\Release\CimTools.xml
 D:\Projects\Git\CimTools\CimToolsTests\bin\Release\UnityEngine.xml
 D:\Projects\Git\CimTools\CimToolsTests\obj\Release\CimToolsTests.csprojResolveAssemblyReference.cache
 D:\Projects\Git\CimTools\CimToolsTests\obj\Release\CimToolsTests.dll
 D:\Projects\Git\CimTools\CimToolsTests\obj\Release\CimToolsTests.pdb
-D:\Projects\Git\CimTools\CimToolsTests\bin\Release\CimTools.xml

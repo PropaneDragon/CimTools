@@ -10,10 +10,10 @@ namespace CimToolsTests
 {
     public static class ExportTranslations
     {
-        [Translatable(identifier = "translateTextA")]
+        [Translatable("translateTextA")]
         public static string TranslationA;
 
-        [Translatable(identifier = "translateTextB")]
+        [Translatable("translateTextB")]
         public static string TranslationB;
     }
 

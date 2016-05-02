@@ -90,6 +90,9 @@ namespace CimTools.v2.Utilities
             }
         }
 
+        /// <summary>
+        /// Loads all languages up if not already loaded.
+        /// </summary>
         public void LoadLanguages()
         {
             if (!_languagesLoaded && _loadLanguageAutomatically)
@@ -101,7 +104,7 @@ namespace CimTools.v2.Utilities
         }
 
         /// <summary>
-        /// Loads all languages from the Locale folder
+        /// Forces a reload of the languages, even if they're already loaded
         /// </summary>
         public void RefreshLanguages()
         {
@@ -135,6 +138,11 @@ namespace CimTools.v2.Utilities
             }
         }
 
+        /// <summary>
+        /// Deserialise a language file using a TextReader
+        /// </summary>
+        /// <param name="reader">The text to deserialise</param>
+        /// <returns>A deserialised language</returns>
         protected Language DeserialiseLanguage(TextReader reader)
         {
             XmlSerializer xmlSerialiser = new XmlSerializer(typeof(Language));
@@ -265,6 +273,11 @@ namespace CimTools.v2.Utilities
             return success;
         }
 
+        /// <summary>
+        /// Returns whether you can translate into a specific translation ID
+        /// </summary>
+        /// <param name="translationId">The ID of the translation to check</param>
+        /// <returns>Whether a translation into this ID is possible</returns>
         public bool HasTranslation(string translationId)
         {
             LoadLanguages();
@@ -272,6 +285,11 @@ namespace CimTools.v2.Utilities
             return _currentLanguage != null && _currentLanguage._conversionDictionary.ContainsKey(translationId);
         }
 
+        /// <summary>
+        /// Gets a translation for a specific translation ID
+        /// </summary>
+        /// <param name="translationId">The ID to return the translation for</param>
+        /// <returns>A translation of the translationId</returns>
         public string GetTranslation(string translationId)
         {
             LoadLanguages();
