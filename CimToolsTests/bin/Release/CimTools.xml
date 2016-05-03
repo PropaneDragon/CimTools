@@ -791,16 +791,6 @@
             </summary>
             <param name="toolBase">Your internally saved CimToolBase</param>
         </member>
-        <member name="M:CimTools.v2.Panels.UpdatePanel.Awake">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:CimTools.v2.Panels.UpdatePanel.Start">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="M:CimTools.v2.Panels.UpdatePanel.SetPositionSpeakyPoint(UnityEngine.Vector2)">
             <summary>
             Sets the position of the panel based on the "speaky point" of the
