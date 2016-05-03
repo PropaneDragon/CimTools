@@ -186,8 +186,12 @@ namespace CimTools.v2.File
         {
             List<ClassData> returnList = new List<ClassData>();
 
+            m_toolBase.DetailedLogger.Log("Finding hierarchies for XML data with type " + m_optionType.ToString() + "...");
+
             foreach (Assembly assembly in m_toolBase.ModSettings.Assemblies)
             {
+                m_toolBase.DetailedLogger.Log("Searching " + assembly.FullName);
+
                 foreach (Type individualType in assembly.GetTypes())
                 {
                     AddClassToList(individualType, null, ref returnList);
@@ -213,9 +217,11 @@ namespace CimTools.v2.File
                 FieldInfo[] fields = classType.GetFields(BindingFlags.Public | (classObject == null ? BindingFlags.Static : BindingFlags.Instance));
                 string savedName = classType.Name;
 
-                if(fields.Length > 0)
+                if(fields.Length > 0 && thisAttribute.type == m_optionType)
                 {
-                    if (thisAttribute != null && thisAttribute.key != null && thisAttribute.type == m_optionType)
+                    m_toolBase.DetailedLogger.Log("Found type " + classType.Name + " with XmlOptionsAttribute from object " + (classObject == null ? "null" : classObject.GetType().ToString()));
+
+                    if (thisAttribute != null && thisAttribute.key != null)
                     {
                         savedName = thisAttribute.key;
                     }
@@ -233,6 +239,8 @@ namespace CimTools.v2.File
 
                 if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                 {
+                    m_toolBase.DetailedLogger.Log("Writing out dictionary");
+
                     Type[] dictionaryTypes = elementType.GetGenericArguments();
                     Type keyType = dictionaryTypes[0];
 
@@ -245,12 +253,14 @@ namespace CimTools.v2.File
                 }
                 else if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(List<>))
                 {
+                    m_toolBase.DetailedLogger.Log("Writing out list");
                     writer.WriteStartElement(field.Name);
                     WriteInternalElement(writer, GetObjectList(field.GetValue(classInfo.instance) as IList));
                     writer.WriteEndElement();
                 }
                 else
                 {
+                    m_toolBase.DetailedLogger.Log("Writing out element \"" + field.Name + "\" with value " + field.GetValue(classInfo.instance));
                     writer.WriteElementString(field.Name, Convert.ChangeType(field.GetValue(classInfo.instance), typeof(string)) as string);
                 }
             }
@@ -277,6 +287,7 @@ namespace CimTools.v2.File
                 }
                 else
                 {
+                    m_toolBase.DetailedLogger.Log("Writing out element \"" + field.Key + "\" with value " + field.Value);
                     writer.WriteElementString(field.Key, Convert.ChangeType(field.Value, typeof(string)) as string);
                 }
             }
@@ -296,6 +307,7 @@ namespace CimTools.v2.File
                 }
                 else
                 {
+                    m_toolBase.DetailedLogger.Log("Writing out element " + field);
                     writer.WriteElementString("Item", Convert.ChangeType(field, typeof(string)) as string);
                 }
             }
