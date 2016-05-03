@@ -13,7 +13,7 @@ namespace CimTools.v2.Attributes
         /// </summary>
         public string identifier = "";
 
-        private TranslatableAttribute()
+        public TranslatableAttribute()
         {
         }
 
