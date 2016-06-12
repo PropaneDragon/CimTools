@@ -1,51 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedOptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<XmlFileOptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SavedData>
     <SavedGroup>
       <Name />
       <Element>
-        <Name>testFloat</Name>
-        <Value xsi:type="xsd:float">10.4</Value>
-      </Element>
-      <Element>
-        <Name>testString</Name>
-        <Value xsi:type="xsd:string">hello</Value>
-      </Element>
-      <Element>
-        <Name>testDouble</Name>
-        <Value xsi:type="xsd:double">19.2</Value>
-      </Element>
-      <Element>
-        <Name>testInt</Name>
-        <Value xsi:type="xsd:int">19</Value>
+        <SavedElement>
+          <Name>testUshort</Name>
+          <Value xsi:type="xsd:unsignedShort">2</Value>
+        </SavedElement>
+        <SavedElement>
+          <Name>testFloat</Name>
+          <Value xsi:type="xsd:float">10.4</Value>
+        </SavedElement>
+        <SavedElement>
+          <Name>testString</Name>
+          <Value xsi:type="xsd:string">hello</Value>
+        </SavedElement>
+        <SavedElement>
+          <Name>testDouble</Name>
+          <Value xsi:type="xsd:double">19.2</Value>
+        </SavedElement>
+        <SavedElement>
+          <Name>testInt</Name>
+          <Value xsi:type="xsd:int">19</Value>
+        </SavedElement>
       </Element>
     </SavedGroup>
     <SavedGroup>
       <Name>awesome group</Name>
       <Element>
-        <Name>testInt</Name>
-        <Value xsi:type="xsd:int">2082</Value>
-      </Element>
-      <Element>
-        <Name>testDouble</Name>
-        <Value xsi:type="xsd:double">106.8</Value>
-      </Element>
-      <Element>
-        <Name>testString</Name>
-        <Value xsi:type="xsd:string">hello again</Value>
-      </Element>
-      <Element>
-        <Name>testDifferentString</Name>
-        <Value xsi:type="xsd:string">hello again again</Value>
+        <SavedElement>
+          <Name>testInt</Name>
+          <Value xsi:type="xsd:int">2082</Value>
+        </SavedElement>
+        <SavedElement>
+          <Name>testDouble</Name>
+          <Value xsi:type="xsd:double">106.8</Value>
+        </SavedElement>
+        <SavedElement>
+          <Name>testString</Name>
+          <Value xsi:type="xsd:string">hello again</Value>
+        </SavedElement>
+        <SavedElement>
+          <Name>testDifferentString</Name>
+          <Value xsi:type="xsd:string">hello again again</Value>
+        </SavedElement>
       </Element>
     </SavedGroup>
     <SavedGroup>
       <Name>not as awesome group</Name>
       <Element>
-        <Name>testDifferentGroup</Name>
-        <Value xsi:type="xsd:string">hi</Value>
+        <SavedElement>
+          <Name>testDifferentGroup</Name>
+          <Value xsi:type="xsd:string">hi</Value>
+        </SavedElement>
       </Element>
     </SavedGroup>
   </SavedData>
-  <OptionVersion>0.1</OptionVersion>
-</SavedOptions>
+</XmlFileOptions>

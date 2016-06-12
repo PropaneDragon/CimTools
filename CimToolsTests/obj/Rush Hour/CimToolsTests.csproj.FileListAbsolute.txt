@@ -1,0 +1,13 @@
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\CimToolsTests.dll
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\CimToolsTests.pdb
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\Assembly-CSharp.dll
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\ColossalManaged.dll
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\ICities.dll
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\UnityEngine.dll
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\Assembly-CSharp-firstpass.dll
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\ICSharpCode.SharpZipLib.dll
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\UnityEngine.xml
+D:\Projects\Git\CimTools\CimToolsTests\obj\Rush Hour\CimToolsTests.csprojResolveAssemblyReference.cache
+D:\Projects\Git\CimTools\CimToolsTests\obj\Rush Hour\CimToolsTests.dll
+D:\Projects\Git\CimTools\CimToolsTests\obj\Rush Hour\CimToolsTests.pdb
+D:\Projects\Git\CimTools\CimToolsTests\bin\Rush Hour\CimTools.dll

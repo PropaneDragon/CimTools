@@ -7,22 +7,23 @@
     <ProjectGuid>{6A388B44-88A7-4E9E-8C2D-F51E173DB061}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CimTools</RootNamespace>
+    <RootNamespace>CimToolsRushHour</RootNamespace>
     <AssemblyName>CimTools</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Debug\CimTools.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -32,7 +33,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\CimTools.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rush Hour|AnyCPU'">
+    <OutputPath>bin\Rush Hour\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -59,22 +73,48 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Elements\UITitleBar.cs" />
-    <Compile Include="File\Path.cs" />
-    <Compile Include="File\PersistentOptions.cs" />
-    <Compile Include="File\Version.cs" />
-    <Compile Include="File\SaveGameOptions.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Utilities\ModOptionUtilities.cs" />
-    <Compile Include="Utilities\SpriteUtilities.cs" />
-    <Compile Include="Utilities\UIUtilities.cs" />
-    <Compile Include="Workshop\Changelog.cs" />
-    <Compile Include="Panels\UpdatePanel.cs" />
+    <Compile Include="Legacy\CimToolBase.cs" />
+    <Compile Include="Legacy\CimToolSettings.cs" />
+    <Compile Include="Legacy\File\ExportOptionBase.cs" />
+    <Compile Include="Legacy\File\SaveFileManager.cs" />
+    <Compile Include="Legacy\File\XmlFileManager.cs" />
+    <Compile Include="Legacy\File\XmlFileOptions.cs" />
+    <Compile Include="v2\Attributes\TranslatableAttribute.cs" />
+    <Compile Include="v2\Attributes\XmlOptionsAttribute.cs" />
+    <Compile Include="v2\Data\Strings.cs" />
+    <Compile Include="v2\Data\OptionPanelSavedData.cs" />
+    <Compile Include="v2\Data\UpdatePanelSavedData.cs" />
+    <Compile Include="v2\Elements\UITitleBar.cs" />
+    <Compile Include="v2\Logging\DetailedLogger.cs" />
+    <Compile Include="v2\Logging\NamedLogger.cs" />
+    <Compile Include="v2\File\Path.cs" />
+    <Compile Include="v2\File\XmlFileManager.cs" />
+    <Compile Include="v2\Utilities\Translation.cs" />
+    <Compile Include="v2\Utilities\Version.cs" />
+    <Compile Include="v2\File\SaveFileManager.cs" />
+    <Compile Include="v2\CimToolSettings.cs" />
+    <Compile Include="v2\CimToolBase.cs" />
+    <Compile Include="v2\Utilities\ModOptionPanelUtilities.cs" />
+    <Compile Include="v2\Utilities\SpriteUtilities.cs" />
+    <Compile Include="v2\Utilities\UIUtilities.cs" />
+    <Compile Include="v2\Workshop\Changelog.cs" />
+    <Compile Include="v2\Panels\UpdatePanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>D:\Projects\XMLtoMD\XMLtoMD\XMLtoMD\bin\Debug\XMLtoMD.exe $(TargetDir)CimTools.xml</PostBuildEvent>
+    <PostBuildEvent>if NOT "$(ConfigurationName)" == "Release" (
+    $(SolutionDir)NamespaceModifier.exe $(SolutionDir) "CimTools$(ConfigurationName)" "CimTools" )
+
+if "$(ConfigurationName)" == "Release" (
+    xcopy /v /e /y "$(TargetDir)*" "%25STEAM_HOME%25\steamapps\workshop\content\255710\676481286\" )</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if NOT "$(ConfigurationName)" == "Release" (
+    $(SolutionDir)NamespaceModifier.exe $(SolutionDir) "CimTools" "CimTools$(ConfigurationName)" )
+
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
