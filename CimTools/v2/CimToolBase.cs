@@ -1,8 +1,8 @@
-﻿using CimTools.v2.Data;
-using CimTools.v2.File;
-using CimTools.v2.Logging;
+using CimTools.v2.Data;
 using CimTools.v2.Utilities;
+using CimTools.v2.Logging;
 using CimTools.v2.Workshop;
+using CimTools.v2.File;
 
 namespace CimTools.v2
 {

@@ -1,4 +1,4 @@
-﻿using CimTools.v2.Attributes;
+using CimTools.v2.Attributes;
 
 namespace CimTools.v2.Data
 {

@@ -1,11 +1,10 @@
-﻿using CimTools.v2.File;
 using ICities;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-namespace CimTools.v2.Utilities
+namespace CimTools.v2.File
 {
     public class SaveFileManager
     {

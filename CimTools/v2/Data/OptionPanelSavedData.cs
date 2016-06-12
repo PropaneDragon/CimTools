@@ -1,4 +1,4 @@
-﻿using CimTools.v2.Attributes;
+using CimTools.v2.Attributes;
 using System.Collections.Generic;
 
 namespace CimTools.v2.Data

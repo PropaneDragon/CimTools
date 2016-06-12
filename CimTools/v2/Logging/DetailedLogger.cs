@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Timers;
 
@@ -25,9 +25,12 @@ namespace CimTools.v2.Logging
             _saveTimer.AutoReset = true;
 
             _fileName = toolBase.ModSettings.ModName + "-detailed.log";
-            
-            System.IO.File.Delete(_fileName);
-            System.IO.File.CreateText(_fileName);
+
+            try { System.IO.File.Delete(_fileName); }
+            catch { LogError("Couldn't delete log file!"); }
+
+            try { System.IO.File.CreateText(_fileName).Close(); }
+            catch { LogError("Couldn't create new log file!"); }
         }
 
         private void SaveTimer_Elapsed(object sender, ElapsedEventArgs e)

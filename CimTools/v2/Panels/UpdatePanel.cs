@@ -1,4 +1,4 @@
-﻿using CimTools.v2.Data;
+using CimTools.v2.Data;
 using CimTools.v2.Elements;
 using CimTools.v2.Workshop;
 using ColossalFramework.UI;

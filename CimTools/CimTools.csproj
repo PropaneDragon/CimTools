@@ -7,22 +7,23 @@
     <ProjectGuid>{6A388B44-88A7-4E9E-8C2D-F51E173DB061}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CimTools</RootNamespace>
+    <RootNamespace>CimToolsRushHour</RootNamespace>
     <AssemblyName>CimTools</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Debug\CimTools.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -32,7 +33,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\CimTools.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rush Hour|AnyCPU'">
+    <OutputPath>bin\Rush Hour\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -59,7 +73,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CimToolsMod.cs" />
+    <Compile Include="Legacy\CimToolBase.cs" />
+    <Compile Include="Legacy\CimToolSettings.cs" />
+    <Compile Include="Legacy\File\ExportOptionBase.cs" />
+    <Compile Include="Legacy\File\SaveFileManager.cs" />
+    <Compile Include="Legacy\File\XmlFileManager.cs" />
+    <Compile Include="Legacy\File\XmlFileOptions.cs" />
     <Compile Include="v2\Attributes\TranslatableAttribute.cs" />
     <Compile Include="v2\Attributes\XmlOptionsAttribute.cs" />
     <Compile Include="v2\Data\Strings.cs" />
@@ -82,9 +101,20 @@
     <Compile Include="v2\Panels\UpdatePanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /v /e /y "$(TargetDir)*" "%25STEAM_HOME%25\steamapps\workshop\content\255710\676481286\"</PostBuildEvent>
+    <PostBuildEvent>if NOT "$(ConfigurationName)" == "Release" (
+    $(SolutionDir)NamespaceModifier.exe $(SolutionDir) "CimTools$(ConfigurationName)" "CimTools" )
+
+if "$(ConfigurationName)" == "Release" (
+    xcopy /v /e /y "$(TargetDir)*" "%25STEAM_HOME%25\steamapps\workshop\content\255710\676481286\" )</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if NOT "$(ConfigurationName)" == "Release" (
+    $(SolutionDir)NamespaceModifier.exe $(SolutionDir) "CimTools" "CimTools$(ConfigurationName)" )
+
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

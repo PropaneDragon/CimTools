@@ -1,4 +1,4 @@
-﻿using CimTools.v2.Attributes;
+using CimTools.v2.Attributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -114,7 +114,7 @@ namespace CimTools.v2.Utilities
 
             if (basePath != "")
             {
-                string languagePath = basePath + Path.DirectorySeparatorChar + "Locale";
+                string languagePath = basePath + System.IO.Path.DirectorySeparatorChar + "Locale";
 
                 if (Directory.Exists(languagePath))
                 {

@@ -1,0 +1,2 @@
+D:\Projects\Git\CimTools\CimToolsMod\bin\Release\CimToolsMod.dll
+D:\Projects\Git\CimTools\CimToolsMod\obj\Release\CimToolsMod.dll

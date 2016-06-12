@@ -1,4 +1,4 @@
-﻿using CimTools.v2.Attributes;
+using CimTools.v2.Attributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -80,106 +80,127 @@ namespace CimTools.v2.File
             return true; //Should be temporary until I can think of something that can cause this to fail
         }
 
-        public void Load()
+        public bool Load()
         {
             if (System.IO.File.Exists(m_toolBase.ModSettings.ModName + "Options.xml"))
             {
                 StreamReader reader = new StreamReader(m_toolBase.ModSettings.ModName + "Options.xml");
-                Load(reader);
+                return Load(reader);
             }
+
+            return false;
         }
 
-        public void Load(TextReader reader)
+        public bool Load(TextReader reader)
         {
             List<ClassData> hierarchies = GetHierarchy();
             XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(reader);
 
-            XmlNodeList settingsElement = xmlDocument.GetElementsByTagName("Settings");
+            bool success = false;
 
-            foreach (XmlNode element in settingsElement[0])
+            try
             {
-                foreach(ClassData hierarchyData in hierarchies)
+                xmlDocument.Load(reader);
+
+                XmlNodeList settingsElement = xmlDocument.GetElementsByTagName("Settings");
+
+                if (settingsElement != null)
                 {
-                    if(hierarchyData.outputName == element.Name)
+                    foreach (XmlNode element in settingsElement[0])
                     {
-                        foreach (FieldInfo field in hierarchyData.fields)
+                        foreach (ClassData hierarchyData in hierarchies)
                         {
-                            XmlNode foundNode = null;
-
-                            foreach (XmlNode innerElement in element.ChildNodes)
+                            if (hierarchyData.outputName == element.Name)
                             {
-                                if (innerElement.Name == field.Name)
+                                foreach (FieldInfo field in hierarchyData.fields)
                                 {
-                                    foundNode = innerElement;
-                                    break;
-                                }
-                            }
+                                    XmlNode foundNode = null;
 
-                            if (foundNode != null)
-                            {
-                                Type elementType = field.FieldType;
-
-                                if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
-                                {
-                                    Type[] dictionaryTypes = elementType.GetGenericArguments();
-                                    Type keyType = dictionaryTypes[0];
-                                    Type valueType = dictionaryTypes[1];
-
-                                    IDictionary dictionary = field.GetValue(hierarchyData.instance) as IDictionary;
-                                    dictionary.Clear();
-
-                                    foreach (XmlNode innerElement in foundNode.ChildNodes)
+                                    foreach (XmlNode innerElement in element.ChildNodes)
                                     {
-                                        try
+                                        if (innerElement.Name == field.Name)
                                         {
-                                            dictionary.Add(innerElement.Name.ToString(), Convert.ChangeType(innerElement.InnerText, valueType));
-                                        }
-                                        catch
-                                        {
-
+                                            foundNode = innerElement;
+                                            break;
                                         }
                                     }
-                                }
-                                else if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(List<>))
-                                {
-                                    Type[] dictionaryTypes = elementType.GetGenericArguments();
-                                    Type valueType = dictionaryTypes[0];
 
-                                    IList list = field.GetValue(hierarchyData.instance) as IList;
-                                    list.Clear();
-
-                                    foreach (XmlNode innerElement in foundNode.ChildNodes)
+                                    if (foundNode != null)
                                     {
+                                        Type elementType = field.FieldType;
 
-                                        try
+                                        if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                                         {
-                                            list.Add(Convert.ChangeType(innerElement.InnerText, valueType));
+                                            Type[] dictionaryTypes = elementType.GetGenericArguments();
+                                            Type keyType = dictionaryTypes[0];
+                                            Type valueType = dictionaryTypes[1];
+
+                                            IDictionary dictionary = field.GetValue(hierarchyData.instance) as IDictionary;
+                                            dictionary.Clear();
+
+                                            foreach (XmlNode innerElement in foundNode.ChildNodes)
+                                            {
+                                                try
+                                                {
+                                                    dictionary.Add(innerElement.Name.ToString(), Convert.ChangeType(innerElement.InnerText, valueType));
+                                                }
+                                                catch
+                                                {
+
+                                                }
+                                            }
                                         }
-                                        catch
+                                        else if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(List<>))
                                         {
+                                            Type[] dictionaryTypes = elementType.GetGenericArguments();
+                                            Type valueType = dictionaryTypes[0];
 
+                                            IList list = field.GetValue(hierarchyData.instance) as IList;
+                                            list.Clear();
+
+                                            foreach (XmlNode innerElement in foundNode.ChildNodes)
+                                            {
+
+                                                try
+                                                {
+                                                    list.Add(Convert.ChangeType(innerElement.InnerText, valueType));
+                                                }
+                                                catch
+                                                {
+
+                                                }
+                                            }
                                         }
-                                    }
-                                }
-                                else
-                                {
-                                    try
-                                    {
-                                        field.SetValue(hierarchyData.instance, Convert.ChangeType(foundNode.InnerText, field.FieldType));
-                                    }
-                                    catch
-                                    {
+                                        else
+                                        {
+                                            try
+                                            {
+                                                field.SetValue(hierarchyData.instance, Convert.ChangeType(foundNode.InnerText, field.FieldType));
+                                            }
+                                            catch
+                                            {
 
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+
+                    success = true;
                 }
             }
+            catch
+            {
 
-            reader.Close();
+            }
+            finally
+            {
+                reader.Close();
+            }
+
+            return success;
         }
 
         private List<ClassData> GetHierarchy()

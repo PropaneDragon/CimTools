@@ -1,4 +1,4 @@
-﻿using CimTools.v2.Data;
+using CimTools.v2.Data;
 using CimTools.v2.Logging;
 using ColossalFramework.UI;
 using ICities;
@@ -186,24 +186,33 @@ namespace CimTools.v2.Utilities
         /// <summary>
         /// Manually load the UI options onto the existing panel elements.
         /// </summary>
-        public void LoadOptions()
+        public bool LoadOptions()
         {
             _toolBase.DetailedLogger.Log("Loading options up");
-            _toolBase.XMLFileOptions.Load();
 
-            foreach (KeyValuePair<string, List<OptionsItemBase>> optionGroup in _options)
+            if (_toolBase.XMLFileOptions.Load())
             {
-                _toolBase.DetailedLogger.Log("Loading option group " + optionGroup.Key);
-                foreach (OptionsItemBase option in optionGroup.Value)
+                foreach (KeyValuePair<string, List<OptionsItemBase>> optionGroup in _options)
                 {
-                    _toolBase.DetailedLogger.Log("Loading option " + option.uniqueName);
-
-                    if (_savedData.data.ContainsKey(option.uniqueName))
+                    _toolBase.DetailedLogger.Log("Loading option group " + optionGroup.Key);
+                    foreach (OptionsItemBase option in optionGroup.Value)
                     {
-                        object value = _savedData.data[option.uniqueName];
-                        option.m_value = value;
+                        _toolBase.DetailedLogger.Log("Loading option " + option.uniqueName);
+
+                        if (_savedData.data.ContainsKey(option.uniqueName))
+                        {
+                            object value = _savedData.data[option.uniqueName];
+                            option.m_value = value;
+                            option.Update();
+                        }
                     }
                 }
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -234,7 +243,28 @@ namespace CimTools.v2.Utilities
 
             return found;
         }
+        
+        public bool SetOptionValue<T>(string uniqueName, T value)
+        {
+            bool changed = false;
 
+            foreach (KeyValuePair<string, List<OptionsItemBase>> optionGroup in _options)
+            {
+                foreach (OptionsItemBase option in optionGroup.Value)
+                {
+                    if (option.uniqueName == uniqueName)
+                    {
+                        option.m_value = (string)Convert.ChangeType(value, typeof(string));
+                        option.Update();
+                        changed = true;
+
+                        break;
+                    }
+                }
+            }
+
+            return changed;
+        }
     }
 
     /// <summary>
@@ -284,6 +314,8 @@ namespace CimTools.v2.Utilities
         /// </summary>
         /// <param name="translation">The translation data</param>
         public abstract void Translate(Translation translation);
+
+        public abstract void Update();
 
         /// <summary>
         /// Required for creating UI elements. Ignored by this utility.
@@ -345,6 +377,16 @@ namespace CimTools.v2.Utilities
                 //Tooltip isn't created yet, so can't be refreshed. Not nice :(
             }
         }
+
+        public override void Update()
+        {
+            UICheckBox uiObject = component as UICheckBox;
+
+            if(uiObject != null)
+            {
+                uiObject.isChecked = value;
+            }
+        }
     }
 
     /// <summary>
@@ -393,8 +435,16 @@ namespace CimTools.v2.Utilities
             slider.eventValueChanged += new PropertyChangedEventHandler<float>(delegate (UIComponent component, float newValue)
             {
                 value = newValue;
-                slider.tooltip = value.ToString();
-                slider.RefreshTooltip();
+
+                try
+                {
+                    slider.tooltip = value.ToString();
+                    slider.RefreshTooltip();
+                }
+                catch
+                {
+                    //Can't change the tooltip when the slider doesn't properly exist yet.
+                }
             });
 
             component = slider;
@@ -414,6 +464,18 @@ namespace CimTools.v2.Utilities
                 {
                     label.text = translation.GetTranslation("Option_" + (translationIdentifier == "" ? uniqueName : translationIdentifier));
                 }
+            }
+        }
+
+        public override void Update()
+        {
+            UISlider uiObject = component as UISlider;
+
+            if (uiObject != null)
+            {
+                uiObject.value = value;
+                uiObject.minValue = min;
+                uiObject.maxValue = max;
             }
         }
     }
@@ -503,6 +565,17 @@ namespace CimTools.v2.Utilities
                 //Tooltip isn't created yet, so can't be refreshed. Not nice :(
             }
         }
+
+        public override void Update()
+        {
+            UIDropDown uiObject = component as UIDropDown;
+
+            if (uiObject != null)
+            {
+                uiObject.selectedValue = value;
+                uiObject.items = options;
+            }
+        }
     }
 
     /// <summary>
@@ -534,6 +607,10 @@ namespace CimTools.v2.Utilities
         }
 
         public override void Translate(Translation translation)
+        {
+        }
+
+        public override void Update()
         {
         }
     }

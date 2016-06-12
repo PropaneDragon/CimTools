@@ -1,6 +1,5 @@
-﻿using ColossalFramework;
+using ColossalFramework;
 using ColossalFramework.Plugins;
-using System.Collections.Generic;
 
 namespace CimTools.v2.File
 {

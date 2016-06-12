@@ -1,4 +1,4 @@
-﻿using ColossalFramework.UI;
+using ColossalFramework.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;

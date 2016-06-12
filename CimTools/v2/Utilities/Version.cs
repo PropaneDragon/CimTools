@@ -1,4 +1,4 @@
-﻿namespace CimTools.v2.Utilities
+namespace CimTools.v2.Utilities
 {
     /// <summary>
     /// Handles everything to do with the mod version number

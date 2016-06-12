@@ -1,5 +1,0 @@
-D:\Projects\Git\CimTools\CimTools\bin\Debug\CimTools.xml
-D:\Projects\Git\CimTools\CimTools\bin\Debug\CimTools.dll
-D:\Projects\Git\CimTools\CimTools\bin\Debug\CimTools.pdb
-D:\Projects\Git\CimTools\CimTools\obj\Debug\CimTools.dll
-D:\Projects\Git\CimTools\CimTools\obj\Debug\CimTools.pdb
