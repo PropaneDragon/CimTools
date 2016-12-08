@@ -1,0 +1,3 @@
+D:\Projects\Git\CimTools\CimTools\bin\Debug\CimTools.dll
+D:\Projects\Git\CimTools\CimTools\obj\Debug\CimTools.dll
+D:\Projects\Git\CimTools\CimTools\obj\Debug\CimTools.csprojResolveAssemblyReference.cache

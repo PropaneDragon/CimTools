@@ -1,2 +1,3 @@
-D:\Projects\Git\CimTools\CimTools\bin\Rush Hour\CimTools.dll
-D:\Projects\Git\CimTools\CimTools\obj\Rush Hour\CimTools.dll
+D:\Projects\Git\CimTools\CimTools\bin\Rush Hour\CimToolsRushHour.dll
+D:\Projects\Git\CimTools\CimTools\obj\Rush Hour\CimToolsRushHour.dll
+D:\Projects\Git\CimTools\CimTools\obj\Rush Hour\CimTools.csprojResolveAssemblyReference.cache

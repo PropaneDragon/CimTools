@@ -105,7 +105,7 @@ namespace CimTools.v2.Elements
                 m_close.pressedBgSprite = "buttonclosepressed";
                 m_close.eventClick += (component, param) => parent.Hide();
 
-                m_title.width = parent.width - relativePosition.x - m_close.width - 10;
+                m_title.width = parent.width - m_title.relativePosition.x - m_close.width - 10;
             }
         }
     }

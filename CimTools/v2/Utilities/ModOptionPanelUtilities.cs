@@ -62,7 +62,6 @@ namespace CimTools.v2.Utilities
             foreach (OptionsItemBase option in options)
             {
                 option.Create(optionGroup);
-                option.Translate(_toolBase.Translation);
 
                 _toolBase.Translation.OnLanguageChanged += delegate (string languageIdentifier)
                 {
@@ -74,8 +73,6 @@ namespace CimTools.v2.Utilities
             UIButton saveButton = optionGroup.AddButton("Apply", SaveOptions) as UIButton;
             saveButton.width = 120;
             saveButton.color = new Color32(0, 255, 0, 255);
-
-            TranslateGroupItems(saveButton, optionGroup, translationId);
 
             _toolBase.Translation.OnLanguageChanged += delegate (string languageIdentifier)
             {
@@ -531,12 +528,14 @@ namespace CimTools.v2.Utilities
             UIDropDown uiObject = component as UIDropDown;
             uiObject.tooltip = translation.GetTranslation("OptionTooltip_" + (translationIdentifier == "" ? uniqueName : translationIdentifier));
 
-            string[] translatedItems = translation.GetTranslation("Option_" + (translationIdentifier == "" ? uniqueName : translationIdentifier)).Split('|');
+            string allTranslatedItems = translation.GetTranslation("Option_" + (translationIdentifier == "" ? uniqueName : translationIdentifier));
+
+            string[] translatedItems = allTranslatedItems.Split('|');
             string[] uiItems = uiObject.items;
 
-            if (translatedItems.Length == uiItems.Length + 1)
+            if (uiItems.Length > 1 && translatedItems.Length - 1 == uiItems.Length)
             {
-                for (int index = 0; index < translatedItems.Length; ++index)
+                for (int index = 0; index < uiItems.Length; ++index)
                 {
                     uiItems[index] = translatedItems[index + 1];
                 }
@@ -568,13 +567,13 @@ namespace CimTools.v2.Utilities
 
         public override void Update()
         {
-            UIDropDown uiObject = component as UIDropDown;
+            /*UIDropDown uiObject = component as UIDropDown;
 
             if (uiObject != null)
             {
                 uiObject.selectedValue = value;
                 uiObject.items = options;
-            }
+            }*/
         }
     }
 

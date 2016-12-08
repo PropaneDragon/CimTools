@@ -1,0 +1,9 @@
+D:\Projects\Git\CimTools\TranslationHelper\bin\Debug\TranslationHelper.exe.config
+D:\Projects\Git\CimTools\TranslationHelper\bin\Debug\TranslationHelper.exe
+D:\Projects\Git\CimTools\TranslationHelper\bin\Debug\TranslationHelper.pdb
+D:\Projects\Git\CimTools\TranslationHelper\obj\Debug\TranslationHelper.TranslationHelperWindow.resources
+D:\Projects\Git\CimTools\TranslationHelper\obj\Debug\TranslationHelper.Properties.Resources.resources
+D:\Projects\Git\CimTools\TranslationHelper\obj\Debug\TranslationHelper.csproj.GenerateResource.Cache
+D:\Projects\Git\CimTools\TranslationHelper\obj\Debug\TranslationHelper.exe
+D:\Projects\Git\CimTools\TranslationHelper\obj\Debug\TranslationHelper.pdb
+D:\Projects\Git\CimTools\TranslationHelper\obj\Debug\TranslationHelper.csprojResolveAssemblyReference.cache

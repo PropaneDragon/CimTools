@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
+using UnityEngine;
 
 namespace CimTools.v2.Utilities
 {
@@ -19,9 +20,11 @@ namespace CimTools.v2.Utilities
         protected CimToolBase _toolBase = null;
         protected List<Language> _languages = new List<Language>();
         protected Dictionary<Assembly, List<FieldInfo>> _fields = new Dictionary<Assembly, List<FieldInfo>>();
-        protected Language _currentLanguage = null;
+        protected Language _currentLanguage = new Language();
         protected bool _languagesLoaded = false;
         protected bool _loadLanguageAutomatically = true;
+
+        private static readonly bool unfuckLocalMods = true;
 
         public Translation(CimToolBase toolBase, bool loadLanguageAutomatically = true)
         {
@@ -99,7 +102,11 @@ namespace CimTools.v2.Utilities
             {
                 _languagesLoaded = true;
                 RefreshLanguages();
-                _currentLanguage = _languages[0];
+
+                if (_languages.Count > 0)
+                {
+                    _currentLanguage = _languages[0];
+                }
             }
         }
 
@@ -114,7 +121,9 @@ namespace CimTools.v2.Utilities
 
             if (basePath != "")
             {
-                string languagePath = basePath + System.IO.Path.DirectorySeparatorChar + "Locale";
+                string languagePath = basePath + Path.DirectorySeparatorChar + "Locale";
+
+                _toolBase.DetailedLogger.Log("Loading languages in " + languagePath);
 
                 if (Directory.Exists(languagePath))
                 {
@@ -127,6 +136,7 @@ namespace CimTools.v2.Utilities
 
                         if (loadedLanguage != null)
                         {
+                            _toolBase.DetailedLogger.Log("Loaded " + languageFile + " language file.");
                             _languages.Add(loadedLanguage);
                         }
                     }
@@ -145,10 +155,19 @@ namespace CimTools.v2.Utilities
         /// <returns>A deserialised language</returns>
         protected Language DeserialiseLanguage(TextReader reader)
         {
-            XmlSerializer xmlSerialiser = new XmlSerializer(typeof(Language));
+            Language loadedLanguage = null;
 
-            Language loadedLanguage = (Language)xmlSerialiser.Deserialize(reader);
-            reader.Close();
+            try
+            {
+                XmlSerializer xmlSerialiser = new XmlSerializer(typeof(Language));
+
+                loadedLanguage = (Language)xmlSerialiser.Deserialize(reader);
+                reader.Close();
+            }
+            catch(Exception ex)
+            {
+                _toolBase.NamedLogger.LogError("Failed to load language file. " + ex.Message);
+            }
 
             return loadedLanguage;
         }
@@ -162,10 +181,13 @@ namespace CimTools.v2.Utilities
             LoadLanguages();
 
             List<string> languageNames = new List<string>();
-
+            
             foreach (Language availableLanguage in _languages)
             {
-                languageNames.Add(availableLanguage._readableName);
+                if (availableLanguage != null && availableLanguage._readableName != null && availableLanguage._readableName != "")
+                {
+                    languageNames.Add(availableLanguage._readableName);
+                }
             }
 
             return languageNames;

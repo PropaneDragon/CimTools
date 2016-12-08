@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Timers;
+using UnityEngine;
 
 namespace CimTools.v2.Logging
 {
     /// <summary>
     /// Allows you to log detailed messages about your mod in its own file.
     /// </summary>
-    public class DetailedLogger
+    public class DetailedLogger : LogBase
     {
         /// <summary>
         /// The type of log to create.
@@ -59,17 +60,17 @@ namespace CimTools.v2.Logging
             }
         }
 
-        public void LogError(string message)
+        public override void LogError(string message)
         {
             _queuedMessages.Add(new KeyValuePair<LogType, string>(LogType.Error, message));
         }
 
-        public void LogWarning(string message)
+        public override void LogWarning(string message)
         {
             _queuedMessages.Add(new KeyValuePair<LogType, string>(LogType.Warning, message));
         }
 
-        public void Log(string message)
+        public override void Log(string message)
         {
             _queuedMessages.Add(new KeyValuePair<LogType, string>(LogType.Message, message));
         }

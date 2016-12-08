@@ -7,8 +7,8 @@
     <ProjectGuid>{6A388B44-88A7-4E9E-8C2D-F51E173DB061}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CimToolsRushHour</RootNamespace>
-    <AssemblyName>CimTools</AssemblyName>
+    <RootNamespace>CimTools</RootNamespace>
+    <AssemblyName>CimToolsRushHour</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -86,6 +86,7 @@
     <Compile Include="v2\Data\UpdatePanelSavedData.cs" />
     <Compile Include="v2\Elements\UITitleBar.cs" />
     <Compile Include="v2\Logging\DetailedLogger.cs" />
+    <Compile Include="v2\Logging\LogBase.cs" />
     <Compile Include="v2\Logging\NamedLogger.cs" />
     <Compile Include="v2\File\Path.cs" />
     <Compile Include="v2\File\XmlFileManager.cs" />

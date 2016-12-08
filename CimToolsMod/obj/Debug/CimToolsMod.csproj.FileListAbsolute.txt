@@ -1,4 +1,3 @@
 D:\Projects\Git\CimTools\CimToolsMod\bin\Debug\CimToolsMod.dll
-D:\Projects\Git\CimTools\CimToolsMod\bin\Debug\CimToolsMod.pdb
 D:\Projects\Git\CimTools\CimToolsMod\obj\Debug\CimToolsMod.dll
-D:\Projects\Git\CimTools\CimToolsMod\obj\Debug\CimToolsMod.pdb
+D:\Projects\Git\CimTools\CimToolsMod\obj\Debug\CimToolsMod.csprojResolveAssemblyReference.cache
