@@ -7,3 +7,4 @@ D:\Projects\Git\CimTools\TranslationHelper\obj\Release\TranslationHelper.csproj.
 D:\Projects\Git\CimTools\TranslationHelper\obj\Release\TranslationHelper.exe
 D:\Projects\Git\CimTools\TranslationHelper\obj\Release\TranslationHelper.pdb
 D:\Projects\Git\CimTools\TranslationHelper\obj\Release\TranslationHelper.csprojResolveAssemblyReference.cache
+C:\Users\applecobbler\Source\Repos\CimTools\TranslationHelper\bin\Release\TranslationHelper.exe.config
